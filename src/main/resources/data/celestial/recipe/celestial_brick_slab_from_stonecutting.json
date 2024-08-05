@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "celestial:celestial_bricks"
+  },
+  "result": {
+    "id": "celestial:celestial_brick_slab",
+    "count": 2
+  }
+}

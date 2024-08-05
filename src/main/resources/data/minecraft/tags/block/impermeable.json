@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "celestial:cursed_glass"
+    "celestial:cursed_glass",
+    "celestial:celestial_glass"
   ]
 }

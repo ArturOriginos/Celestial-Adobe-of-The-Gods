@@ -176,5 +176,11 @@
   "advancement.celestial.enter_celestia.desc": "Enter the Celestia dimension.",
   "item.celestial.united_soul": "United Soul of Gods and the Cursed",
   "item.celestial.paxel": "Paxel of Gods and the Cursed",
-  "item.celestial.paxel.lore": "Light and dark in one hand: breaks everything in its way."
+  "item.celestial.paxel.lore": "Light and dark in one hand: breaks everything in its way.",
+  "advancement.celestial.paxel.title": "The End? Or the Beginning of the End?...",
+  "advancement.celestial.paxel.desc": "Obtain the Paxel of Gods and the Cursed.",
+  "block.celestial.celestial_bricks": "Celestia Bricks",
+  "block.celestial.celestial_glass": "Celestia Glass",
+  "block.celestial.celestial_brick_stairs": "Celestia Brick Stairs",
+  "block.celestial.celestial_brick_slab": "Celestia Brick Slab"
 }

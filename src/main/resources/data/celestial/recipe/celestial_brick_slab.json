@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "celestial:celestial_bricks"
+    }
+  },
+  "result": {
+    "id": "celestial:celestial_brick_slab",
+    "count": 6
+  }
+}

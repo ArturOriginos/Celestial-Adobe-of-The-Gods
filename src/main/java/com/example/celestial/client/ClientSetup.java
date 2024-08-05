@@ -38,11 +38,10 @@ public final class ClientSetup {
                 context -> new GodSpikeRenderer(context, GodSpikeRenderer.CURSED_TEXTURE));
     }
 
-    /** Щит проклятых и Защитная Руна Селестии рисуются как ванильный щит (встроенная модель + свой рендерер). */
+    /** Щит проклятых рисуется как ванильный щит (Защитная Руна Селестии теперь воксельная 3D-модель) (встроенная модель + свой рендерер). */
     @SubscribeEvent
     public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
         event.registerItem(shieldExtension(CursedShieldRenderer.CURSED_TEXTURE), ModItems.CURSED_SHIELD.get());
-        event.registerItem(shieldExtension(CursedShieldRenderer.CELESTIA_TEXTURE), ModItems.CELESTIA_SHIELD.get());
     }
 
     private static IClientItemExtensions shieldExtension(ResourceLocation texture) {

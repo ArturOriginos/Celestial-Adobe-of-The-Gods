@@ -121,6 +121,10 @@ public class CelestialMod {
             event.accept(ModBlocks.CELESTIAL_PLANKS_ITEM);
             event.accept(ModBlocks.CELESTIAL_SLAB_ITEM);
             event.accept(ModBlocks.CELESTIAL_STAIRS_ITEM);
+            event.accept(ModBlocks.CELESTIAL_BRICKS_ITEM);
+            event.accept(ModBlocks.CELESTIAL_BRICK_STAIRS_ITEM);
+            event.accept(ModBlocks.CELESTIAL_BRICK_SLAB_ITEM);
+            event.accept(ModBlocks.CELESTIAL_GLASS_ITEM);
             event.accept(ModBlocks.CELESTIA_BLOCK_ITEM);
             event.accept(ModBlocks.CELESTIA_PORTAL_ITEM);
         }

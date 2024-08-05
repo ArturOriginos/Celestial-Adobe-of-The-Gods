@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "celestial:celestial_stone"
+    }
+  },
+  "result": {
+    "id": "celestial:celestial_bricks",
+    "count": 4
+  }
+}

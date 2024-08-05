@@ -3,6 +3,7 @@ package com.example.celestial.registry;
 import static com.example.celestial.CelestialMod.MODID;
 
 import com.example.celestial.block.AdvancedEnchantingTableBlock;
+import com.example.celestial.block.CelestialGlassBlock;
 import com.example.celestial.block.CelestiaPortalBlock;
 import com.example.celestial.block.CelestiaPortalFieldBlock;
 import com.example.celestial.block.CelestialLeavesBlock;
@@ -289,6 +290,26 @@ public final class ModBlocks {
     public static final DeferredItem<BlockItem> CURSED_LEAVES_ITEM = ITEMS.registerSimpleBlockItem(CURSED_LEAVES);
     public static final DeferredItem<BlockItem> CURSED_HANGING_LEAVES_ITEM = ITEMS.registerSimpleBlockItem(CURSED_HANGING_LEAVES);
     public static final DeferredItem<BlockItem> CURSED_SAPLING_ITEM = ITEMS.registerSimpleBlockItem(CURSED_SAPLING);
+
+    // --- селестийский кирпич, стекло, ступеньки и плиты (beta 1.8) ---
+    public static final DeferredBlock<Block> CELESTIAL_BRICKS = BLOCKS.registerBlock(
+            "celestial_bricks", Block::new, solid(1.5F, 6.0F, SoundType.STONE).requiresCorrectToolForDrops().lightLevel(s -> 4));
+    public static final DeferredBlock<StairBlock> CELESTIAL_BRICK_STAIRS = BLOCKS.registerBlock(
+            "celestial_brick_stairs", props -> new StairBlock(CELESTIAL_BRICKS.get().defaultBlockState(), props),
+            solid(1.5F, 6.0F, SoundType.STONE).requiresCorrectToolForDrops().lightLevel(s -> 4));
+    public static final DeferredBlock<SlabBlock> CELESTIAL_BRICK_SLAB = BLOCKS.registerBlock(
+            "celestial_brick_slab", SlabBlock::new, solid(1.5F, 6.0F, SoundType.STONE).requiresCorrectToolForDrops().lightLevel(s -> 4));
+    public static final DeferredBlock<CelestialGlassBlock> CELESTIAL_GLASS = BLOCKS.registerBlock(
+            "celestial_glass", CelestialGlassBlock::new,
+            solid(0.3F, 0.3F, SoundType.GLASS).noOcclusion().lightLevel(s -> 7)
+                    .isValidSpawn((state, level, pos, type) -> false)
+                    .isRedstoneConductor((state, level, pos) -> false)
+                    .isSuffocating((state, level, pos) -> false)
+                    .isViewBlocking((state, level, pos) -> false));
+    public static final DeferredItem<BlockItem> CELESTIAL_BRICKS_ITEM = ITEMS.registerSimpleBlockItem(CELESTIAL_BRICKS);
+    public static final DeferredItem<BlockItem> CELESTIAL_BRICK_STAIRS_ITEM = ITEMS.registerSimpleBlockItem(CELESTIAL_BRICK_STAIRS);
+    public static final DeferredItem<BlockItem> CELESTIAL_BRICK_SLAB_ITEM = ITEMS.registerSimpleBlockItem(CELESTIAL_BRICK_SLAB);
+    public static final DeferredItem<BlockItem> CELESTIAL_GLASS_ITEM = ITEMS.registerSimpleBlockItem(CELESTIAL_GLASS);
 
     // --- проклятый незерский кирпич, стекло, ступеньки и плиты (beta 1.5) ---
     public static final DeferredBlock<Block> CURSED_NETHER_BRICKS = BLOCKS.registerBlock(

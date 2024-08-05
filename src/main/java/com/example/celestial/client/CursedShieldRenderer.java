@@ -19,8 +19,6 @@ import net.minecraft.world.item.ItemStack;
 public class CursedShieldRenderer extends BlockEntityWithoutLevelRenderer {
     public static final ResourceLocation CURSED_TEXTURE =
             ResourceLocation.fromNamespaceAndPath(CelestialMod.MODID, "textures/entity/cursed_shield.png");
-    public static final ResourceLocation CELESTIA_TEXTURE =
-            ResourceLocation.fromNamespaceAndPath(CelestialMod.MODID, "textures/entity/celestia_shield.png");
 
     private final EntityModelSet modelSet;
     private final ResourceLocation texture;

@@ -20,6 +20,9 @@
     "celestial:crystal_sprouts",
     "celestial:cursed_nether_bricks",
     "celestial:cursed_nether_brick_stairs",
-    "celestial:cursed_nether_brick_slab"
+    "celestial:cursed_nether_brick_slab",
+    "celestial:celestial_bricks",
+    "celestial:celestial_brick_stairs",
+    "celestial:celestial_brick_slab"
   ]
 }

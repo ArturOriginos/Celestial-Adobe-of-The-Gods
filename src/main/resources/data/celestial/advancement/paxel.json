@@ -1,0 +1,35 @@
+{
+  "parent": "celestial:all_tools",
+  "display": {
+    "icon": {
+      "id": "celestial:paxel"
+    },
+    "title": {
+      "translate": "advancement.celestial.paxel.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.paxel.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "has_paxel": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:paxel"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_paxel"
+    ]
+  ]
+}

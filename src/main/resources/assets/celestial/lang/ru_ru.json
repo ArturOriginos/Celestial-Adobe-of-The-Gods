@@ -176,5 +176,11 @@
   "advancement.celestial.enter_celestia.desc": "Войдите в измерение Селестия.",
   "item.celestial.united_soul": "Объединённая душа богов и проклятых",
   "item.celestial.paxel": "Паксель Богов и Проклятых",
-  "item.celestial.paxel.lore": "Свет и тьма в одной руке: ломает всё, что встанет на пути."
+  "item.celestial.paxel.lore": "Свет и тьма в одной руке: ломает всё, что встанет на пути.",
+  "advancement.celestial.paxel.title": "Конец? Или начало конца?...",
+  "advancement.celestial.paxel.desc": "Получите Паксель Богов и Проклятых.",
+  "block.celestial.celestial_bricks": "Селестийский кирпич",
+  "block.celestial.celestial_glass": "Селестийское стекло",
+  "block.celestial.celestial_brick_stairs": "Селестийские кирпичные ступеньки",
+  "block.celestial.celestial_brick_slab": "Селестийская кирпичная плита"
 }

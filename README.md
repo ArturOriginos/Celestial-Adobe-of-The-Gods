@@ -1,140 +1,70 @@
-# Advanced Enchanting Table (NeoForge 1.21.1)
+# Celestial: Abode of the Gods
 
-Сборка:
-1. Возьмите официальный MDK (https://github.com/NeoForgeMDKs/MDK-1.21.1-ModDevGradle) ИЛИ используйте этот проект
-   (нужен gradle wrapper: `gradle wrapper` либо скопируйте gradlew/gradle/ из MDK).
-2. `./gradlew build` -> jar в build/libs/
-3. Тест: `./gradlew runClient`
+**English** | [Русский](README.ru.md)
 
-Если Gradle не находит версию плагина/NeoForge — поставьте версии из официального MDK
-(gradle.properties: neo_version=21.1.x, build.gradle: id 'net.neoforged.moddev' version '...').
+A NeoForge 1.21.1 mod about the sky realm of the gods: advanced enchanting, unbreakable Celestia weapons and tools, the Guardian of the Gods, the Celestia dimension of floating islands, the Cursed Niflheim biome in the Nether with its boss, and the ultimate tool, the Paxel of Gods and the Cursed. Current version: **1.8-beta**.
 
-Рецепт:  B G B / G E G / B G B  (B=книжная полка, G=золотой блок, E=стол зачарования)
-Конфиг:  world/serverconfig/celestial-server.toml
+All items and blocks are in the creative tab **"Celestial: Abode of the Gods"**. Server config: `world/serverconfig/celestial-server.toml`.
 
-## Улучшенная книга и кастомные зачарования
-Рецепт книги: 4 золотых самородка (сверху/снизу/слева/справа) + книга в центре.
-1. Положите улучшенную книгу в улучшенный стол зачарования — в списке будут только кастомные зачарования.
-2. Зачарованная книга меняет спрайт на переливающийся.
-3. В наковальне: инструмент слева + зачарованная улучшенная книга справа -> зачарования переносятся на инструмент.
-Обычные (ванильные) зачарования накладываются на предметы и обычные книги прямо в столе.
+## Enchanting
 
-Зачарования: Синдром Майнера (1), Убийца (2), Кровотечение (3), Увеличение опыта (2), Магнит (1).
-Shift (присесть) отключает 3x3-добычу и магнит.
+- **Advanced Enchanting Table** ("Grace of the Gods of Celestia"): recipe `B G B / G E G / B G B` (B = bookshelf, G = gold block, E = enchanting table). Enchantment levels are doubled (Efficiency 10, Silk Touch 2 mines spawners).
+- **Advanced Book**: 4 gold nuggets (top/bottom/left/right) around a book. Put it into the advanced table to get only the custom enchantments. An enchanted book changes to a shimmering sprite.
+- Custom enchantments: Miner's Syndrome (1), Slayer (2), Bleeding (3), Experience Boost (2), Magnet (1), Nature's Wrath, Soul Devourer (I-V, 2% per level to drop a spawn egg from a mob, swords only). Sneaking disables the 3x3 mining and the magnet.
+- **Solar Anvil**: put an item and a "Boon of Hephaestus and Athena" book with custom enchantments into it. Custom enchantments can be transferred from a book to an item **only** in the Solar Anvil. Make it from the table plus an anvil, or in a normal anvil with a book that has the "Blessing of Helios" enchantment.
 
-## Сборка jar через GitHub
-1. Создайте репозиторий на github.com и загрузите СОДЕРЖИМОЕ папки (build.gradle должен лежать в корне репозитория).
-2. Вкладка Actions -> "Build mod" -> дождитесь зелёной галочки.
-3. Откройте запуск -> внизу в Artifacts скачайте celestial-jar (внутри zip лежит .jar).
-Ручной запуск: Actions -> Build mod -> Run workflow.
+## Celestia items and the Guardian of the Gods
 
-## Обновление: Солнечная наковальня
-- «Милость Богов Селестии» (бывший улучшенный стол) + обычная наковальня -> зачарование «Благословение Гелиоса» -> Солнечная наковальня.
-  То же можно сделать в обычной наковальне: наковальня + книга «Благо Гефеста и Афины» с этим зачарованием.
-- Солнечная наковальня: предмет + книга «Благо Гефеста и Афины» с кастомными зачарованиями -> предмет с зачарованиями (цена = сумма уровней).
-- Благословение Гелиоса принимают только наковальни и книга «Благо Гефеста и Афины».
-- Кастомные зачарования переносятся с книги на предмет ТОЛЬКО в Солнечной наковальне.
+- **Guardian of the Gods**: summon egg only (creative tab "Spawn Eggs"). 280 HP, spikes from underground, drops the Soul of the Guardian of the Gods. It has its own boss bar.
+- The Ender Dragon always drops the soul. The Wither drops it with a 25% chance, and every 5th kill guarantees it.
+- Crafting (soul in the center, one row): sword = 2 netherite swords, axe = 2 netherite axes, pickaxe-shovel = netherite pickaxe + netherite shovel, shield = 2 normal shields. Celestia Shears = 2 shears + soul.
+- All Celestia items are unbreakable. Their names shimmer white-gold. Tools are twice as fast as netherite. The pickaxe-shovel breaks stone, dirt and ores instantly.
+- **Celestia Block**: 8 runes + soul, can only be broken with a Celestia or Cursed pickaxe.
+- All Celestia tools, the shield and the shears have 3D (voxel) models. The Celestia Shield is displayed and held like a shield.
 
-## Предметы Селестии и Хранитель Богов
-- Хранитель Богов: только яйцо призыва (креатив, вкладка "Яйца призыва"). 280 HP (140 сердец), шипы из-под земли, дроп - Душа Хранителя Богов.
-- Крафт в верстаке (душа в центре, один ряд): меч = 2 незеритовых меча, топор = 2 незеритовых топора,
-  кирко-лопата = незеритовая кирка + незеритовая лопата, щит = 2 обычных щита (по бокам души).
-- Все предметы Селестии неразрушимы. Меч 20 урона, топор 24, кирко-лопата 10 (мгновенно ломает камень/землю/руды).
+## World of Celestia
 
-## Дерево Селестии
-- Блоки: селестийская древесина, доски, плита, ступеньки, листва, росток. Само в мире не появляется.
-- Росток растёт только от костной муки (шанс 10%) в большое дерево: ствол 3x3, 8 ветвей, огромная крона.
-- Листва: 20% -> 100 опыта при разрушении игроком; росток падает с шансом 2% (ножницы/шёлковое касание - сама листва).
-- Крафты как у обычных: древесина -> 4 доски; 3 доски в ряд -> 6 плит; 6 досок лесенкой -> 4 ступеньки.
+- Blocks: earth, stone, sand, ore, ice, dense and fluffy cloud, glowstone, grass, flower, mushroom, crystal. Celestia Ore drops exactly 1 Celestia Rune.
+- **Celestia Bricks** (4 Celestia Stone in a 2x2), **Celestia Brick Stairs**, **Celestia Brick Slab** and **Celestia Glass** (smelt Celestia Ice). White-lavender stone with gold corners and a glowing star. Stairs and slabs are also in the stonecutter. The blocks emit a soft light.
+- **Celestia Key**: `GG / G. / R.` (G = gold ingot, R = Celestia Rune).
+- **Celestial Tree**: wood, planks, slab, stairs, leaves, sapling (bone meal only, 10%). Grows into a big tree with a 3x3 trunk. Leaves give 100 XP at 20%.
+- **Giant Celestial Tree**: a real structure with a room, chests and a Guardian (`/locate structure celestial:giant_celestial_tree`).
 
-## Celestial: Abode of the Gods - мир и ключ
-- Блоки: земля, камень, песок, руда, лёд, плотное и рыхлое облако, светящийся камень, трава, цветок, гриб, кристалл. В мире не появляются.
-- Руда даёт Руну Селестии (с Удачей больше). Ключ Селестии: 3 золотых слитка буквой Г + руна на конце:
-  GG / G. / R. (G - золотой слиток, R - Руна Селестии).
-- Генерация руды на уровне алмазов подготовлена в docs/ore_generation (выключена).
-- Вкладка творческого режима "Celestial: Abode of the Gods" содержит все предметы мода.
+## Cursed Niflheim and the Cursed
 
-## Версия 1.1
-- Новая 3D-модель щита (из Blockbench), новая модель и текстуры стола "Милость Богов Селестии", новые интерфейсы стола и Солнечной наковальни.
-- Стол: уровни зачарований x2 (Эффективность 10, Шёлковое касание 2 добывает спавнеры).
-- Инструменты Селестии в 2 раза быстрее незеритовых; названия инструментов и руды переливаются бело-жёлтым.
-- Хранитель Богов: без головы, вырывается из-под земли, своя полоска здоровья (280 HP).
-- Блок Селестии (8 рун + душа, ломается только кирко-лопатой Селестии).
-- Ножницы Селестии (2 ножниц + душа или ножницы -> зачарование "Гнев Природы"), зачарование "Гнев Природы" (топор Селестии - мгновенная валка деревьев).
-- Деревья Селестии: большое, среднее и маленькое.
+- The **Cursed Niflheim** biome (`celestial:cursed_niflheim`) lives in the Nether: cursed stone, basalt, floating islands, cursed trees of three sizes, wither skeletons and ghasts. Find it with `/locate biome celestial:cursed_niflheim`. The file `data/minecraft/dimension/nether.json` is overridden, so other Nether-changing mods may conflict.
+- Cursed blocks: Cursed Nether Bricks, Stairs, Slab, Glass, rune stone, tree wood and more.
+- **The Cursed** (boss): 500 HP, armor 16, damage 36. Rises from the ground, summons crimson spikes, adds a fourth ring below 50% health. Has a custom 3D model and boss bar. Drops the **Cursed Soul**. Summon: spawn egg or `/summon celestial:cursed_boss`.
+- Cursed weapons: Sword, Axe, Pickaxe, **Shield** (shown as a real shield).
+- **Cursed Church** (`celestial:cursed_church`): a structure in Cursed Niflheim with the Cursed boss already waiting in the main hall. Find it with `/locate structure celestial:cursed_church`.
 
-- Эндер Дракон и Визер: кастомные полоски здоровья; с них с шансом 25% выпадает Душа Хранителя Богов с припиской об источнике.
+## Celestia dimension
 
-## Версия 1.2 fix 2
-- Рецепты: Милость Богов (книжные полки, руны сверху/снизу, души по бокам, стол зачарования в центре); Благо Гефеста и Афины (8 книг + руна в центре).
-- Руда Селестии: удача не работает, дроп ровно 1 руна. Генерация: жилы 1-3, высоты от -30 до 30.
-- Гигантское Селестийское дерево с комнатой, сундуками и Хранителем Богов: шанс 0.01% на чанк, вырастить нельзя.
-- Исправлено: Синдром Майнера на камне/глубинном сланце, длинные названия зачарований в списке стола.
+- Dimension `celestial:celestia`: **50000 x 50000 blocks** (border from -25000 to +25000) of floating islands above a sea of clouds you can walk on.
+- Small (radius 7-15), medium (20-34) and large (44-64) islands. Celestia earth on top, stone and Celestia Ore inside, glowstone on the underside. Grass, flowers, mushrooms, crystals, trees, sheep, chickens and rabbits. No hostile mobs.
+- **Portal**: build a vertical frame of Celestia Portal blocks (inside 2x3 up to 21x21, corners not needed) and **right-click the frame with the Celestia Key**. One craft gives 10 portal blocks. Works from any dimension.
+- The center (0, 0) has a flat spawn island with a return portal. The portal back returns you to where you came from.
+- Advancement "Above the Clouds" for the first visit. Teleport: `/execute in celestial:celestia run tp @s 0 140 0`.
 
-## Версия 1.2 fix 3
-- Руда Селестии встречается чаще (20 жил на чанк, жилы 1-3 блока, высоты от -30 до 30).
-- Ножницы Селестии: Удача увеличивает шанс мгновенного убийства (2% + уровень*1.33%, Удача VI = 10%).
-- Эндер Дракон: душа Хранителя выпадает всегда. Визер: 25%, каждое 5-е убийство - гарантированно.
-- Гигантское дерево теперь настоящая структура: /locate structure celestial:giant_celestial_tree (1 на область 100x100 чанков).
-- Новое зачарование для мечей "Поглотитель Душ" (I-V): 2% за уровень на выпадение яйца призыва с моба.
+## United Soul and the Paxel
 
-- Исправлено падение при создании мира (Failed to load registries): добавлена заглушка для устаревших файлов дерева.
+- **United Soul of Gods and the Cursed**: shapeless craft of the Soul of the Guardian of the Gods + the Cursed Soul.
+- **Paxel of Gods and the Cursed** (`celestial:paxel`): a multi-tool. Instantly mines everything a pickaxe, axe, shovel or hoe can mine, deals **50 damage**, unbreakable, strips logs on right click. Works with the enchantments of Celestia axes and pickaxes. The name shimmers orange, red and dark.
+- Recipe (cross): United Soul in the center, Celestia Pickaxe on top, Celestia Axe on the left, Cursed Sword on the right, Cursed Axe at the bottom (all consumed).
+- Advancement **"The End? Or the Beginning of the End?..."** for obtaining it (hidden until then).
 
+## Versions
 
-## Версия beta 1.3x - биом «Проклятый Нифельхельм» в Аду
-Схема версий: 1-я правка - beta 1.3x, правки 2-4 - beta 1.3y, большое обновление - beta 1.4, затем 1.5, 1.6 и т.д.
+Versioning: small edits bump the third number (1.7.1, 1.7.2), big updates bump the second (1.7, 1.8).
 
-- Биом **«Проклятый Нифельхельм»** (`celestial:cursed_niflheim`) теперь находится в **Аду (Незере)** среди ванильных биомов. Найти: `/locate biome celestial:cursed_niflheim` в Незере.
-- Для этого файл `data/minecraft/dimension/nether.json` переопределён: добавлен наш биом к пяти ванильным (отдельного измерения больше нет). Другие моды, меняющие Незер, могут конфликтовать.
-- В биоме незерак превращается в незерский камень (местами базальт), есть пещеры, кварц, золото, лавовые источники, плавающие острова (кристаллы, растения, рунические башни), заросли растений и проклятые деревья трёх размеров (только на незерском камне). Из мобов: иссушитель-скелет и гаст.
-- Блоки основы: Незерский камень, базальт, кирпич, рунический камень, лёд, светящийся камень, листва; растения: трава, цветок, гриб, Адский куст, Пылающий цветок, Незерский кристалл и Кристальные ростки.
-- Проклятое дерево: бревно (топором очищается), доски, плита, ступеньки, забор, листва, свисающие листья, росток (сажается только на незерский камень, 35% от костной муки).
-- Крафты: доски из бревна, плита / ступеньки / забор, кирпич = 4 камня (2x2), рунический камень = кирпич + Руна Селестии.
-- Объёмные блоки сделаны 3D-моделями. Облака не добавлялись.
-
-
-## Версия beta 1.4 - босс «Проклятый»
-- Новый босс **Проклятый**: 500 здоровья (250 сердец), броня 16, урон 36. Вырывается из-под земли, накапливает душу и призывает багровые шипы (кольцами вокруг себя или линией к цели). Ниже 50% здоровья добавляется четвёртое кольцо шипов (урон шипа 22).
-- Своя 3D-модель: рога, наплечники, мантия, парящий кристалл души над головой и два вращающихся кольца; светящийся слой (глаза, крест на груди, кристалл, кольца).
-- Своя кастомная полоска здоровья (из присланного референса) с названием и числом здоровья.
-- Дроп: **Душа проклятого** (спрайт взят из референса). Яйцо призыва: вкладка «Яйца призыва».
-- Призвать: яйцо призыва или `/summon celestial:cursed_boss`.
-
-## Версия beta 1.4x
-- Полоска здоровья Проклятого заменена на присланную: рамка с орнаментом и отдельная красная заливка (дорожка из двух половин, заливка идёт слева направо).
-
-## Версия beta 1.4y
-- Новая полоска здоровья Хранителя Богов (золотая рамка с крыльями и кристаллами, фиолетовая заливка). Название «Хранитель Богов» нарисовано в самой рамке, а число здоровья выводится игрой справа под полоской.
-
-## Версия beta 1.5 - новые проклятые блоки
-- **Проклятый незерский кирпич**, **Проклятые ступеньки**, **Проклятая плита** и **Проклятое стекло** (по референсу).
-- Работают как обычные аналоги: камень, ступеньки и плиты ломаются киркой (без неё ничего не выпадет), стекло ломается рукой и выпадает только с шёлковым касанием.
-- Крафты: 4 проклятых кирпича (2x2) = 4 проклятых незерских кирпича; плита (3 в ряд) = 6; ступеньки = 4; стекло получается плавкой незерского льда; ступеньки и плиты есть в камнерезе.
-
-## Версия beta 1.6 - измерение «Селестия»
-Схема версий: мелкие правки - 1.5.1, 1.5.2 и т.д.; большое обновление - 1.6, 1.7 и т.д.
-
-- Новое измерение **Селестия** (`celestial:celestia`): парящие острова над облачным морем. Размер мира **50000 x 50000 блоков** (граница от -25000 до +25000 по X и Z, центр в 0, 0).
-- Три размера островов: маленькие (радиус 7-15), средние (20-34) и большие (44-64). Сверху селестийская земля (местами песок и лёд), ниже камень, в камне руда Селестии, снизу островов светящийся камень. Внизу сплошное облачное море (плотное и пушистое облако), по нему можно ходить.
-- На островах растут селестийская трава, цветы, грибы, кристаллы и деревья трёх размеров. Животные: овцы, куры, кролики. Монстров нет.
-- **Портал в Селестию**: постройте вертикальную рамку из блоков «Портал Селестии» (внутри от 2x3 до 21x21, углы не нужны) и нажмите **ПКМ Ключом Селестии** по рамке - внутри зажжётся поле портала. Войти можно из любого измерения.
-- В центре Селестии (0, 0) стоит стартовый остров с плоской площадкой; портал обратно создаётся там автоматически. Из Селестии портал возвращает туда, откуда вы пришли (иначе - на спавн обычного мира).
-- Рецепт блока «Портал Селестии» теперь даёт **10 блоков** за один крафт (для одной рамки 2x3 нужно 10 блоков).
-- Достижение «Над облаками» за первый вход в Селестию.
-- Найти измерение: `/execute in celestial:celestia run tp @s 0 140 0`.
-
-## Версия beta 1.6.1 - правки
-- **Защитная Руна Селестии** теперь рисуется как настоящий щит (ванильная модель щита с собственной текстурой) в руке, при блоке и в инвентаре, как Щит проклятых.
-- Новая структура **«Церковь Проклятых»** (`celestial:cursed_church`): появляется в биоме «Проклятый Нифельхельм» в Незере, поворачивается случайно на 0/90/180/270 градусов, под зданием достраивается фундамент, внутри здания расчищается рельеф. Найти: `/locate structure celestial:cursed_church`.
-- В главном зале церкви сразу при генерации стоит **Проклятый** (босс не из-под земли, а на полу, чтобы не застревать в чанке). Спавн только один на церковь.
-- Новый предмет **Объединённая душа богов и проклятых**: безформенный крафт из Души Хранителя Богов и Души проклятого, светится как зачарованный, редкость эпическая.
-
-## Версия beta 1.7 - Паксель Богов и Проклятых
-- Новый инструмент **Паксель Богов и Проклятых** (`celestial:paxel`): мульти-тул. Мгновенно добывает всё, что берётся киркой, топором, лопатой и мотыгой (камень, руды, земля, дерево, листва), наносит **50 урона**, неразрушим. ПКМ обтёсывает брёвна как топор. Работают зачарования топоров и кирок Селестии (Синдром Майнера 3x3, Гнев Природы, Убийца, Кровотечение и др.), ломает Блок Селестии.
-- Крафт на верстаке крестом: объединённая душа в центре, Кирка Селестии сверху, Топор Селестии слева, Меч Проклятых справа, Топор Проклятых снизу (все четыре предмета расходуются).
-- Название переливается оранжевым, красным и тёмно-бордовым; описание - оранжево-красным градиентом.
-- 3D-модель: воксельная, построена по референсу (золотая половина слева, красная справа, тёмная сердцевина).
-
-## Версия beta 1.7.1
-- Паксель Богов и Проклятых в 2 раза больше в руке (от первого и третьего лица); в инвентаре, на земле и в рамке размер прежний.
-
+- **1.8** - Celestia Bricks, Celestia Brick Stairs, Celestia Brick Slab and Celestia Glass (with recipes, stonecutter and loot).
+- **1.7.2** - New 3D models for Celestia Sword, Axe, Pickaxe and Shears. New 3D model for the Celestia Shield, shown and held like a shield (with a separate blocking pose). Advancement for the Paxel. README in English and Russian.
+- **1.7.1** - Paxel is twice as big in the hand (first and third person).
+- **1.7** - Paxel of Gods and the Cursed.
+- **1.6.1** - Cursed Church with the Cursed boss, United Soul, Celestia Shield displayed as a shield.
+- **1.6** - Celestia dimension and portal.
+- **1.5** - Cursed Nether Bricks, Stairs, Slab and Glass.
+- **1.4** - The Cursed boss, Cursed Soul, boss bars (the Guardian of the Gods got his own too).
+- **1.3** - Cursed Niflheim biome in the Nether.
+- **1.2** - Giant Celestial Tree structure, Soul Devourer, Celestia Ore tuning, many fixes.
+- **1.1** - Blockbench shield, new enchanting table and Solar Anvil UI, Celestia Block, Celestia Shears, Nature's Wrath, tree sizes.

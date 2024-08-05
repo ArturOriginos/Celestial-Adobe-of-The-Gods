@@ -3,6 +3,7 @@
   "values": [
     "celestial:celestial_slab",
     "celestial:cursed_slab",
-    "celestial:cursed_nether_brick_slab"
+    "celestial:cursed_nether_brick_slab",
+    "celestial:celestial_brick_slab"
   ]
 }
