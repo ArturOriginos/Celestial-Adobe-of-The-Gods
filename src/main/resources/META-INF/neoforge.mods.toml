@@ -1,0 +1,25 @@
+modLoader = "javafml"
+loaderVersion = "[1,)"
+license = "MIT"
+
+[[mods]]
+modId = "celestial"
+version = "1.0.0"
+displayName = "Celestial: Abode of the Gods"
+description = '''
+Celestial: Abode of the Gods - небесный мир богов: улучшенное зачарование, оружие Селестии, Хранитель Богов и Селестийское дерево.
+'''
+
+[[dependencies.celestial]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1.0,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.celestial]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.1,1.22)"
+ordering = "NONE"
+side = "BOTH"

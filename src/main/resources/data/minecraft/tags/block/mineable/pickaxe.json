@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "celestial:advanced_enchanting_table",
+    "celestial:celestial_crystal",
+    "celestial:celestial_glowstone",
+    "celestial:celestial_ice",
+    "celestial:celestial_ore",
+    "celestial:celestial_stone",
+    "celestial:solar_anvil"
+  ]
+}

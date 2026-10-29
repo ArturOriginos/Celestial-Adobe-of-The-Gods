@@ -1,0 +1,35 @@
+{
+  "parent": "celestial:celestial_stone",
+  "display": {
+    "icon": {
+      "id": "celestial:celestial_glowstone"
+    },
+    "title": {
+      "translate": "advancement.celestial.celestial_glowstone.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.celestial_glowstone.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_celestial_glowstone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:celestial_glowstone"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_celestial_glowstone"
+    ]
+  ]
+}

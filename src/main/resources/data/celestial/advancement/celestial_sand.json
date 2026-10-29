@@ -1,0 +1,35 @@
+{
+  "parent": "celestial:celestial_earth",
+  "display": {
+    "icon": {
+      "id": "celestial:celestial_sand"
+    },
+    "title": {
+      "translate": "advancement.celestial.celestial_sand.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.celestial_sand.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_celestial_sand": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:celestial_sand"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_celestial_sand"
+    ]
+  ]
+}

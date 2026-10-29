@@ -1,0 +1,21 @@
+{
+  "display": {
+    "icon": {
+      "id": "celestial:advanced_enchanting_table"
+    },
+    "title": {
+      "translate": "advancement.celestial.root.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.root.desc"
+    },
+    "background": "minecraft:textures/gui/advancements/backgrounds/adventure.png",
+    "show_toast": false,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

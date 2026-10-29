@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " N ",
+    "NBN",
+    " N "
+  ],
+  "key": {
+    "N": { "item": "minecraft:gold_nugget" },
+    "B": { "item": "minecraft:book" }
+  },
+  "result": { "id": "celestial:advanced_book", "count": 1 }
+}

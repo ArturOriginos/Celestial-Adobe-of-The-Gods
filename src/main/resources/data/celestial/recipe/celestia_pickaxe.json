@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "POS"
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:netherite_pickaxe"
+    },
+    "S": {
+      "item": "minecraft:netherite_shovel"
+    },
+    "O": {
+      "item": "celestial:guardian_soul"
+    }
+  },
+  "result": {
+    "id": "celestial:celestia_pickaxe",
+    "count": 1
+  }
+}

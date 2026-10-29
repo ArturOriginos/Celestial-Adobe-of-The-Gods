@@ -1,0 +1,10 @@
+{
+  "description": { "translate": "enchantment.celestial.helios_blessing" },
+  "supported_items": [ "minecraft:anvil", "minecraft:chipped_anvil", "minecraft:damaged_anvil" ],
+  "weight": 1,
+  "max_level": 1,
+  "min_cost": { "base": 1, "per_level_above_first": 0 },
+  "max_cost": { "base": 1, "per_level_above_first": 0 },
+  "anvil_cost": 10,
+  "slots": [ "mainhand" ]
+}

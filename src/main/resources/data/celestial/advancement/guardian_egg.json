@@ -1,0 +1,35 @@
+{
+  "parent": "celestial:root",
+  "display": {
+    "icon": {
+      "id": "celestial:guardian_of_gods_spawn_egg"
+    },
+    "title": {
+      "translate": "advancement.celestial.guardian_egg.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.guardian_egg.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_guardian_of_gods_spawn_egg": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:guardian_of_gods_spawn_egg"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_guardian_of_gods_spawn_egg"
+    ]
+  ]
+}

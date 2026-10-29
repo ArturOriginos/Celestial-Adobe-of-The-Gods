@@ -1,0 +1,35 @@
+{
+  "parent": "celestial:celestial_grass",
+  "display": {
+    "icon": {
+      "id": "celestial:celestial_flower"
+    },
+    "title": {
+      "translate": "advancement.celestial.celestial_flower.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.celestial_flower.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_celestial_flower": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:celestial_flower"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_celestial_flower"
+    ]
+  ]
+}

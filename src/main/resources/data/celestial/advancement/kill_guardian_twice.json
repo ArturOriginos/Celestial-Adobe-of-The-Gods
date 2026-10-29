@@ -1,0 +1,28 @@
+{
+  "parent": "celestial:kill_guardian",
+  "display": {
+    "icon": {
+      "id": "celestial:guardian_soul"
+    },
+    "title": {
+      "translate": "advancement.celestial.kill_guardian_twice.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.kill_guardian_twice.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "trigger": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "trigger"
+    ]
+  ]
+}

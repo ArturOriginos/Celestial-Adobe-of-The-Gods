@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "planks",
+  "ingredients": [
+    {
+      "item": "celestial:celestial_log"
+    }
+  ],
+  "result": {
+    "id": "celestial:celestial_planks",
+    "count": 4
+  }
+}

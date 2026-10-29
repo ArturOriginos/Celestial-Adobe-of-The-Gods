@@ -1,0 +1,35 @@
+{
+  "parent": "celestial:book",
+  "display": {
+    "icon": {
+      "id": "celestial:solar_anvil"
+    },
+    "title": {
+      "translate": "advancement.celestial.solar_anvil.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.solar_anvil.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_solar_anvil": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:solar_anvil"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_solar_anvil"
+    ]
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "parent": "celestial:celestia_shield",
+  "display": {
+    "icon": {
+      "id": "celestial:celestia_shield"
+    },
+    "title": {
+      "translate": "advancement.celestial.war_ready.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.war_ready.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_celestia_sword": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:celestia_sword"
+          }
+        ]
+      }
+    },
+    "has_celestia_shield": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:celestia_shield"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_celestia_sword"
+    ],
+    [
+      "has_celestia_shield"
+    ]
+  ]
+}

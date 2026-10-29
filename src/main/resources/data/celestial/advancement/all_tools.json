@@ -1,0 +1,61 @@
+{
+  "parent": "celestial:celestia_pickaxe",
+  "display": {
+    "icon": {
+      "id": "celestial:celestia_pickaxe"
+    },
+    "title": {
+      "translate": "advancement.celestial.all_tools.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.all_tools.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_celestia_sword": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:celestia_sword"
+          }
+        ]
+      }
+    },
+    "has_celestia_axe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:celestia_axe"
+          }
+        ]
+      }
+    },
+    "has_celestia_pickaxe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:celestia_pickaxe"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_celestia_sword"
+    ],
+    [
+      "has_celestia_axe"
+    ],
+    [
+      "has_celestia_pickaxe"
+    ]
+  ]
+}

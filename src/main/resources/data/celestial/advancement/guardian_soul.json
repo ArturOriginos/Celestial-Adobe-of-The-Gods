@@ -1,0 +1,35 @@
+{
+  "parent": "celestial:kill_guardian",
+  "display": {
+    "icon": {
+      "id": "celestial:guardian_soul"
+    },
+    "title": {
+      "translate": "advancement.celestial.guardian_soul.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.guardian_soul.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_guardian_soul": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:guardian_soul"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_guardian_soul"
+    ]
+  ]
+}

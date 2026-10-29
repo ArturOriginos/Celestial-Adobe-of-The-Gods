@@ -1,0 +1,35 @@
+{
+  "parent": "celestial:root",
+  "display": {
+    "icon": {
+      "id": "celestial:celestial_sapling"
+    },
+    "title": {
+      "translate": "advancement.celestial.celestial_sapling.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.celestial_sapling.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_item": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:celestial_sapling"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_item"
+    ]
+  ]
+}

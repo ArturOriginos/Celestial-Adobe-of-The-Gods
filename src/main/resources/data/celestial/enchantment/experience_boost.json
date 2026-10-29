@@ -1,0 +1,10 @@
+{
+  "description": { "translate": "enchantment.celestial.experience_boost" },
+  "supported_items": "#celestial:enchantable/experience_boost",
+  "weight": 1,
+  "max_level": 2,
+  "min_cost": { "base": 1, "per_level_above_first": 0 },
+  "max_cost": { "base": 1, "per_level_above_first": 0 },
+  "anvil_cost": 5,
+  "slots": [ "mainhand" ]
+}

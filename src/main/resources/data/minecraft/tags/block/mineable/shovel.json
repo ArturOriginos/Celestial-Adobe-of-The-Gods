@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "celestial:celestial_cloud",
+    "celestial:celestial_cloud_fluffy",
+    "celestial:celestial_earth",
+    "celestial:celestial_sand"
+  ]
+}

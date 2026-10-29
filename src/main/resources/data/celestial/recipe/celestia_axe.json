@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "AOA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:netherite_axe"
+    },
+    "O": {
+      "item": "celestial:guardian_soul"
+    }
+  },
+  "result": {
+    "id": "celestial:celestia_axe",
+    "count": 1
+  }
+}

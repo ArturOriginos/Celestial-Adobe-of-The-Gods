@@ -1,0 +1,35 @@
+{
+  "parent": "celestial:guardian_soul",
+  "display": {
+    "icon": {
+      "id": "celestial:celestia_sword"
+    },
+    "title": {
+      "translate": "advancement.celestial.celestia_sword.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.celestia_sword.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_celestia_sword": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:celestia_sword"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_celestia_sword"
+    ]
+  ]
+}

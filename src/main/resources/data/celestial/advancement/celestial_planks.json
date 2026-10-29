@@ -1,0 +1,35 @@
+{
+  "parent": "celestial:celestial_log",
+  "display": {
+    "icon": {
+      "id": "celestial:celestial_planks"
+    },
+    "title": {
+      "translate": "advancement.celestial.celestial_planks.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.celestial_planks.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_item": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:celestial_planks"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_item"
+    ]
+  ]
+}

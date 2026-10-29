@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "BGB",
+    "GEG",
+    "BGB"
+  ],
+  "key": {
+    "B": { "item": "minecraft:bookshelf" },
+    "G": { "item": "minecraft:gold_block" },
+    "E": { "item": "minecraft:enchanting_table" }
+  },
+  "result": {
+    "id": "celestial:advanced_enchanting_table",
+    "count": 1
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "parent": "celestial:celestial_flower",
+  "display": {
+    "icon": {
+      "id": "celestial:celestial_mushroom"
+    },
+    "title": {
+      "translate": "advancement.celestial.celestial_mushroom.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.celestial_mushroom.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_celestial_mushroom": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:celestial_mushroom"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_celestial_mushroom"
+    ]
+  ]
+}

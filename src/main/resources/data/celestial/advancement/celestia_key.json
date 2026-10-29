@@ -1,0 +1,35 @@
+{
+  "parent": "celestial:celestial_ore",
+  "display": {
+    "icon": {
+      "id": "celestial:celestia_key"
+    },
+    "title": {
+      "translate": "advancement.celestial.celestia_key.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.celestia_key.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_celestia_key": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:celestia_key"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_celestia_key"
+    ]
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "SOS"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:netherite_sword"
+    },
+    "O": {
+      "item": "celestial:guardian_soul"
+    }
+  },
+  "result": {
+    "id": "celestial:celestia_sword",
+    "count": 1
+  }
+}

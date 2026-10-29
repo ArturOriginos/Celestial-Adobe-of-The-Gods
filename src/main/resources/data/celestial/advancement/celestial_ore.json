@@ -1,0 +1,46 @@
+{
+  "parent": "celestial:celestial_stone",
+  "display": {
+    "icon": {
+      "id": "celestial:celestial_ore"
+    },
+    "title": {
+      "translate": "advancement.celestial.celestial_ore.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.celestial_ore.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_celestial_ore": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:celestial_ore"
+          }
+        ]
+      }
+    },
+    "has_celestia_rune": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:celestia_rune"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_celestial_ore",
+      "has_celestia_rune"
+    ]
+  ]
+}

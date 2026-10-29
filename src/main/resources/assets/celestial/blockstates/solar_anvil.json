@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "celestial:block/solar_anvil" },
+    "facing=east":  { "model": "celestial:block/solar_anvil", "y": 90 },
+    "facing=south": { "model": "celestial:block/solar_anvil", "y": 180 },
+    "facing=west":  { "model": "celestial:block/solar_anvil", "y": 270 }
+  }
+}

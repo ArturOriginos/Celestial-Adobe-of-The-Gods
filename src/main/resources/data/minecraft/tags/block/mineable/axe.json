@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "celestial:celestial_log",
+    "celestial:celestial_planks",
+    "celestial:celestial_slab",
+    "celestial:celestial_stairs"
+  ]
+}

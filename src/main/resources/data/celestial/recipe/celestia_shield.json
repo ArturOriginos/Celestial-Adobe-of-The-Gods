@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "HOH"
+  ],
+  "key": {
+    "H": {
+      "item": "minecraft:shield"
+    },
+    "O": {
+      "item": "celestial:guardian_soul"
+    }
+  },
+  "result": {
+    "id": "celestial:celestia_shield",
+    "count": 1
+  }
+}

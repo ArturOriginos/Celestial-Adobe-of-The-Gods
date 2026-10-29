@@ -1,0 +1,28 @@
+{
+  "parent": "celestial:guardian_egg",
+  "display": {
+    "icon": {
+      "id": "celestial:guardian_soul"
+    },
+    "title": {
+      "translate": "advancement.celestial.kill_guardian.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.kill_guardian.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "trigger": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "trigger"
+    ]
+  ]
+}

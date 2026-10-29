@@ -1,0 +1,35 @@
+{
+  "parent": "celestial:guardian_soul",
+  "display": {
+    "icon": {
+      "id": "celestial:celestia_pickaxe"
+    },
+    "title": {
+      "translate": "advancement.celestial.celestia_pickaxe.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.celestia_pickaxe.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_celestia_pickaxe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:celestia_pickaxe"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_celestia_pickaxe"
+    ]
+  ]
+}

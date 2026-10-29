@@ -1,0 +1,35 @@
+{
+  "parent": "celestial:celestial_earth",
+  "display": {
+    "icon": {
+      "id": "celestial:celestial_stone"
+    },
+    "title": {
+      "translate": "advancement.celestial.celestial_stone.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.celestial_stone.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_celestial_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:celestial_stone"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_celestial_stone"
+    ]
+  ]
+}
