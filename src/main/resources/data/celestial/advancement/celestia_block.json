@@ -1,0 +1,35 @@
+{
+  "parent": "celestial:celestia_pickaxe",
+  "display": {
+    "icon": {
+      "id": "celestial:celestia_block"
+    },
+    "title": {
+      "translate": "advancement.celestial.celestia_block.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.celestia_block.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_item": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:celestia_block"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_item"
+    ]
+  ]
+}

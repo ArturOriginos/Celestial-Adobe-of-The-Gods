@@ -2,6 +2,7 @@ package com.example.celestial.menu;
 
 import com.example.celestial.EnchantLogic;
 import com.example.celestial.registry.ModBlocks;
+import com.example.celestial.registry.ModItems;
 import com.example.celestial.registry.ModMenus;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -34,8 +35,8 @@ import net.minecraft.world.item.enchantment.ItemEnchantments;
 
 public class AdvancedEnchantingMenu extends AbstractContainerMenu {
     public static final int INPUT_SLOT = 0;
-    public static final int INV_LEFT = 34;
-    public static final int INV_TOP = 150;
+    public static final int INV_LEFT = 23;
+    public static final int INV_TOP = 158;
 
     private final Container input = new SimpleContainer(1) {
         @Override
@@ -55,7 +56,7 @@ public class AdvancedEnchantingMenu extends AbstractContainerMenu {
         super(ModMenus.ADVANCED_ENCHANTING.get(), id);
         this.access = access;
 
-        this.addSlot(new Slot(input, 0, 8, 18) {
+        this.addSlot(new Slot(input, 0, 14, 34) {
             @Override
             public int getMaxStackSize() {
                 return 1;
@@ -110,6 +111,9 @@ public class AdvancedEnchantingMenu extends AbstractContainerMenu {
         if (EnchantLogic.isAnvil(stack)) {
             // Благословение Гелиоса превращает обычную наковальню в Солнечную
             result = new ItemStack(ModBlocks.SOLAR_ANVIL_ITEM.get());
+        } else if (EnchantLogic.isShears(stack)) {
+            // Гнев Природы превращает обычные ножницы в Ножницы Селестии
+            result = new ItemStack(ModItems.CELESTIA_SHEARS.get());
         } else {
             result = stack.is(Items.BOOK) ? new ItemStack(Items.ENCHANTED_BOOK) : stack.copy();
             result.setCount(1);

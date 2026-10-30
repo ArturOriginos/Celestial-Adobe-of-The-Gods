@@ -1,14 +1,11 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "celestial:item/celestia_shield"
-  },
+  "parent": "celestial:item/celestia_shield_3d",
   "overrides": [
     {
       "predicate": {
         "blocking": 1
       },
-      "model": "celestial:item/celestia_shield_blocking"
+      "model": "celestial:item/celestia_shield_3d"
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "RRR",
+    "RSR",
+    "RRR"
+  ],
+  "key": {
+    "R": {
+      "item": "celestial:celestia_rune"
+    },
+    "S": {
+      "item": "celestial:guardian_soul"
+    }
+  },
+  "result": {
+    "id": "celestial:celestia_block",
+    "count": 1
+  }
+}

@@ -19,7 +19,9 @@ import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.block.SoundType;
+import com.example.celestial.item.ShimmerBlockItem;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -37,7 +39,8 @@ public final class ModBlocks {
                     .mapColor(MapColor.COLOR_PURPLE)
                     .requiresCorrectToolForDrops()
                     .strength(5.0F, 1200.0F)
-                    .lightLevel(state -> 7));
+                    .lightLevel(state -> 7)
+                    .noOcclusion());
 
     public static final DeferredItem<BlockItem> ADVANCED_ENCHANTING_TABLE_ITEM =
             ITEMS.registerSimpleBlockItem(ADVANCED_ENCHANTING_TABLE);
@@ -139,7 +142,8 @@ public final class ModBlocks {
     public static final DeferredItem<BlockItem> CELESTIAL_EARTH_ITEM = ITEMS.registerSimpleBlockItem(CELESTIAL_EARTH);
     public static final DeferredItem<BlockItem> CELESTIAL_STONE_ITEM = ITEMS.registerSimpleBlockItem(CELESTIAL_STONE);
     public static final DeferredItem<BlockItem> CELESTIAL_SAND_ITEM = ITEMS.registerSimpleBlockItem(CELESTIAL_SAND);
-    public static final DeferredItem<BlockItem> CELESTIAL_ORE_ITEM = ITEMS.registerSimpleBlockItem(CELESTIAL_ORE);
+    public static final DeferredItem<ShimmerBlockItem> CELESTIAL_ORE_ITEM = ITEMS.register("celestial_ore",
+            () -> new ShimmerBlockItem(CELESTIAL_ORE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> CELESTIAL_ICE_ITEM = ITEMS.registerSimpleBlockItem(CELESTIAL_ICE);
     public static final DeferredItem<BlockItem> CELESTIAL_CLOUD_ITEM = ITEMS.registerSimpleBlockItem(CELESTIAL_CLOUD);
     public static final DeferredItem<BlockItem> CELESTIAL_CLOUD_FLUFFY_ITEM = ITEMS.registerSimpleBlockItem(CELESTIAL_CLOUD_FLUFFY);
@@ -148,6 +152,13 @@ public final class ModBlocks {
     public static final DeferredItem<BlockItem> CELESTIAL_FLOWER_ITEM = ITEMS.registerSimpleBlockItem(CELESTIAL_FLOWER);
     public static final DeferredItem<BlockItem> CELESTIAL_MUSHROOM_ITEM = ITEMS.registerSimpleBlockItem(CELESTIAL_MUSHROOM);
     public static final DeferredItem<BlockItem> CELESTIAL_CRYSTAL_ITEM = ITEMS.registerSimpleBlockItem(CELESTIAL_CRYSTAL);
+
+    /** Блок Селестии: ломается только кирко-лопатой Селестии. */
+    public static final DeferredBlock<Block> CELESTIA_BLOCK = BLOCKS.registerBlock(
+            "celestia_block", Block::new,
+            BlockBehaviour.Properties.of().mapColor(MapColor.GOLD).strength(50.0F, 3600000.0F)
+                    .requiresCorrectToolForDrops().sound(SoundType.AMETHYST).lightLevel(state -> 10));
+    public static final DeferredItem<BlockItem> CELESTIA_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(CELESTIA_BLOCK);
 
     private ModBlocks() {}
 }

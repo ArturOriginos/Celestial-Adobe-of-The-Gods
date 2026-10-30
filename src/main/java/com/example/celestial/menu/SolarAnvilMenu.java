@@ -49,7 +49,7 @@ public class SolarAnvilMenu extends AbstractContainerMenu {
         this.access = access;
         this.player = inventory.player;
 
-        this.addSlot(new Slot(inputs, TOOL_SLOT, 27, 47) {
+        this.addSlot(new Slot(inputs, TOOL_SLOT, 25, 53) {
             @Override
             public int getMaxStackSize() {
                 return 1;
@@ -60,7 +60,7 @@ public class SolarAnvilMenu extends AbstractContainerMenu {
                 return !EnchantLogic.isBook(stack);
             }
         });
-        this.addSlot(new Slot(inputs, BOOK_SLOT, 76, 47) {
+        this.addSlot(new Slot(inputs, BOOK_SLOT, 74, 53) {
             @Override
             public int getMaxStackSize() {
                 return 1;
@@ -71,7 +71,7 @@ public class SolarAnvilMenu extends AbstractContainerMenu {
                 return EnchantLogic.isAdvancedBook(stack);
             }
         });
-        this.addSlot(new Slot(result, 0, 134, 47) {
+        this.addSlot(new Slot(result, 0, 135, 53) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return false;
@@ -98,11 +98,11 @@ public class SolarAnvilMenu extends AbstractContainerMenu {
 
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
-                this.addSlot(new Slot(inventory, col + row * 9 + 9, 8 + col * 18, 84 + row * 18));
+                this.addSlot(new Slot(inventory, col + row * 9 + 9, 8 + col * 18, 97 + row * 18));
             }
         }
         for (int col = 0; col < 9; col++) {
-            this.addSlot(new Slot(inventory, col, 8 + col * 18, 142));
+            this.addSlot(new Slot(inventory, col, 8 + col * 18, 159));
         }
         this.addDataSlot(cost);
     }
@@ -128,6 +128,17 @@ public class SolarAnvilMenu extends AbstractContainerMenu {
 
         ItemEnchantments stored = book.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY);
         if (stored.isEmpty()) return;
+
+        if (EnchantLogic.isShears(tool)) {
+            for (Object2IntMap.Entry<Holder<Enchantment>> entry : stored.entrySet()) {
+                if (EnchantLogic.isNaturesWrath(entry.getKey())) {
+                    result.setItem(0, new ItemStack(com.example.celestial.registry.ModItems.CELESTIA_SHEARS.get()));
+                    cost.set(10);
+                    return;
+                }
+            }
+            return;
+        }
 
         ItemStack out = tool.copy();
         out.setCount(1);

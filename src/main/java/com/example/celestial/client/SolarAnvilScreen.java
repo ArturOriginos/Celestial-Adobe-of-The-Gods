@@ -1,19 +1,23 @@
 package com.example.celestial.client;
 
+import com.example.celestial.CelestialMod;
 import com.example.celestial.menu.SolarAnvilMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.Slot;
 
-/** GUI Солнечной наковальни (рисуется без внешней текстуры). */
+/** GUI Солнечной наковальни: фон нарисован по референсу, слоты совпадают с рисунком. */
 public class SolarAnvilScreen extends AbstractContainerScreen<SolarAnvilMenu> {
+    private static final ResourceLocation TEXTURE =
+            ResourceLocation.fromNamespaceAndPath(CelestialMod.MODID, "textures/gui/solar_anvil.png");
+    private static final int BROWN = 0xFF6B4A1E;
+
     public SolarAnvilScreen(SolarAnvilMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
         this.imageWidth = 176;
-        this.imageHeight = 166;
-        this.inventoryLabelY = 73;
+        this.imageHeight = 183;
     }
 
     @Override
@@ -24,37 +28,19 @@ public class SolarAnvilScreen extends AbstractContainerScreen<SolarAnvilMenu> {
 
     @Override
     protected void renderBg(GuiGraphics g, float partialTick, int mouseX, int mouseY) {
-        g.fill(leftPos, topPos, leftPos + imageWidth, topPos + imageHeight, 0xFF000000);
-        g.fill(leftPos + 1, topPos + 1, leftPos + imageWidth - 1, topPos + imageHeight - 1, 0xFFC6C6C6);
-        g.fill(leftPos + 1, topPos + 1, leftPos + imageWidth - 1, topPos + 2, 0xFFFFFFFF);
-        g.fill(leftPos + 1, topPos + 1, leftPos + 2, topPos + imageHeight - 1, 0xFFFFFFFF);
-
-        for (Slot slot : menu.slots) {
-            int sx = leftPos + slot.x - 1;
-            int sy = topPos + slot.y - 1;
-            g.fill(sx, sy, sx + 18, sy + 18, 0xFF373737);
-            g.fill(sx + 1, sy + 1, sx + 18, sy + 18, 0xFFFFFFFF);
-            g.fill(sx + 1, sy + 1, sx + 17, sy + 17, 0xFF8B8B8B);
-        }
-        // золотая подсветка слотов ввода и результата
-        for (int i = 0; i < 3; i++) {
-            Slot s = menu.getSlot(i);
-            g.fill(leftPos + s.x - 2, topPos + s.y - 2, leftPos + s.x + 18, topPos + s.y - 1, 0xFFE0A800);
-            g.fill(leftPos + s.x - 2, topPos + s.y + 17, leftPos + s.x + 18, topPos + s.y + 18, 0xFFE0A800);
-        }
-        g.drawString(font, "+", leftPos + 55, topPos + 51, 0xFF404040, false);
-        g.drawString(font, "->", leftPos + 105, topPos + 51, 0xFF404040, false);
+        g.blit(TEXTURE, leftPos, topPos, imageWidth, imageHeight, 0, 0, 352, 366, 352, 366);
     }
 
     @Override
     protected void renderLabels(GuiGraphics g, int mouseX, int mouseY) {
-        super.renderLabels(g, mouseX, mouseY);
+        g.drawString(font, title, (imageWidth - font.width(title)) / 2, 15, BROWN, false);
+        g.drawString(font, playerInventoryTitle, 10, 84, BROWN, false);
         int cost = menu.getCost();
         if (cost > 0) {
             boolean ok = minecraft != null && minecraft.player != null
                     && (minecraft.player.getAbilities().instabuild || minecraft.player.experienceLevel >= cost);
-            g.drawString(font, Component.translatable("gui.celestial.solar_cost", cost),
-                    8, 24, ok ? 0xFF2E7D32 : 0xFFB71C1C, false);
+            Component text = Component.translatable("gui.celestial.solar_cost", cost);
+            g.drawString(font, text, (imageWidth - font.width(text)) / 2, 76, ok ? 0xFF2E7D32 : 0xFFB71C1C, false);
         }
     }
 }

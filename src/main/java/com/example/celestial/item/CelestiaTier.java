@@ -8,9 +8,9 @@ import net.minecraft.world.level.block.Block;
 
 /** Тир инструментов Селестии. Прочность не используется: предметы неразрушимы (компонент UNBREAKABLE). */
 public record CelestiaTier(float speed) implements Tier {
-    public static final CelestiaTier SWORD = new CelestiaTier(12.0F);
-    public static final CelestiaTier AXE = new CelestiaTier(30.0F);   // очень быстро ломает дерево
-    public static final CelestiaTier PICK = new CelestiaTier(40.0F);
+    public static final CelestiaTier SWORD = new CelestiaTier(18.0F);
+    public static final CelestiaTier AXE = new CelestiaTier(18.0F);   // 2x незерит (9.0)
+    public static final CelestiaTier PICK = new CelestiaTier(18.0F);
 
     @Override
     public int getUses() {

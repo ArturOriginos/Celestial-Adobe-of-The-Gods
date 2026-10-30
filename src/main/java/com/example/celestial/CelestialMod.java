@@ -110,6 +110,7 @@ public class CelestialMod {
             event.accept(ModBlocks.CELESTIAL_PLANKS_ITEM);
             event.accept(ModBlocks.CELESTIAL_SLAB_ITEM);
             event.accept(ModBlocks.CELESTIAL_STAIRS_ITEM);
+            event.accept(ModBlocks.CELESTIA_BLOCK_ITEM);
         }
         if (event.getTabKey() == CreativeModeTabs.COMBAT) {
             event.accept(ModItems.CELESTIA_SWORD);
@@ -118,6 +119,7 @@ public class CelestialMod {
         }
         if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
             event.accept(ModItems.CELESTIA_PICKAXE);
+            event.accept(ModItems.CELESTIA_SHEARS);
         }
         if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
             event.accept(ModItems.GUARDIAN_EGG);

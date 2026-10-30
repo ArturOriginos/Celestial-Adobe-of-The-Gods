@@ -53,7 +53,7 @@ public final class EnchantEvents {
     // ---------------------------------------------------------------- Синдром Майнера (3x3)
     @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
-        if (mining) return;
+        if (mining || CelestiaEvents.felling) return;
         if (!(event.getPlayer() instanceof ServerPlayer player)) return;
         if (player.isShiftKeyDown()) return; // на Shift ломаем один блок
 

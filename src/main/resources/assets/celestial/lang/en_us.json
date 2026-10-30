@@ -115,5 +115,13 @@
   "advancement.celestial.celestial_mushroom.title": "Mushroom of the Gods",
   "advancement.celestial.celestial_mushroom.desc": "Get a Celestial Mushroom.",
   "advancement.celestial.celestial_crystal.title": "Crystal Chime",
-  "advancement.celestial.celestial_crystal.desc": "Get a Celestial Crystal."
+  "advancement.celestial.celestial_crystal.desc": "Get a Celestial Crystal.",
+  "block.celestial.celestia_block": "Celestia Block",
+  "item.celestial.celestia_shears": "Celestia Shears",
+  "item.celestial.celestia_shears.lore": "Gift of the Nature Slayer",
+  "enchantment.celestial.natures_wrath": "Wrath of Nature",
+  "advancement.celestial.celestia_shears.title": "Nature's Bane",
+  "advancement.celestial.celestia_shears.desc": "Get the Celestia Shears.",
+  "advancement.celestial.celestia_block.title": "Monolith of the Gods",
+  "advancement.celestial.celestia_block.desc": "Craft a Celestia Block."
 }

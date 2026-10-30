@@ -20,22 +20,42 @@ import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * Большое Селестийское дерево: толстый ствол 3x3 с корнями, 8 ветвей и огромная крона.
+ * Селестийские деревья трёх размеров: большое (ствол 3x3), среднее (ствол 2x2) и маленькое (ствол 1x1).
  * Вызывается из саженца при успешном применении костной муки (в мире само не появляется).
  */
 public final class CelestialTreeGenerator {
-    private static final int[][] DIRS = {{1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1}};
+    /** Параметры формы дерева. */
+    private record Shape(int trunkMin, int trunkMax, int minHeight, int heightRange,
+                         int canopyR, int canopyRy, int lowerR, int lowerRy, int lowerDrop,
+                         int branches, int branchMin, int branchRange, int branchLeafR, int branchLeafRy,
+                         int spire, boolean roots) {}
+
+    private static final Shape LARGE = new Shape(-1, 1, 20, 6, 9, 6, 7, 4, 4, 8, 6, 3, 4, 3, 4, true);
+    private static final Shape MEDIUM = new Shape(0, 1, 11, 5, 6, 4, 0, 0, 0, 4, 3, 3, 3, 2, 2, false);
+    private static final Shape SMALL = new Shape(0, 0, 6, 3, 4, 3, 0, 0, 0, 0, 0, 1, 0, 0, 2, false);
+
+    // сначала стороны света, потом диагонали
+    private static final int[][] DIRS = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}, {1, 1}, {-1, 1}, {-1, -1}, {1, -1}};
     private static final int MAX_LEAF_DISTANCE = 6; // дальше листва бы сразу засохла
 
     private CelestialTreeGenerator() {}
 
     public static boolean grow(ServerLevel level, BlockPos origin, RandomSource random) {
-        int height = 20 + random.nextInt(6);
+        int roll = random.nextInt(100);
+        Shape[] order = roll < 25 ? new Shape[]{LARGE, MEDIUM, SMALL}
+                : roll < 60 ? new Shape[]{MEDIUM, SMALL} : new Shape[]{SMALL};
+        for (Shape shape : order) {
+            if (tryGrow(level, origin, random, shape)) return true; // не поместилось - пробуем поменьше
+        }
+        return false;
+    }
 
-        // Проверяем, что ствол 3x3 помещается
+    private static boolean tryGrow(ServerLevel level, BlockPos origin, RandomSource random, Shape s) {
+        int height = s.minHeight() + random.nextInt(s.heightRange());
+
         for (int y = 0; y < height; y++) {
-            for (int dx = -1; dx <= 1; dx++) {
-                for (int dz = -1; dz <= 1; dz++) {
+            for (int dx = s.trunkMin(); dx <= s.trunkMax(); dx++) {
+                for (int dz = s.trunkMin(); dz <= s.trunkMax(); dz++) {
                     if (!canReplace(level, origin.offset(dx, y, dz))) return false;
                 }
             }
@@ -44,42 +64,41 @@ public final class CelestialTreeGenerator {
         BlockState logY = ModBlocks.CELESTIAL_LOG.get().defaultBlockState();
         Map<BlockPos, BlockState> logs = new HashMap<>();
 
-        // ствол 3x3 и шпиль 1x1 над ним
         for (int y = 0; y < height; y++) {
-            for (int dx = -1; dx <= 1; dx++) {
-                for (int dz = -1; dz <= 1; dz++) {
+            for (int dx = s.trunkMin(); dx <= s.trunkMax(); dx++) {
+                for (int dz = s.trunkMin(); dz <= s.trunkMax(); dz++) {
                     logs.put(origin.offset(dx, y, dz), logY);
                 }
             }
         }
-        for (int y = height; y < height + 4; y++) logs.put(origin.above(y), logY);
+        for (int y = height; y < height + s.spire(); y++) logs.put(origin.above(y), logY);
 
-        // корни у основания
-        for (int dx = -3; dx <= 3; dx++) {
-            for (int dz = -3; dz <= 3; dz++) {
-                int ax = Math.abs(dx), az = Math.abs(dz);
-                int ring = Math.max(ax, az);
-                if (ring < 2 || ax + az > 4 || random.nextInt(4) == 0) continue;
-                int rootHeight = (ring == 2 ? 2 : 1) + random.nextInt(2);
-                for (int y = 0; y < rootHeight; y++) {
-                    BlockPos p = origin.offset(dx, y, dz);
-                    if (canReplace(level, p)) logs.put(p, logY);
+        if (s.roots()) {
+            for (int dx = -3; dx <= 3; dx++) {
+                for (int dz = -3; dz <= 3; dz++) {
+                    int ax = Math.abs(dx), az = Math.abs(dz);
+                    int ring = Math.max(ax, az);
+                    if (ring < 2 || ax + az > 4 || random.nextInt(4) == 0) continue;
+                    int rootHeight = (ring == 2 ? 2 : 1) + random.nextInt(2);
+                    for (int y = 0; y < rootHeight; y++) {
+                        BlockPos p = origin.offset(dx, y, dz);
+                        if (canReplace(level, p)) logs.put(p, logY);
+                    }
                 }
             }
         }
 
-        // 8 ветвей, на концах - кластеры листвы
         List<BlockPos> branchEnds = new ArrayList<>();
-        for (int i = 0; i < DIRS.length; i++) {
+        for (int i = 0; i < s.branches(); i++) {
             int dx = DIRS[i][0], dz = DIRS[i][1];
-            int baseY = (int) (height * 0.5) + random.nextInt(4) + (i % 2) * 3;
-            int length = 6 + random.nextInt(3);
+            int baseY = (int) (height * 0.5) + random.nextInt(3) + (i % 2) * 2;
+            int length = s.branchMin() + random.nextInt(s.branchRange());
             Direction.Axis axis = (dx != 0 && dz == 0) ? Direction.Axis.X
                     : (dz != 0 && dx == 0) ? Direction.Axis.Z : Direction.Axis.Y;
             BlockState branch = logY.setValue(RotatedPillarBlock.AXIS, axis);
             BlockPos last = origin.offset(dx, baseY, dz);
-            for (int s = 2; s <= length + 1; s++) {
-                BlockPos p = origin.offset(dx * s, baseY + (s - 2) / 2, dz * s);
+            for (int step = 2; step <= length + 1; step++) {
+                BlockPos p = origin.offset(dx * step, baseY + (step - 2) / 2, dz * step);
                 if (!canReplace(level, p)) break;
                 logs.put(p, branch);
                 last = p;
@@ -87,11 +106,12 @@ public final class CelestialTreeGenerator {
             branchEnds.add(last);
         }
 
-        // форма кроны
         Set<BlockPos> candidates = new HashSet<>();
-        addEllipsoid(candidates, origin.above(height + 1), 9, 6, random);
-        addEllipsoid(candidates, origin.above(height - 4), 7, 4, random);
-        for (BlockPos end : branchEnds) addEllipsoid(candidates, end.above(), 4, 3, random);
+        addEllipsoid(candidates, origin.above(height + 1), s.canopyR(), s.canopyRy(), random);
+        if (s.lowerR() > 0) addEllipsoid(candidates, origin.above(height - s.lowerDrop()), s.lowerR(), s.lowerRy(), random);
+        if (s.branchLeafR() > 0) {
+            for (BlockPos end : branchEnds) addEllipsoid(candidates, end.above(), s.branchLeafR(), s.branchLeafRy(), random);
+        }
         candidates.removeIf(p -> logs.containsKey(p) || !canReplace(level, p));
 
         // расстояние листвы до ближайшего бревна (как в ванильной механике засыхания)
@@ -114,7 +134,6 @@ public final class CelestialTreeGenerator {
             }
         }
 
-        // размещаем (флаг 2: без каскада обновлений соседей)
         for (Map.Entry<BlockPos, BlockState> e : logs.entrySet()) {
             level.setBlock(e.getKey(), e.getValue(), 2);
         }

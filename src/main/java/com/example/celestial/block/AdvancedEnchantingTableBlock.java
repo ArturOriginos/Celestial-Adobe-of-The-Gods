@@ -21,7 +21,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class AdvancedEnchantingTableBlock extends Block {
     public static final MapCodec<AdvancedEnchantingTableBlock> CODEC = simpleCodec(AdvancedEnchantingTableBlock::new);
-    private static final VoxelShape SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 12.0, 16.0);
+    private static final VoxelShape SHAPE = net.minecraft.world.phys.shapes.Shapes.or(
+            Block.box(0.0, 10.0, 0.0, 16.0, 14.0, 16.0),
+            Block.box(0.0, 0.0, 0.0, 4.0, 10.0, 4.0), Block.box(12.0, 0.0, 0.0, 16.0, 10.0, 4.0),
+            Block.box(0.0, 0.0, 12.0, 4.0, 10.0, 16.0), Block.box(12.0, 0.0, 12.0, 16.0, 10.0, 16.0));
     private static final Component TITLE = Component.translatable("container.celestial.advanced_enchanting");
 
     public AdvancedEnchantingTableBlock(BlockBehaviour.Properties properties) {

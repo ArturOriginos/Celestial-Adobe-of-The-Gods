@@ -16,6 +16,9 @@ public class GuardianRenderer extends HumanoidMobRenderer<GuardianOfGods, Humano
 
     public GuardianRenderer(EntityRendererProvider.Context context) {
         super(context, new HumanoidModel<>(context.bakeLayer(ModelLayers.ZOMBIE)), 1.2F);
+        // у Хранителя нет головы
+        this.model.head.visible = false;
+        this.model.hat.visible = false;
     }
 
     @Override

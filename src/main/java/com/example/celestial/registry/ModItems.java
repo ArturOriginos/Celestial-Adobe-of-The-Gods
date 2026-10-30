@@ -2,18 +2,20 @@ package com.example.celestial.registry;
 
 import static com.example.celestial.CelestialMod.MODID;
 
+import com.example.celestial.item.CelestiaAxeItem;
+import com.example.celestial.item.CelestiaPickShovelItem;
+import com.example.celestial.item.CelestiaShearsItem;
+import com.example.celestial.item.CelestiaShieldItem;
+import com.example.celestial.item.CelestiaSwordItem;
 import com.example.celestial.item.CelestiaTier;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.ShieldItem;
-import net.minecraft.world.item.ShovelItem;
-import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.Unbreakable;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
@@ -40,19 +42,26 @@ public final class ModItems {
             ITEMS.registerSimpleItem("celestia_key", new Item.Properties().rarity(Rarity.EPIC).stacksTo(1));
 
     // Урон = 1 (рука) + модификатор. Меч 20, топор 24, кирко-лопата 10.
-    public static final DeferredItem<SwordItem> CELESTIA_SWORD = ITEMS.register("celestia_sword",
-            () -> new SwordItem(CelestiaTier.SWORD, celestia(19.0, -2.4)));
+    public static final DeferredItem<CelestiaSwordItem> CELESTIA_SWORD = ITEMS.register("celestia_sword",
+            () -> new CelestiaSwordItem(CelestiaTier.SWORD, celestia(19.0, -2.4)));
 
-    public static final DeferredItem<AxeItem> CELESTIA_AXE = ITEMS.register("celestia_axe",
-            () -> new AxeItem(CelestiaTier.AXE, celestia(23.0, -3.0)));
+    public static final DeferredItem<CelestiaAxeItem> CELESTIA_AXE = ITEMS.register("celestia_axe",
+            () -> new CelestiaAxeItem(CelestiaTier.AXE, celestia(23.0, -3.0)));
 
-    public static final DeferredItem<ShovelItem> CELESTIA_PICKAXE = ITEMS.register("celestia_pickaxe",
-            () -> new ShovelItem(CelestiaTier.PICK, celestia(9.0, -2.8)));
+    public static final DeferredItem<CelestiaPickShovelItem> CELESTIA_PICKAXE = ITEMS.register("celestia_pickaxe",
+            () -> new CelestiaPickShovelItem(CelestiaTier.PICK, celestia(9.0, -2.8)));
 
-    public static final DeferredItem<ShieldItem> CELESTIA_SHIELD = ITEMS.register("celestia_shield",
-            () -> new ShieldItem(new Item.Properties()
+    public static final DeferredItem<CelestiaShieldItem> CELESTIA_SHIELD = ITEMS.register("celestia_shield",
+            () -> new CelestiaShieldItem(new Item.Properties()
                     .rarity(Rarity.EPIC).fireResistant().stacksTo(1)
                     .component(DataComponents.UNBREAKABLE, new Unbreakable(true))));
+
+    /** Ножницы Селестии: бесконечные, 1 урон, 2% шанс мгновенного убийства. */
+    public static final DeferredItem<CelestiaShearsItem> CELESTIA_SHEARS = ITEMS.register("celestia_shears",
+            () -> new CelestiaShearsItem(new Item.Properties()
+                    .rarity(Rarity.EPIC).fireResistant().stacksTo(1)
+                    .component(DataComponents.UNBREAKABLE, new Unbreakable(true))
+                    .component(DataComponents.TOOL, ShearsItem.createToolProperties())));
 
     public static final DeferredItem<DeferredSpawnEggItem> GUARDIAN_EGG = ITEMS.register("guardian_of_gods_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.GUARDIAN, 0xE0A800, 0xFFF3C4, new Item.Properties()));

@@ -22,6 +22,7 @@ public final class ModEnchantments {
     public static final ResourceKey<Enchantment> EXPERIENCE_BOOST = key("experience_boost");
     public static final ResourceKey<Enchantment> MAGNET = key("magnet");
     public static final ResourceKey<Enchantment> HELIOS_BLESSING = key("helios_blessing");
+    public static final ResourceKey<Enchantment> NATURES_WRATH = key("natures_wrath");
 
     private ModEnchantments() {}
 

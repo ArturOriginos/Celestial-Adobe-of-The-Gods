@@ -115,5 +115,13 @@
   "advancement.celestial.celestial_mushroom.title": "Гриб богов",
   "advancement.celestial.celestial_mushroom.desc": "Получите селестийский гриб.",
   "advancement.celestial.celestial_crystal.title": "Кристальный звон",
-  "advancement.celestial.celestial_crystal.desc": "Получите селестийский кристалл."
+  "advancement.celestial.celestial_crystal.desc": "Получите селестийский кристалл.",
+  "block.celestial.celestia_block": "Блок Селестии",
+  "item.celestial.celestia_shears": "Ножницы Селестии",
+  "item.celestial.celestia_shears.lore": "Дар Убийцы природы",
+  "enchantment.celestial.natures_wrath": "Гнев Природы",
+  "advancement.celestial.celestia_shears.title": "Убийца природы",
+  "advancement.celestial.celestia_shears.desc": "Получите ножницы Селестии.",
+  "advancement.celestial.celestia_block.title": "Монолит богов",
+  "advancement.celestial.celestia_block.desc": "Создайте блок Селестии."
 }

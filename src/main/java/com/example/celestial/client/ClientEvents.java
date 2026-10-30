@@ -21,6 +21,7 @@ public final class ClientEvents {
         if (stack.is(ModItems.CELESTIA_SWORD.get())) key = "item.celestial.celestia_sword.lore";
         else if (stack.is(ModItems.CELESTIA_AXE.get())) key = "item.celestial.celestia_axe.lore";
         else if (stack.is(ModItems.CELESTIA_PICKAXE.get())) key = "item.celestial.celestia_pickaxe.lore";
+        else if (stack.is(ModItems.CELESTIA_SHEARS.get())) key = "item.celestial.celestia_shears.lore";
         if (key == null) return;
         event.getToolTip().add(Component.empty());
         event.getToolTip().add(GradientText.of(Component.translatable(key).getString()));
