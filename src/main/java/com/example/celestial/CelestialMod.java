@@ -111,6 +111,7 @@ public class CelestialMod {
             event.accept(ModBlocks.CELESTIAL_SLAB_ITEM);
             event.accept(ModBlocks.CELESTIAL_STAIRS_ITEM);
             event.accept(ModBlocks.CELESTIA_BLOCK_ITEM);
+            event.accept(ModBlocks.CELESTIA_PORTAL_ITEM);
         }
         if (event.getTabKey() == CreativeModeTabs.COMBAT) {
             event.accept(ModItems.CELESTIA_SWORD);

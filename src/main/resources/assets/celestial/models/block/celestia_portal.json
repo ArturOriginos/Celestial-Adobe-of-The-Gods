@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "celestial:block/celestia_portal_side",
+    "up": "celestial:block/celestia_portal_up",
+    "down": "celestial:block/celestia_portal_down",
+    "north": "celestial:block/celestia_portal_side",
+    "south": "celestial:block/celestia_portal_side2",
+    "east": "celestial:block/celestia_portal_side",
+    "west": "celestial:block/celestia_portal_side2"
+  }
+}

@@ -160,5 +160,12 @@ public final class ModBlocks {
                     .requiresCorrectToolForDrops().sound(SoundType.AMETHYST).lightLevel(state -> 10));
     public static final DeferredItem<BlockItem> CELESTIA_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(CELESTIA_BLOCK);
 
+    /** Портал Селестии: ключ в центре, по бокам души, остальное руны. */
+    public static final DeferredBlock<Block> CELESTIA_PORTAL = BLOCKS.registerBlock(
+            "celestia_portal", Block::new,
+            BlockBehaviour.Properties.of().mapColor(MapColor.SNOW).strength(5.0F, 1200.0F)
+                    .requiresCorrectToolForDrops().sound(SoundType.AMETHYST).lightLevel(state -> 15));
+    public static final DeferredItem<BlockItem> CELESTIA_PORTAL_ITEM = ITEMS.registerSimpleBlockItem(CELESTIA_PORTAL);
+
     private ModBlocks() {}
 }

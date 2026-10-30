@@ -139,7 +139,7 @@ public final class CelestiaEvents {
         if (!(source.getEntity() instanceof ServerPlayer player)) return;
         if (!player.getMainHandItem().is(ModItems.CELESTIA_SHEARS.get())) return;
         LivingEntity target = event.getEntity();
-        if (target instanceof Player || !target.isAlive()) return;
+        if (target instanceof Player || target instanceof GuardianOfGods || !target.isAlive()) return;
         if (player.getRandom().nextFloat() < 0.02F) {
             target.hurt(player.damageSources().playerAttack(player), Float.MAX_VALUE);
         }

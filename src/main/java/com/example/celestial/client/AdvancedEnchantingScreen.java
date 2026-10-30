@@ -35,7 +35,7 @@ public class AdvancedEnchantingScreen extends AbstractContainerScreen<AdvancedEn
             ResourceLocation.fromNamespaceAndPath(CelestialMod.MODID, "textures/gui/frame.png");
     private static final int TW = 352, TH = 366, C = 28, D = 14;
 
-    private static final int LIST_X = 38, LIST_Y = 32, LIST_W = 158, ROW_H = 14, VISIBLE = 6;
+    private static final int LIST_X = 38, LIST_Y = 32, LIST_W = 150, ROW_H = 14, VISIBLE = 6;
     private static final int MINUS_X0 = LIST_W - 54, MINUS_X1 = LIST_W - 42;
     private static final int PLUS_X0 = LIST_W - 16, PLUS_X1 = LIST_W - 4;
     private static final int BTN_X = 118, BTN_Y = 122, BTN_W = 76, BTN_H = 18;
