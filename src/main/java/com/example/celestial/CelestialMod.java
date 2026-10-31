@@ -7,6 +7,7 @@ import com.example.celestial.entity.GuardianOfGods;
 import com.example.celestial.registry.ModCreativeTabs;
 import com.example.celestial.registry.ModEffects;
 import com.example.celestial.registry.ModEntities;
+import com.example.celestial.registry.ModFeatures;
 import com.example.celestial.registry.ModStructures;
 import com.example.celestial.registry.ModItems;
 import com.example.celestial.registry.ModMenus;
@@ -33,6 +34,7 @@ public class CelestialMod {
         ModItems.ITEMS.register(modBus);
         ModEffects.EFFECTS.register(modBus);
         ModEntities.ENTITIES.register(modBus);
+        ModFeatures.FEATURES.register(modBus);
         ModStructures.STRUCTURE_TYPES.register(modBus);
         ModStructures.PIECE_TYPES.register(modBus);
         ModCreativeTabs.TABS.register(modBus);

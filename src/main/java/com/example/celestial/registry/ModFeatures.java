@@ -12,7 +12,8 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public final class ModFeatures {
     public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(Registries.FEATURE, MODID);
 
-    public static final DeferredHolder<Feature<?>, GiantCelestialTreeFeature> GIANT_TREE =
+    /** Заглушка совместимости со старыми версиями (ничего не генерирует). */
+    public static final DeferredHolder<Feature<?>, GiantCelestialTreeFeature> LEGACY_GIANT_TREE =
             FEATURES.register("giant_celestial_tree", () -> new GiantCelestialTreeFeature(NoneFeatureConfiguration.CODEC));
 
     private ModFeatures() {}
