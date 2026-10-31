@@ -23,6 +23,7 @@ public final class ModEnchantments {
     public static final ResourceKey<Enchantment> MAGNET = key("magnet");
     public static final ResourceKey<Enchantment> HELIOS_BLESSING = key("helios_blessing");
     public static final ResourceKey<Enchantment> NATURES_WRATH = key("natures_wrath");
+    public static final ResourceKey<Enchantment> SOUL_DEVOURER = key("soul_devourer");
 
     private ModEnchantments() {}
 

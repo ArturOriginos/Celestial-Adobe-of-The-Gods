@@ -35,6 +35,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -150,7 +151,9 @@ public final class CelestiaEvents {
         if (!player.getMainHandItem().is(ModItems.CELESTIA_SHEARS.get())) return;
         LivingEntity target = event.getEntity();
         if (target instanceof Player || target instanceof GuardianOfGods || !target.isAlive()) return;
-        if (player.getRandom().nextFloat() < 0.02F) {
+        int fortune = ModEnchantments.getLevel(player.level(), player.getMainHandItem(), Enchantments.FORTUNE);
+        float chance = 0.02F + fortune * (0.08F / 6.0F); // Удача VI = 10%
+        if (player.getRandom().nextFloat() < chance) {
             target.hurt(player.damageSources().playerAttack(player), Float.MAX_VALUE);
         }
     }
@@ -184,14 +187,26 @@ public final class CelestiaEvents {
         }
     }
 
-    /** С Эндер Дракона и Визера с шансом 25% выпадает Душа Хранителя Богов (с припиской, откуда она выбита). */
+    private static final String WITHER_KILLS = "celestial_wither_kills";
+
+    /** Эндер Дракон: душа выпадает всегда. Визер: шанс 25%, а каждое 5-е убийство без дропа - гарантированная душа. */
     @SubscribeEvent
     public static void onBossDeath(LivingDeathEvent event) {
         LivingEntity entity = event.getEntity();
         if (!(entity.level() instanceof ServerLevel level)) return;
-        String key = entity instanceof EnderDragon ? "item.celestial.guardian_soul.from_ender_dragon"
-                : entity instanceof WitherBoss ? "item.celestial.guardian_soul.from_wither" : null;
-        if (key == null || level.random.nextFloat() >= 0.25F) return;
+        boolean dragon = entity instanceof EnderDragon;
+        boolean wither = entity instanceof WitherBoss;
+        if (!dragon && !wither) return;
+
+        String key = dragon ? "item.celestial.guardian_soul.from_ender_dragon" : "item.celestial.guardian_soul.from_wither";
+        boolean drop = dragon || level.random.nextFloat() < 0.25F;
+        if (wither && event.getSource().getEntity() instanceof ServerPlayer killer) {
+            CompoundTag data = killer.getPersistentData();
+            int kills = data.getInt(WITHER_KILLS) + 1;
+            if (kills >= 5) drop = true;
+            data.putInt(WITHER_KILLS, drop ? 0 : kills);
+        }
+        if (!drop) return;
 
         ItemStack soul = new ItemStack(ModItems.GUARDIAN_SOUL.get());
         soul.set(DataComponents.LORE, new ItemLore(List.of(Component.translatable(key).withStyle(ChatFormatting.GOLD))));
@@ -206,5 +221,28 @@ public final class CelestiaEvents {
         item.setDefaultPickUpDelay();
         item.setGlowingTag(true);
         level.addFreshEntity(item);
+    }
+
+    /** Счётчик убийств Визера переживает смерть игрока. */
+    @SubscribeEvent
+    public static void onPlayerClone(PlayerEvent.Clone event) {
+        if (event.isWasDeath()) {
+            event.getEntity().getPersistentData().putInt(WITHER_KILLS,
+                    event.getOriginal().getPersistentData().getInt(WITHER_KILLS));
+        }
+    }
+
+    /** Поглотитель Душ (меч): шанс 2% за уровень, что с убитого моба выпадет его яйцо призыва. */
+    @SubscribeEvent
+    public static void onSoulDevourer(LivingDeathEvent event) {
+        LivingEntity target = event.getEntity();
+        if (!(event.getSource().getEntity() instanceof ServerPlayer player)) return;
+        if (event.getSource().getDirectEntity() != player) return;
+        if (target instanceof Player || target instanceof GuardianOfGods) return;
+        int lvl = ModEnchantments.getLevel(player.level(), player.getMainHandItem(), ModEnchantments.SOUL_DEVOURER);
+        if (lvl <= 0) return;
+        SpawnEggItem egg = SpawnEggItem.byId(target.getType());
+        if (egg == null || player.getRandom().nextFloat() >= lvl * 0.02F) return;
+        target.spawnAtLocation(new ItemStack(egg));
     }
 }
