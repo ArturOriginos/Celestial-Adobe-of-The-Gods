@@ -190,6 +190,10 @@ public class AdvancedEnchantingScreen extends AbstractContainerScreen<AdvancedEn
     public void render(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
         super.render(g, mouseX, mouseY, partialTick);
         this.renderTooltip(g, mouseX, mouseY);
+        int hover = rowAt(mouseX, mouseY);
+        if (hover >= 0) { // при наведении показываем полное название
+            g.renderTooltip(font, available.get(hover).value().description(), mouseX, mouseY);
+        }
     }
 
     @Override
@@ -234,8 +238,21 @@ public class AdvancedEnchantingScreen extends AbstractContainerScreen<AdvancedEn
 
             String name = ench.value().description().getString();
             if (have > 0) name += " (" + have + ")";
-            name = font.plainSubstrByWidth(name, MINUS_X0 - 6);
-            g.drawString(font, name, lx + 3, ry + 3, level > 0 ? 0xFFFFD86B : 0xFFF2E6C4, false);
+            int avail = MINUS_X0 - 6;
+            int textW = font.width(name);
+            int nameColor = level > 0 ? 0xFFFFD86B : 0xFFF2E6C4;
+            if (textW <= avail) {
+                g.drawString(font, name, lx + 3, ry + 3, nameColor, false);
+            } else {
+                // длинное название уменьшаем, чтобы оно влезло целиком
+                float scale = Math.max(0.6F, (float) avail / textW);
+                if (textW * scale > avail) name = font.plainSubstrByWidth(name, (int) (avail / scale));
+                g.pose().pushPose();
+                g.pose().translate(lx + 3, ry + 3 + (1.0F - scale) * 4.0F, 0.0F);
+                g.pose().scale(scale, scale, 1.0F);
+                g.drawString(font, name, 0, 0, nameColor, false);
+                g.pose().popPose();
+            }
 
             g.fill(lx + MINUS_X0, ry + 1, lx + MINUS_X1, ry + ROW_H - 2, 0xFF8A6B1E);
             g.drawCenteredString(font, "-", lx + (MINUS_X0 + MINUS_X1) / 2, ry + 3, 0xFFFFFFFF);

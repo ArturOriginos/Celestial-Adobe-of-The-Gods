@@ -1,25 +1,25 @@
 {
   "type": "minecraft:ore",
   "config": {
-    "size": 4,
-    "discard_chance_on_air_exposure": 0.5,
+    "discard_chance_on_air_exposure": 0.0,
+    "size": 3,
     "targets": [
       {
+        "state": {
+          "Name": "celestial:celestial_ore"
+        },
         "target": {
           "predicate_type": "minecraft:tag_match",
           "tag": "minecraft:stone_ore_replaceables"
-        },
-        "state": {
-          "Name": "celestial:celestial_ore"
         }
       },
       {
+        "state": {
+          "Name": "celestial:celestial_ore"
+        },
         "target": {
           "predicate_type": "minecraft:tag_match",
           "tag": "minecraft:deepslate_ore_replaceables"
-        },
-        "state": {
-          "Name": "celestial:celestial_ore"
         }
       }
     ]

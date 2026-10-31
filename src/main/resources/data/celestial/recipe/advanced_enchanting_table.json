@@ -2,14 +2,23 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "BGB",
-    "GEG",
-    "BGB"
+    "BRB",
+    "SES",
+    "BRB"
   ],
   "key": {
-    "B": { "item": "minecraft:bookshelf" },
-    "G": { "item": "minecraft:gold_block" },
-    "E": { "item": "minecraft:enchanting_table" }
+    "B": {
+      "item": "minecraft:bookshelf"
+    },
+    "R": {
+      "item": "celestial:celestia_rune"
+    },
+    "S": {
+      "item": "celestial:guardian_soul"
+    },
+    "E": {
+      "item": "minecraft:enchanting_table"
+    }
   },
   "result": {
     "id": "celestial:advanced_enchanting_table",

@@ -126,5 +126,7 @@
   "advancement.celestial.celestia_block.desc": "Craft a Celestia Block.",
   "block.celestial.celestia_portal": "Celestia Portal",
   "advancement.celestial.celestia_portal.title": "Gateway to the Skies",
-  "advancement.celestial.celestia_portal.desc": "Craft a Celestia Portal."
+  "advancement.celestial.celestia_portal.desc": "Craft a Celestia Portal.",
+  "item.celestial.guardian_soul.from_ender_dragon": "Dropped by the Ender Dragon",
+  "item.celestial.guardian_soul.from_wither": "Dropped by the Wither"
 }

@@ -2,13 +2,20 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    " N ",
-    "NBN",
-    " N "
+    "BBB",
+    "BRB",
+    "BBB"
   ],
   "key": {
-    "N": { "item": "minecraft:gold_nugget" },
-    "B": { "item": "minecraft:book" }
+    "B": {
+      "item": "minecraft:book"
+    },
+    "R": {
+      "item": "celestial:celestia_rune"
+    }
   },
-  "result": { "id": "celestial:advanced_book", "count": 1 }
+  "result": {
+    "id": "celestial:advanced_book",
+    "count": 1
+  }
 }

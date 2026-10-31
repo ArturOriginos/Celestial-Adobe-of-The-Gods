@@ -1,0 +1,12 @@
+{
+  "feature": "celestial:giant_celestial_tree",
+  "placement": [
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 10000
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

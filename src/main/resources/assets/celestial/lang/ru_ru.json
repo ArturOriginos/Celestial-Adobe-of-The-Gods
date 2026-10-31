@@ -126,5 +126,7 @@
   "advancement.celestial.celestia_block.desc": "Создайте блок Селестии.",
   "block.celestial.celestia_portal": "Портал Селестии",
   "advancement.celestial.celestia_portal.title": "Врата в небеса",
-  "advancement.celestial.celestia_portal.desc": "Создайте портал Селестии."
+  "advancement.celestial.celestia_portal.desc": "Создайте портал Селестии.",
+  "item.celestial.guardian_soul.from_ender_dragon": "Выбит с Эндер Дракона",
+  "item.celestial.guardian_soul.from_wither": "Выбит с Визера"
 }

@@ -12,7 +12,17 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.List;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
+import net.minecraft.world.entity.boss.wither.WitherBoss;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.component.ItemLore;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
@@ -172,5 +182,29 @@ public final class CelestiaEvents {
         } else {
             ModAdvancements.grant(player, "kill_guardian");
         }
+    }
+
+    /** С Эндер Дракона и Визера с шансом 25% выпадает Душа Хранителя Богов (с припиской, откуда она выбита). */
+    @SubscribeEvent
+    public static void onBossDeath(LivingDeathEvent event) {
+        LivingEntity entity = event.getEntity();
+        if (!(entity.level() instanceof ServerLevel level)) return;
+        String key = entity instanceof EnderDragon ? "item.celestial.guardian_soul.from_ender_dragon"
+                : entity instanceof WitherBoss ? "item.celestial.guardian_soul.from_wither" : null;
+        if (key == null || level.random.nextFloat() >= 0.25F) return;
+
+        ItemStack soul = new ItemStack(ModItems.GUARDIAN_SOUL.get());
+        soul.set(DataComponents.LORE, new ItemLore(List.of(Component.translatable(key).withStyle(ChatFormatting.GOLD))));
+
+        Vec3 pos = entity.position();
+        if (entity instanceof EnderDragon && level.dimension() == Level.END) {
+            // дракон умирает в воздухе - кладём душу у портала, чтобы она не упала в бездну
+            BlockPos top = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, BlockPos.ZERO);
+            pos = Vec3.atBottomCenterOf(top.above());
+        }
+        ItemEntity item = new ItemEntity(level, pos.x, pos.y, pos.z, soul);
+        item.setDefaultPickUpDelay();
+        item.setGlowingTag(true);
+        level.addFreshEntity(item);
     }
 }

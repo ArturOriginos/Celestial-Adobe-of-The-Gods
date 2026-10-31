@@ -90,8 +90,12 @@ public final class EnchantEvents {
                     if (state.isAir()) continue;
                     float hardness = state.getDestroySpeed(level, pos);
                     if (hardness < 0) continue;                       // бедрок и т.п.
-                    if (hardness > originHardness * 1.5F + 0.5F) continue; // не трогаем куда более твёрдое
-                    if (!tool.isCorrectToolForDrops(state)) continue;  // только то, что инструмент реально добывает
+                    if (hardness > originHardness * 2.5F + 1.0F) continue; // не трогаем куда более твёрдое
+                    boolean correct = tool.isCorrectToolForDrops(state)
+                            || (tool.is(com.example.celestial.registry.ModItems.CELESTIA_PICKAXE.get())
+                            && (state.is(net.minecraft.tags.BlockTags.MINEABLE_WITH_PICKAXE)
+                            || state.is(net.minecraft.tags.BlockTags.MINEABLE_WITH_SHOVEL)));
+                    if (!correct) continue;  // только то, что инструмент реально добывает
 
                     player.gameMode.destroyBlock(pos);
                 }

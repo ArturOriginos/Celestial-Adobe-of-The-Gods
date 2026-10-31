@@ -77,6 +77,7 @@ public class GuardianOfGods extends Monster {
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
                                         MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
         SpawnGroupData data = super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
+        if (spawnType == MobSpawnType.STRUCTURE) return data; // в комнате дерева стоит сразу
         this.riseBaseY = this.getY();
         this.riseTicks = RISE_TICKS;
         this.setPos(this.getX(), this.riseBaseY - 4.0D, this.getZ());
