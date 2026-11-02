@@ -1,0 +1,82 @@
+{
+  "has_precipitation": false,
+  "temperature": 2.0,
+  "downfall": 0.0,
+  "effects": {
+    "sky_color": 3342336,
+    "fog_color": 2621440,
+    "water_color": 4393481,
+    "water_fog_color": 1048576,
+    "particle": {
+      "options": {
+        "type": "minecraft:crimson_spore"
+      },
+      "probability": 0.03
+    },
+    "ambient_sound": "minecraft:ambient.crimson_forest.loop",
+    "mood_sound": {
+      "sound": "minecraft:ambient.crimson_forest.mood",
+      "tick_delay": 6000,
+      "block_search_extent": 8,
+      "offset": 2.0
+    },
+    "additions_sound": {
+      "sound": "minecraft:ambient.crimson_forest.additions",
+      "tick_chance": 0.0111
+    }
+  },
+  "spawners": {
+    "monster": [
+      {
+        "type": "minecraft:wither_skeleton",
+        "weight": 25,
+        "minCount": 1,
+        "maxCount": 3
+      },
+      {
+        "type": "minecraft:ghast",
+        "weight": 30,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    ],
+    "creature": [],
+    "ambient": [],
+    "axolotls": [],
+    "underground_water_creature": [],
+    "water_creature": [],
+    "water_ambient": [],
+    "misc": []
+  },
+  "spawn_costs": {},
+  "carvers": [
+    "minecraft:nether_cave"
+  ],
+  "features": [
+    [
+      "celestial:cursed_surface"
+    ],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "minecraft:ore_gold_nether",
+      "minecraft:ore_quartz_nether"
+    ],
+    [],
+    [
+      "minecraft:spring_open",
+      "minecraft:spring_closed"
+    ],
+    [
+      "celestial:cursed_floating_island",
+      "celestial:cursed_tree_large",
+      "celestial:cursed_tree_medium",
+      "celestial:cursed_tree_small",
+      "celestial:cursed_vegetation"
+    ],
+    []
+  ]
+}

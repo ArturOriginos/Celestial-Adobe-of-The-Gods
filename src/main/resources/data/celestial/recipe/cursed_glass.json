@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "category": "building",
+  "ingredient": {
+    "item": "celestial:cursed_ice"
+  },
+  "result": {
+    "id": "celestial:cursed_glass"
+  },
+  "experience": 0.1,
+  "cookingtime": 200
+}

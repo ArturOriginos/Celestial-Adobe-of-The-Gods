@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "celestial:celestial_log"
+    "celestial:celestial_log",
+    "celestial:cursed_log",
+    "celestial:cursed_stripped_log"
   ]
 }

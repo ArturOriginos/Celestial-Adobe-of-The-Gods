@@ -29,6 +29,14 @@ public final class ClientSetup {
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntities.GUARDIAN.get(), GuardianRenderer::new);
         event.registerEntityRenderer(ModEntities.GOD_SPIKE.get(), GodSpikeRenderer::new);
+        event.registerEntityRenderer(ModEntities.CURSED_BOSS.get(), CursedBossRenderer::new);
+        event.registerEntityRenderer(ModEntities.CURSED_SPIKE.get(),
+                context -> new GodSpikeRenderer(context, GodSpikeRenderer.CURSED_TEXTURE));
+    }
+
+    @SubscribeEvent
+    public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(CursedBossModel.LAYER, CursedBossModel::createBodyLayer);
     }
 
     /** Свойство модели "enchanted": книга с зачарованиями получает второй (переливающийся) спрайт. */

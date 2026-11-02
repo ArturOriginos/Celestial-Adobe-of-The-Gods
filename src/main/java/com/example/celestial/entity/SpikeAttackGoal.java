@@ -2,25 +2,37 @@ package com.example.celestial.entity;
 
 import com.example.celestial.registry.ModEntities;
 import java.util.EnumSet;
+import java.util.function.Supplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 /** Хранитель замирает, концентрируется и призывает шипы: либо кольцами вокруг себя, либо линией к цели. */
 public class SpikeAttackGoal extends Goal {
-    private final GuardianOfGods mob;
+    private final Monster mob;
+    private final Supplier<EntityType<? extends GodSpike>> spikeType;
+    private final ParticleOptions chargeParticle;
     private int windup;
     private int nextCastTick = 60;
 
     public SpikeAttackGoal(GuardianOfGods mob) {
+        this(mob, ModEntities.GOD_SPIKE::get, ParticleTypes.FLAME);
+    }
+
+    public SpikeAttackGoal(Monster mob, Supplier<EntityType<? extends GodSpike>> spikeType, ParticleOptions chargeParticle) {
         this.mob = mob;
+        this.spikeType = spikeType;
+        this.chargeParticle = chargeParticle;
         this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
     }
 
@@ -54,7 +66,7 @@ public class SpikeAttackGoal extends Goal {
 
         if (mob.level() instanceof ServerLevel level) {
             // подготовка: золотые искры вокруг ног
-            level.sendParticles(ParticleTypes.FLAME, mob.getX(), mob.getY() + 0.1, mob.getZ(),
+            level.sendParticles(chargeParticle, mob.getX(), mob.getY() + 0.1, mob.getZ(),
                     6, 1.2, 0.05, 1.2, 0.02);
             if (windup == 0) cast(level, target);
         }
@@ -70,8 +82,9 @@ public class SpikeAttackGoal extends Goal {
         mob.playSound(SoundEvents.EVOKER_CAST_SPELL, 3.0F, 0.6F);
         if (mob.getRandom().nextBoolean()) {
             // кольца вокруг Хранителя
-            int[] radii = {2, 4, 6};
-            int[] counts = {8, 14, 20};
+            boolean enraged = mob.getHealth() < mob.getMaxHealth() * 0.5F;
+            int[] radii = enraged ? new int[]{2, 4, 6, 8} : new int[]{2, 4, 6};
+            int[] counts = enraged ? new int[]{8, 14, 20, 26} : new int[]{8, 14, 20};
             for (int r = 0; r < radii.length; r++) {
                 for (int i = 0; i < counts[r]; i++) {
                     double angle = (Math.PI * 2.0 / counts[r]) * i;
@@ -97,7 +110,8 @@ public class SpikeAttackGoal extends Goal {
     }
 
     private void spawn(ServerLevel level, double x, double z, int delay) {
-        GodSpike spike = new GodSpike(ModEntities.GOD_SPIKE.get(), level);
+        GodSpike spike = spikeType.get().create(level);
+        if (spike == null) return;
         spike.setup(x, groundY(level, x, mob.getY(), z), z, mob, delay);
         level.addFreshEntity(spike);
     }

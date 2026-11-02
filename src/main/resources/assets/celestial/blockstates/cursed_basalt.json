@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "celestial:block/cursed_basalt"
+    },
+    "axis=z": {
+      "model": "celestial:block/cursed_basalt_horizontal",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "celestial:block/cursed_basalt_horizontal",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

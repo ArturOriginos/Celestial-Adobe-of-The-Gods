@@ -4,6 +4,12 @@
     "celestial:celestial_log",
     "celestial:celestial_planks",
     "celestial:celestial_slab",
-    "celestial:celestial_stairs"
+    "celestial:celestial_stairs",
+    "celestial:cursed_log",
+    "celestial:cursed_stripped_log",
+    "celestial:cursed_planks",
+    "celestial:cursed_slab",
+    "celestial:cursed_stairs",
+    "celestial:cursed_fence"
   ]
 }

@@ -33,6 +33,10 @@ public final class ModItems {
     public static final DeferredItem<Item> GUARDIAN_SOUL =
             ITEMS.registerSimpleItem("guardian_soul", new Item.Properties().rarity(Rarity.EPIC).fireResistant());
 
+    /** Душа проклятого: выпадает из босса Проклятый. */
+    public static final DeferredItem<Item> CURSED_SOUL =
+            ITEMS.registerSimpleItem("cursed_soul", new Item.Properties().rarity(Rarity.EPIC).fireResistant());
+
     /** Руна Селестии: выпадает из Селестийской руды. */
     public static final DeferredItem<Item> CELESTIA_RUNE =
             ITEMS.registerSimpleItem("celestia_rune", new Item.Properties().rarity(Rarity.RARE));
@@ -65,6 +69,9 @@ public final class ModItems {
 
     public static final DeferredItem<DeferredSpawnEggItem> GUARDIAN_EGG = ITEMS.register("guardian_of_gods_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.GUARDIAN, 0xE0A800, 0xFFF3C4, new Item.Properties()));
+
+    public static final DeferredItem<DeferredSpawnEggItem> CURSED_BOSS_EGG = ITEMS.register("cursed_boss_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.CURSED_BOSS, 0x1A0A12, 0xD01824, new Item.Properties()));
 
     private static Item.Properties celestia(double damage, double speed) {
         ItemAttributeModifiers attributes = ItemAttributeModifiers.builder()

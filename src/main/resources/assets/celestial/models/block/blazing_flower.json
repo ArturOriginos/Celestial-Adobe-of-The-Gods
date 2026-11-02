@@ -1,0 +1,263 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "celestial:block/blazing_flower",
+    "t": "celestial:block/blazing_flower"
+  },
+  "elements": [
+    {
+      "from": [
+        7.4,
+        0,
+        7.4
+      ],
+      "to": [
+        8.6,
+        12,
+        8.6
+      ],
+      "faces": {
+        "north": {
+          "texture": "#t",
+          "uv": [
+            7.75,
+            6.5,
+            8.25,
+            15.5
+          ]
+        },
+        "east": {
+          "texture": "#t",
+          "uv": [
+            7.75,
+            6.5,
+            8.25,
+            15.5
+          ]
+        },
+        "south": {
+          "texture": "#t",
+          "uv": [
+            7.75,
+            6.5,
+            8.25,
+            15.5
+          ]
+        },
+        "west": {
+          "texture": "#t",
+          "uv": [
+            7.75,
+            6.5,
+            8.25,
+            15.5
+          ]
+        },
+        "up": {
+          "texture": "#t",
+          "uv": [
+            7.75,
+            6.5,
+            8.25,
+            15.5
+          ]
+        },
+        "down": {
+          "texture": "#t",
+          "uv": [
+            7.75,
+            6.5,
+            8.25,
+            15.5
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        2.5,
+        9,
+        8
+      ],
+      "to": [
+        13.5,
+        19,
+        8
+      ],
+      "shade": false,
+      "faces": {
+        "north": {
+          "texture": "#t",
+          "uv": [
+            3,
+            0.25,
+            13,
+            7.75
+          ]
+        },
+        "south": {
+          "texture": "#t",
+          "uv": [
+            3,
+            0.25,
+            13,
+            7.75
+          ]
+        }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          14,
+          8
+        ],
+        "axis": "y",
+        "angle": 45
+      }
+    },
+    {
+      "from": [
+        2.5,
+        9,
+        8
+      ],
+      "to": [
+        13.5,
+        19,
+        8
+      ],
+      "shade": false,
+      "faces": {
+        "north": {
+          "texture": "#t",
+          "uv": [
+            3,
+            0.25,
+            13,
+            7.75
+          ]
+        },
+        "south": {
+          "texture": "#t",
+          "uv": [
+            3,
+            0.25,
+            13,
+            7.75
+          ]
+        }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          14,
+          8
+        ],
+        "axis": "y",
+        "angle": -45
+      }
+    },
+    {
+      "from": [
+        2.5,
+        14,
+        2.5
+      ],
+      "to": [
+        13.5,
+        14,
+        13.5
+      ],
+      "shade": false,
+      "faces": {
+        "up": {
+          "texture": "#t",
+          "uv": [
+            3,
+            0.25,
+            13,
+            7.75
+          ]
+        },
+        "down": {
+          "texture": "#t",
+          "uv": [
+            3,
+            0.25,
+            13,
+            7.75
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        6,
+        12.5,
+        6
+      ],
+      "to": [
+        10,
+        16.5,
+        10
+      ],
+      "faces": {
+        "north": {
+          "texture": "#t",
+          "uv": [
+            7.2,
+            3.2,
+            8.8,
+            4.8
+          ]
+        },
+        "east": {
+          "texture": "#t",
+          "uv": [
+            7.2,
+            3.2,
+            8.8,
+            4.8
+          ]
+        },
+        "south": {
+          "texture": "#t",
+          "uv": [
+            7.2,
+            3.2,
+            8.8,
+            4.8
+          ]
+        },
+        "west": {
+          "texture": "#t",
+          "uv": [
+            7.2,
+            3.2,
+            8.8,
+            4.8
+          ]
+        },
+        "up": {
+          "texture": "#t",
+          "uv": [
+            7.2,
+            3.2,
+            8.8,
+            4.8
+          ]
+        },
+        "down": {
+          "texture": "#t",
+          "uv": [
+            7.2,
+            3.2,
+            8.8,
+            4.8
+          ]
+        }
+      }
+    }
+  ],
+  "render_type": "minecraft:cutout"
+}

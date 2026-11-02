@@ -16,12 +16,20 @@ import net.minecraft.resources.ResourceLocation;
 
 /** Рисует шип моделью клыков вызывателя с золотой текстурой (увеличенной). */
 public class GodSpikeRenderer extends EntityRenderer<GodSpike> {
-    private static final ResourceLocation TEXTURE =
+    private static final ResourceLocation GOLD_TEXTURE =
             ResourceLocation.fromNamespaceAndPath(MODID, "textures/entity/god_spike.png");
+    public static final ResourceLocation CURSED_TEXTURE =
+            ResourceLocation.fromNamespaceAndPath(MODID, "textures/entity/cursed_spike.png");
+    private final ResourceLocation texture;
     private final EvokerFangsModel<GodSpike> model;
 
     public GodSpikeRenderer(EntityRendererProvider.Context context) {
+        this(context, GOLD_TEXTURE);
+    }
+
+    public GodSpikeRenderer(EntityRendererProvider.Context context, ResourceLocation texture) {
         super(context);
+        this.texture = texture;
         this.model = new EvokerFangsModel<>(context.bakeLayer(ModelLayers.EVOKER_FANGS));
     }
 
@@ -38,7 +46,7 @@ public class GodSpikeRenderer extends EntityRenderer<GodSpike> {
             poseStack.translate(0.0F, -0.626F, 0.0F);
             poseStack.scale(0.5F, 0.5F, 0.5F);
             this.model.setupAnim(entity, progress, 0.0F, 0.0F, entity.getYRot(), 0.0F);
-            VertexConsumer consumer = buffer.getBuffer(this.model.renderType(TEXTURE));
+            VertexConsumer consumer = buffer.getBuffer(this.model.renderType(texture));
             this.model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, -1);
             poseStack.popPose();
             super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
@@ -47,6 +55,6 @@ public class GodSpikeRenderer extends EntityRenderer<GodSpike> {
 
     @Override
     public ResourceLocation getTextureLocation(GodSpike entity) {
-        return TEXTURE;
+        return texture;
     }
 }

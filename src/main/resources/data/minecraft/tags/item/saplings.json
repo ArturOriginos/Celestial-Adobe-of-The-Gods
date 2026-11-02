@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "celestial:celestial_sapling"
+    "celestial:celestial_sapling",
+    "celestial:cursed_sapling"
   ]
 }

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "celestial:cursed_log"
+    }
+  ],
+  "result": {
+    "id": "celestial:cursed_planks",
+    "count": 4
+  },
+  "group": "planks"
+}

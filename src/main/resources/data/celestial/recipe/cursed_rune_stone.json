@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "celestial:cursed_bricks"
+    },
+    {
+      "item": "celestial:celestia_rune"
+    }
+  ],
+  "result": {
+    "id": "celestial:cursed_rune_stone",
+    "count": 1
+  }
+}

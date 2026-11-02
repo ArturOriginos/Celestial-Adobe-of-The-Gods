@@ -9,6 +9,17 @@
     "celestial:celestial_ice",
     "celestial:celestial_ore",
     "celestial:celestial_stone",
-    "celestial:solar_anvil"
+    "celestial:solar_anvil",
+    "celestial:cursed_stone",
+    "celestial:cursed_basalt",
+    "celestial:cursed_bricks",
+    "celestial:cursed_rune_stone",
+    "celestial:cursed_ice",
+    "celestial:cursed_glowstone",
+    "celestial:cursed_crystal",
+    "celestial:crystal_sprouts",
+    "celestial:cursed_nether_bricks",
+    "celestial:cursed_nether_brick_stairs",
+    "celestial:cursed_nether_brick_slab"
   ]
 }

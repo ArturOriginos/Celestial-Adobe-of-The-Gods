@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "celestial:cursed_nether_bricks"
+    }
+  },
+  "result": {
+    "id": "celestial:cursed_nether_brick_slab",
+    "count": 6
+  }
+}

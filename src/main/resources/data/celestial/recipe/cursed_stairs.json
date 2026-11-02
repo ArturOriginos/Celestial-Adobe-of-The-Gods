@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "celestial:cursed_planks"
+    }
+  },
+  "result": {
+    "id": "celestial:cursed_stairs",
+    "count": 4
+  },
+  "group": "wooden_stairs"
+}

@@ -1,0 +1,52 @@
+{
+  "type": "minecraft:simple_block",
+  "config": {
+    "to_place": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "weight": 14,
+          "data": {
+            "Name": "celestial:cursed_grass"
+          }
+        },
+        {
+          "weight": 3,
+          "data": {
+            "Name": "celestial:cursed_flower"
+          }
+        },
+        {
+          "weight": 3,
+          "data": {
+            "Name": "celestial:cursed_mushroom"
+          }
+        },
+        {
+          "weight": 4,
+          "data": {
+            "Name": "celestial:hell_bush"
+          }
+        },
+        {
+          "weight": 2,
+          "data": {
+            "Name": "celestial:blazing_flower"
+          }
+        },
+        {
+          "weight": 2,
+          "data": {
+            "Name": "celestial:cursed_crystal"
+          }
+        },
+        {
+          "weight": 3,
+          "data": {
+            "Name": "celestial:crystal_sprouts"
+          }
+        }
+      ]
+    }
+  }
+}

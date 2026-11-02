@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "celestial:celestial_slab"
+    "celestial:celestial_slab",
+    "celestial:cursed_slab"
   ]
 }

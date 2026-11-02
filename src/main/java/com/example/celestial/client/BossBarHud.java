@@ -1,6 +1,7 @@
 package com.example.celestial.client;
 
 import com.example.celestial.CelestialMod;
+import com.example.celestial.entity.CursedBoss;
 import com.example.celestial.entity.GuardianOfGods;
 import java.util.Map;
 import net.minecraft.client.Minecraft;
@@ -15,7 +16,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.CustomizeGuiOverlayEvent;
 
-/** Кастомные полоски здоровья: Хранитель Богов, Эндер Дракон и Визер. */
+/** Кастомные полоски здоровья: Хранитель Богов, Проклятый, Эндер Дракон и Визер. */
 @EventBusSubscriber(modid = CelestialMod.MODID, value = Dist.CLIENT)
 public final class BossBarHud {
     private static ResourceLocation tex(String name) {
@@ -26,25 +27,73 @@ public final class BossBarHud {
     private record Style(ResourceLocation frame, ResourceLocation fill, int texW, int texH, int w, int h,
                          int fillW, int fillH, int tx, int ty, int tw, int th,
                          int nameY, int numY, int nameColor, int numColor, double maxHealth,
-                         boolean plate, int yOffset, int increment) {}
+                         boolean plate, int yOffset, int increment, boolean bakedName, int numRight) {}
 
     private static final Map<String, Style> STYLES = Map.of(
             "entity.celestial.guardian_of_gods",
-            new Style(tex("boss_frame"), tex("boss_fill"), 600, 58, 300, 29, 523, 23, 19, 10, 261, 11,
-                    -11, 30, 0xFFF6D77A, 0xFFFFFFFF, GuardianOfGods.MAX_HEALTH, true, 10, 55),
+            new Style(tex("boss_frame"), tex("boss_fill"), 660, 204, 330, 102, 492, 20, 42, 62, 246, 10,
+                    0, 77, 0xFFF6D77A, 0xFFFFF1C2, GuardianOfGods.MAX_HEALTH, false, 3, 108, true, 285),
             "entity.minecraft.ender_dragon",
             new Style(tex("boss_dragon_frame"), tex("boss_dragon_fill"), 560, 161, 280, 80, 426, 16, 33, 39, 213, 8,
-                    51, 62, 0xFFC84BFF, 0xFFD9A0FF, 200.0, false, -4, 84),
+                    51, 62, 0xFFC84BFF, 0xFFD9A0FF, 200.0, false, -4, 84, false, 0),
             "entity.minecraft.wither",
             new Style(tex("boss_wither_frame"), tex("boss_wither_fill"), 560, 199, 280, 100, 419, 17, 35, 60, 210, 9,
-                    72, 83, 0xFFFF4545, 0xFFFF8A8A, 300.0, false, -4, 104));
+                    72, 83, 0xFFFF4545, 0xFFFF8A8A, 300.0, false, -4, 104, false, 0));
+
+    // --- полоска Проклятого: рамка 542x174, дорожка из двух половин по 172x18 ---
+    private static final ResourceLocation CURSED_FRAME = tex("cursed_boss_frame");
+    private static final ResourceLocation CURSED_FILL = tex("cursed_boss_fill");
+    private static final int CF_W = 542, CF_H = 174, CF_FILL_W = 344, CF_FILL_H = 18, CF_SEG = 172;
+    private static final int CF_LEFT_X = 69, CF_RIGHT_X = 301, CF_TRACK_Y = 80;
 
     private BossBarHud() {}
+
+    private static void drawCursed(CustomizeGuiOverlayEvent.BossEventProgress event, LerpingBossEvent boss) {
+        event.setCanceled(true);
+        GuiGraphics g = event.getGuiGraphics();
+        Font font = Minecraft.getInstance().font;
+        int w = 340;
+        float sc = w / (float) CF_W;
+        int h = Math.round(CF_H * sc);
+        int x = (g.guiWidth() - w) / 2;
+        int y = event.getY() + 12;
+        int cx = x + w / 2;
+        float progress = Math.max(0.0F, Math.min(1.0F, boss.getProgress()));
+
+        g.blit(CURSED_FRAME, x, y, w, h, 0, 0, CF_W, CF_H, CF_W, CF_H);
+
+        int fw = Math.round(CF_FILL_W * progress);
+        int seg1 = Math.min(fw, CF_SEG);
+        int seg2 = Math.max(0, fw - CF_SEG);
+        int ty = y + Math.round(CF_TRACK_Y * sc);
+        int th = Math.max(1, Math.round(CF_FILL_H * sc));
+        if (seg1 > 0) {
+            g.blit(CURSED_FILL, x + Math.round(CF_LEFT_X * sc), ty, Math.max(1, Math.round(seg1 * sc)), th,
+                    0, 0, seg1, CF_FILL_H, CF_FILL_W, CF_FILL_H);
+        }
+        if (seg2 > 0) {
+            g.blit(CURSED_FILL, x + Math.round(CF_RIGHT_X * sc), ty, Math.max(1, Math.round(seg2 * sc)), th,
+                    CF_SEG, 0, seg2, CF_FILL_H, CF_FILL_W, CF_FILL_H);
+        }
+
+        Component name = boss.getName();
+        g.drawString(font, name, cx - font.width(name) / 2, y - 9, 0xFFFF3B3B, true);
+        int max = (int) CursedBoss.MAX_HEALTH;
+        int hp = (int) Math.ceil(progress * CursedBoss.MAX_HEALTH);
+        String text = hp + " / " + max;
+        g.drawString(font, text, cx - font.width(text) / 2, y + h + 1, 0xFFFFB0B0, true);
+
+        event.setIncrement(h + 22);
+    }
 
     @SubscribeEvent
     public static void onBossBar(CustomizeGuiOverlayEvent.BossEventProgress event) {
         LerpingBossEvent boss = event.getBossEvent();
         if (!(boss.getName().getContents() instanceof TranslatableContents tc)) return;
+        if (tc.getKey().equals("entity.celestial.cursed_boss")) {
+            drawCursed(event, boss);
+            return;
+        }
         Style s = STYLES.get(tc.getKey());
         if (s == null) return;
 
@@ -58,7 +107,7 @@ public final class BossBarHud {
 
         Component name = boss.getName();
         int nameW = font.width(name);
-        if (s.plate()) { // у Хранителя название на тёмной плашке с золотой окантовкой
+        if (s.plate()) { // тёмная плашка под названием (у новых полосок название нарисовано в рамке)
             g.fill(cx - nameW / 2 - 9, y - 14, cx + nameW / 2 + 9, y - 1, 0xFFC9A227);
             g.fill(cx - nameW / 2 - 8, y - 13, cx + nameW / 2 + 8, y - 2, 0xFF12162E);
         }
@@ -70,11 +119,12 @@ public final class BossBarHud {
                     Math.max(1, Math.round(s.fillW() * progress)), s.fillH(), s.fillW(), s.fillH());
         }
 
-        g.drawString(font, name, cx - nameW / 2, y + s.nameY(), s.nameColor(), true);
+        if (!s.bakedName()) g.drawString(font, name, cx - nameW / 2, y + s.nameY(), s.nameColor(), true);
         int max = (int) s.maxHealth();
         int hp = (int) Math.ceil(progress * s.maxHealth());
         String text = hp + " / " + max;
-        g.drawString(font, text, cx - font.width(text) / 2, y + s.numY(), s.numColor(), true);
+        int numX = s.numRight() > 0 ? x + s.numRight() - font.width(text) : cx - font.width(text) / 2;
+        g.drawString(font, text, numX, y + s.numY(), s.numColor(), true);
 
         event.setIncrement(s.increment());
     }

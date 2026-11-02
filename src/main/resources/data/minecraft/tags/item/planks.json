@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "celestial:celestial_planks"
+    "celestial:celestial_planks",
+    "celestial:cursed_planks"
   ]
 }
