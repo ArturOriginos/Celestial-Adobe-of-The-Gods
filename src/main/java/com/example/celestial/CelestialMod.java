@@ -157,10 +157,14 @@ public class CelestialMod {
             event.accept(ModItems.CELESTIA_SWORD);
             event.accept(ModItems.CELESTIA_AXE);
             event.accept(ModItems.CELESTIA_SHIELD);
+            event.accept(ModItems.CURSED_SWORD);
+            event.accept(ModItems.CURSED_AXE);
+            event.accept(ModItems.CURSED_SHIELD);
         }
         if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
             event.accept(ModItems.CELESTIA_PICKAXE);
             event.accept(ModItems.CELESTIA_SHEARS);
+            event.accept(ModItems.CURSED_PICKAXE);
         }
         if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
             event.accept(ModItems.GUARDIAN_EGG);

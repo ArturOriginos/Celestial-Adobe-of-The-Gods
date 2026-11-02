@@ -54,5 +54,11 @@ public final class ClientSetup {
                 ResourceLocation.withDefaultNamespace("blocking"),
                 (stack, level, entity, seed) ->
                         entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F));
+        // щит проклятых: то же самое
+        event.enqueueWork(() -> ItemProperties.register(
+                ModItems.CURSED_SHIELD.get(),
+                ResourceLocation.withDefaultNamespace("blocking"),
+                (stack, level, entity, seed) ->
+                        entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F));
     }
 }

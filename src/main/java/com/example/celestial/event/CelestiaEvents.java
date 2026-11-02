@@ -91,7 +91,8 @@ public final class CelestiaEvents {
         ItemStack tool = player.getMainHandItem();
 
         // 1. Блок Селестии можно сломать только кирко-лопатой Селестии
-        if (state.is(ModBlocks.CELESTIA_BLOCK.get()) && !tool.is(ModItems.CELESTIA_PICKAXE.get())) {
+        if (state.is(ModBlocks.CELESTIA_BLOCK.get()) && !tool.is(ModItems.CELESTIA_PICKAXE.get())
+                && !tool.is(ModItems.CURSED_PICKAXE.get())) {
             event.setCanceled(true);
             return;
         }

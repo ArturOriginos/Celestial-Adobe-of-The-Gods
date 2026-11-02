@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "celestial:celestia_axe",
-    "celestial:celestia_pickaxe"
+    "celestial:celestia_pickaxe",
+    "celestial:cursed_axe",
+    "celestial:cursed_pickaxe"
   ]
 }

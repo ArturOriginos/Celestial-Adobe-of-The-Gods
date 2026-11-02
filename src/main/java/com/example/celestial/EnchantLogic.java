@@ -6,6 +6,7 @@ import java.util.Map;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -29,6 +30,28 @@ public final class EnchantLogic {
     /** Любая "книга": обычная, зачарованная или улучшенная. */
     public static boolean isBook(ItemStack stack) {
         return stack.is(Items.BOOK) || stack.is(Items.ENCHANTED_BOOK) || isAdvancedBook(stack);
+    }
+
+    /** Душа проклятого: вторая составляющая предметов проклятых в Солнечной наковальне. */
+    public static boolean isCursedSoul(ItemStack stack) {
+        return stack.is(ModItems.CURSED_SOUL.get());
+    }
+
+    /**
+     * Солнечная наковальня: предмет Селестии + душа проклятого => такой же предмет проклятых.
+     * Зачарования переходят на новый предмет. Если предмет не подходит - пустой стек.
+     */
+    public static ItemStack cursedUpgrade(ItemStack tool) {
+        Item result = null;
+        if (tool.is(ModItems.CELESTIA_SWORD.get())) result = ModItems.CURSED_SWORD.get();
+        else if (tool.is(ModItems.CELESTIA_AXE.get())) result = ModItems.CURSED_AXE.get();
+        else if (tool.is(ModItems.CELESTIA_PICKAXE.get())) result = ModItems.CURSED_PICKAXE.get();
+        else if (tool.is(ModItems.CELESTIA_SHIELD.get())) result = ModItems.CURSED_SHIELD.get();
+        if (result == null) return ItemStack.EMPTY;
+        ItemStack out = new ItemStack(result);
+        ItemEnchantments enchants = tool.get(DataComponents.ENCHANTMENTS);
+        if (enchants != null && !enchants.isEmpty()) out.set(DataComponents.ENCHANTMENTS, enchants);
+        return out;
     }
 
     public static boolean isAnvil(ItemStack stack) {

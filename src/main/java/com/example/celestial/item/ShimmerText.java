@@ -22,4 +22,21 @@ public final class ShimmerText {
         }
         return out;
     }
+
+    /** Название с переливанием в красно-чёрных тонах (от тёмно-бордового до ярко-красного). */
+    public static MutableComponent ofCursed(Component base) {
+        String text = base.getString();
+        double time = System.currentTimeMillis() / 260.0;
+        MutableComponent out = Component.empty();
+        for (int i = 0; i < text.length(); i++) {
+            double t = (Math.sin(time - i * 0.5) + 1.0) / 2.0;        // 0..1
+            int r = (int) Math.round(90 + 165 * t);                    // тёмно-бордовый -> ярко-красный
+            int g = (int) Math.round(4 + 26 * t);
+            int b = (int) Math.round(10 + 26 * t);
+            int rgb = (r << 16) | (g << 8) | b;
+            out.append(Component.literal(String.valueOf(text.charAt(i)))
+                    .withStyle(base.getStyle().withColor(rgb)));
+        }
+        return out;
+    }
 }

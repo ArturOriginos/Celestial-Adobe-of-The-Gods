@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "celestial:celestia_pickaxe"
+    "celestial:celestia_pickaxe",
+    "celestial:cursed_pickaxe"
   ]
 }

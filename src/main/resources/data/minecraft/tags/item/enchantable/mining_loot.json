@@ -3,6 +3,8 @@
   "values": [
     "celestial:celestia_axe",
     "celestial:celestia_pickaxe",
-    "celestial:celestia_shears"
+    "celestial:celestia_shears",
+    "celestial:cursed_axe",
+    "celestial:cursed_pickaxe"
   ]
 }

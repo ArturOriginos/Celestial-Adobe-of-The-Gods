@@ -49,9 +49,11 @@
     "misc": []
   },
   "spawn_costs": {},
-  "carvers": [
-    "minecraft:nether_cave"
-  ],
+  "carvers": {
+    "air": [
+      "minecraft:nether_cave"
+    ]
+  },
   "features": [
     [
       "celestial:cursed_surface"

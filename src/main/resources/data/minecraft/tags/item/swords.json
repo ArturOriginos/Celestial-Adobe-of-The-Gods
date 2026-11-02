@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "celestial:celestia_sword"
+    "celestial:celestia_sword",
+    "celestial:cursed_sword"
   ]
 }

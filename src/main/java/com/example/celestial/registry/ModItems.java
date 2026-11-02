@@ -8,6 +8,10 @@ import com.example.celestial.item.CelestiaShearsItem;
 import com.example.celestial.item.CelestiaShieldItem;
 import com.example.celestial.item.CelestiaSwordItem;
 import com.example.celestial.item.CelestiaTier;
+import com.example.celestial.item.CursedAxeItem;
+import com.example.celestial.item.CursedPickShovelItem;
+import com.example.celestial.item.CursedShieldItem;
+import com.example.celestial.item.CursedSwordItem;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -66,6 +70,25 @@ public final class ModItems {
                     .rarity(Rarity.EPIC).fireResistant().stacksTo(1)
                     .component(DataComponents.UNBREAKABLE, new Unbreakable(true))
                     .component(DataComponents.TOOL, ShearsItem.createToolProperties())));
+
+    // ----------------------------------------------------------- Инструменты проклятых
+    /** Меч проклятых: 40 урона (1 рука + 39), неразрушим. */
+    public static final DeferredItem<CursedSwordItem> CURSED_SWORD = ITEMS.register("cursed_sword",
+            () -> new CursedSwordItem(CelestiaTier.SWORD, celestia(39.0, -2.4)));
+
+    /** Топор проклятых: мгновенно срубает дерево целиком (см. CursedEvents), неразрушим. */
+    public static final DeferredItem<CursedAxeItem> CURSED_AXE = ITEMS.register("cursed_axe",
+            () -> new CursedAxeItem(CelestiaTier.AXE, celestia(23.0, -3.0)));
+
+    /** Кирко-лопата проклятых: мгновенно ломает любой блок, кроме бедрока и деревьев. */
+    public static final DeferredItem<CursedPickShovelItem> CURSED_PICKAXE = ITEMS.register("cursed_pickaxe",
+            () -> new CursedPickShovelItem(CelestiaTier.PICK, celestia(9.0, -2.8)));
+
+    /** Щит проклятых: возвращает полученный урон атакующему. */
+    public static final DeferredItem<CursedShieldItem> CURSED_SHIELD = ITEMS.register("cursed_shield",
+            () -> new CursedShieldItem(new Item.Properties()
+                    .rarity(Rarity.EPIC).fireResistant().stacksTo(1)
+                    .component(DataComponents.UNBREAKABLE, new Unbreakable(true))));
 
     public static final DeferredItem<DeferredSpawnEggItem> GUARDIAN_EGG = ITEMS.register("guardian_of_gods_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.GUARDIAN, 0xE0A800, 0xFFF3C4, new Item.Properties()));

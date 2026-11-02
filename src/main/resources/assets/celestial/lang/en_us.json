@@ -161,5 +161,13 @@
   "block.celestial.cursed_nether_bricks": "Cursed Nether Bricks",
   "block.celestial.cursed_glass": "Cursed Glass",
   "block.celestial.cursed_nether_brick_stairs": "Cursed Nether Brick Stairs",
-  "block.celestial.cursed_nether_brick_slab": "Cursed Nether Brick Slab"
+  "block.celestial.cursed_nether_brick_slab": "Cursed Nether Brick Slab",
+  "item.celestial.cursed_sword": "Sword of the Cursed",
+  "item.celestial.cursed_axe": "Axe of the Cursed",
+  "item.celestial.cursed_pickaxe": "Pick-Shovel of the Cursed",
+  "item.celestial.cursed_shield": "Shield of the Cursed",
+  "item.celestial.cursed_sword.lore": "Forty strikes of pain in every swing.",
+  "item.celestial.cursed_axe.lore": "The whole tree falls, no matter how vast.",
+  "item.celestial.cursed_pickaxe.lore": "Everything crumbles but bedrock and trees.",
+  "item.celestial.cursed_shield.lore": "Every blow returns to the one who struck it."
 }

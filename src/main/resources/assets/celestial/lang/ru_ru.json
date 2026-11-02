@@ -161,5 +161,13 @@
   "block.celestial.cursed_nether_bricks": "Проклятый незерский кирпич",
   "block.celestial.cursed_glass": "Проклятое стекло",
   "block.celestial.cursed_nether_brick_stairs": "Проклятые ступеньки",
-  "block.celestial.cursed_nether_brick_slab": "Проклятая плита"
+  "block.celestial.cursed_nether_brick_slab": "Проклятая плита",
+  "item.celestial.cursed_sword": "Меч Проклятых",
+  "item.celestial.cursed_axe": "Топор Проклятых",
+  "item.celestial.cursed_pickaxe": "Кирко-лопата Проклятых",
+  "item.celestial.cursed_shield": "Щит Проклятых",
+  "item.celestial.cursed_sword.lore": "Сорок ударов боли в каждом взмахе.",
+  "item.celestial.cursed_axe.lore": "Лес падает целиком, как бы он ни был велик.",
+  "item.celestial.cursed_pickaxe.lore": "Рушится всё, кроме бедрока и древ.",
+  "item.celestial.cursed_shield.lore": "Каждый удар вернётся тому, кто его нанёс."
 }

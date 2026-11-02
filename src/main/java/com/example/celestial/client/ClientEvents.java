@@ -22,6 +22,16 @@ public final class ClientEvents {
         else if (stack.is(ModItems.CELESTIA_AXE.get())) key = "item.celestial.celestia_axe.lore";
         else if (stack.is(ModItems.CELESTIA_PICKAXE.get())) key = "item.celestial.celestia_pickaxe.lore";
         else if (stack.is(ModItems.CELESTIA_SHEARS.get())) key = "item.celestial.celestia_shears.lore";
+        String cursedKey = null;
+        if (stack.is(ModItems.CURSED_SWORD.get())) cursedKey = "item.celestial.cursed_sword.lore";
+        else if (stack.is(ModItems.CURSED_AXE.get())) cursedKey = "item.celestial.cursed_axe.lore";
+        else if (stack.is(ModItems.CURSED_PICKAXE.get())) cursedKey = "item.celestial.cursed_pickaxe.lore";
+        else if (stack.is(ModItems.CURSED_SHIELD.get())) cursedKey = "item.celestial.cursed_shield.lore";
+        if (cursedKey != null) {
+            event.getToolTip().add(Component.empty());
+            event.getToolTip().add(GradientText.ofCursed(Component.translatable(cursedKey).getString()));
+            return;
+        }
         if (key == null) return;
         event.getToolTip().add(Component.empty());
         event.getToolTip().add(GradientText.of(Component.translatable(key).getString()));

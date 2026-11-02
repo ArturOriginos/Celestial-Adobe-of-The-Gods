@@ -26,6 +26,8 @@ public class SolarAnvilMenu extends AbstractContainerMenu {
     public static final int TOOL_SLOT = 0;
     public static final int BOOK_SLOT = 1;
     public static final int RESULT_SLOT = 2;
+    /** Цена (в уровнях опыта) превращения предмета Селестии в предмет проклятых. */
+    public static final int CURSED_UPGRADE_COST = 30;
 
     private final Container inputs = new SimpleContainer(2) {
         @Override
@@ -57,7 +59,7 @@ public class SolarAnvilMenu extends AbstractContainerMenu {
 
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return !EnchantLogic.isBook(stack);
+                return !EnchantLogic.isBook(stack) && !EnchantLogic.isCursedSoul(stack);
             }
         });
         this.addSlot(new Slot(inputs, BOOK_SLOT, 74, 53) {
@@ -68,7 +70,7 @@ public class SolarAnvilMenu extends AbstractContainerMenu {
 
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return EnchantLogic.isAdvancedBook(stack);
+                return EnchantLogic.isAdvancedBook(stack) || EnchantLogic.isCursedSoul(stack);
             }
         });
         this.addSlot(new Slot(result, 0, 135, 53) {
@@ -124,6 +126,16 @@ public class SolarAnvilMenu extends AbstractContainerMenu {
 
         ItemStack tool = inputs.getItem(TOOL_SLOT);
         ItemStack book = inputs.getItem(BOOK_SLOT);
+        // предмет Селестии + душа проклятого => предмет проклятых
+        if (EnchantLogic.isCursedSoul(book)) {
+            ItemStack upgraded = EnchantLogic.cursedUpgrade(tool);
+            if (!upgraded.isEmpty()) {
+                result.setItem(0, upgraded);
+                cost.set(CURSED_UPGRADE_COST);
+            }
+            return;
+        }
+
         if (tool.isEmpty() || !EnchantLogic.isAdvancedBook(book) || EnchantLogic.isBook(tool)) return;
 
         ItemEnchantments stored = book.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY);
@@ -176,7 +188,7 @@ public class SolarAnvilMenu extends AbstractContainerMenu {
                 slot.onQuickCraft(stack, copy);
             } else if (index < RESULT_SLOT) {
                 if (!this.moveItemStackTo(stack, 3, 39, false)) return ItemStack.EMPTY;
-            } else if (EnchantLogic.isAdvancedBook(stack)) {
+            } else if (EnchantLogic.isAdvancedBook(stack) || EnchantLogic.isCursedSoul(stack)) {
                 if (!this.moveItemStackTo(stack, BOOK_SLOT, BOOK_SLOT + 1, false)) return ItemStack.EMPTY;
             } else if (!EnchantLogic.isBook(stack)) {
                 if (!this.moveItemStackTo(stack, TOOL_SLOT, TOOL_SLOT + 1, false)) return ItemStack.EMPTY;
