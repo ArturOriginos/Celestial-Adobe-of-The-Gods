@@ -1,3 +1,6 @@
 {
-  "parent": "celestial:block/cursed_mushroom"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "celestial:block/cursed_mushroom"
+  }
 }

@@ -4,6 +4,8 @@ import com.example.celestial.CelestialMod;
 import com.example.celestial.registry.ModEntities;
 import com.example.celestial.registry.ModItems;
 import com.example.celestial.registry.ModMenus;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
@@ -14,6 +16,8 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 
 @EventBusSubscriber(modid = CelestialMod.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class ClientSetup {
@@ -32,6 +36,23 @@ public final class ClientSetup {
         event.registerEntityRenderer(ModEntities.CURSED_BOSS.get(), CursedBossRenderer::new);
         event.registerEntityRenderer(ModEntities.CURSED_SPIKE.get(),
                 context -> new GodSpikeRenderer(context, GodSpikeRenderer.CURSED_TEXTURE));
+    }
+
+    /** Щит проклятых рисуется как ванильный щит (встроенная модель + свой рендерер). */
+    @SubscribeEvent
+    public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
+        event.registerItem(new IClientItemExtensions() {
+            private CursedShieldRenderer renderer;
+
+            @Override
+            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                if (renderer == null) {
+                    Minecraft mc = Minecraft.getInstance();
+                    renderer = new CursedShieldRenderer(mc.getBlockEntityRenderDispatcher(), mc.getEntityModels());
+                }
+                return renderer;
+            }
+        }, ModItems.CURSED_SHIELD.get());
     }
 
     @SubscribeEvent

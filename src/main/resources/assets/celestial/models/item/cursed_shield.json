@@ -1,11 +1,11 @@
 {
-  "parent": "celestial:item/cursed_shield_3d",
+  "parent": "minecraft:item/shield",
   "overrides": [
     {
       "predicate": {
         "blocking": 1
       },
-      "model": "celestial:item/cursed_shield_3d"
+      "model": "celestial:item/cursed_shield_blocking"
     }
   ]
 }
