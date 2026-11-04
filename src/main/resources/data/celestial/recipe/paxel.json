@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    " P ",
+    "AUS",
+    " C "
+  ],
+  "key": {
+    "P": {
+      "item": "celestial:celestia_pickaxe"
+    },
+    "A": {
+      "item": "celestial:celestia_axe"
+    },
+    "S": {
+      "item": "celestial:cursed_sword"
+    },
+    "C": {
+      "item": "celestial:cursed_axe"
+    },
+    "U": {
+      "item": "celestial:united_soul"
+    }
+  },
+  "result": {
+    "id": "celestial:paxel",
+    "count": 1
+  }
+}

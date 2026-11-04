@@ -15,17 +15,26 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
-/** Рисует Щит проклятых как настоящий ванильный щит (с собственной текстурой). */
+/** Рисует щит (Проклятых или Селестии) как настоящий ванильный щит с собственной текстурой. */
 public class CursedShieldRenderer extends BlockEntityWithoutLevelRenderer {
-    private static final ResourceLocation TEXTURE =
+    public static final ResourceLocation CURSED_TEXTURE =
             ResourceLocation.fromNamespaceAndPath(CelestialMod.MODID, "textures/entity/cursed_shield.png");
+    public static final ResourceLocation CELESTIA_TEXTURE =
+            ResourceLocation.fromNamespaceAndPath(CelestialMod.MODID, "textures/entity/celestia_shield.png");
 
     private final EntityModelSet modelSet;
+    private final ResourceLocation texture;
     private ShieldModel shieldModel;
 
     public CursedShieldRenderer(BlockEntityRenderDispatcher dispatcher, EntityModelSet modelSet) {
+        this(dispatcher, modelSet, CURSED_TEXTURE);
+    }
+
+    /** Один и тот же ванильный щит с разными текстурами: Щит проклятых и Защитная Руна Селестии. */
+    public CursedShieldRenderer(BlockEntityRenderDispatcher dispatcher, EntityModelSet modelSet, ResourceLocation texture) {
         super(dispatcher, modelSet);
         this.modelSet = modelSet;
+        this.texture = texture;
     }
 
     @Override
@@ -37,7 +46,7 @@ public class CursedShieldRenderer extends BlockEntityWithoutLevelRenderer {
         poseStack.pushPose();
         poseStack.scale(1.0F, -1.0F, -1.0F);
         VertexConsumer consumer = ItemRenderer.getFoilBufferDirect(
-                buffer, RenderType.entityCutoutNoCull(TEXTURE), true, stack.hasFoil());
+                buffer, RenderType.entityCutoutNoCull(texture), true, stack.hasFoil());
         shieldModel.handle().render(poseStack, consumer, packedLight, packedOverlay);
         shieldModel.plate().render(poseStack, consumer, packedLight, packedOverlay);
         poseStack.popPose();

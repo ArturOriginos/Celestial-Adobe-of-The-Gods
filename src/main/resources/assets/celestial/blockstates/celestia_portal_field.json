@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "axis=x": { "model": "celestial:block/celestia_portal_field_x" },
+    "axis=z": { "model": "celestial:block/celestia_portal_field_z" }
+  }
+}

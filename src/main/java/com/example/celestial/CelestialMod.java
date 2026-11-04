@@ -5,6 +5,7 @@ import com.example.celestial.network.EnchantRequestPayload;
 import com.example.celestial.registry.ModBlocks;
 import com.example.celestial.entity.CursedBoss;
 import com.example.celestial.entity.GuardianOfGods;
+import com.example.celestial.registry.ModChunkGenerators;
 import com.example.celestial.registry.ModCreativeTabs;
 import com.example.celestial.registry.ModEffects;
 import com.example.celestial.registry.ModEntities;
@@ -36,6 +37,7 @@ public class CelestialMod {
         ModEffects.EFFECTS.register(modBus);
         ModEntities.ENTITIES.register(modBus);
         ModFeatures.FEATURES.register(modBus);
+        ModChunkGenerators.CHUNK_GENERATORS.register(modBus);
         ModStructures.STRUCTURE_TYPES.register(modBus);
         ModStructures.PIECE_TYPES.register(modBus);
         ModCreativeTabs.TABS.register(modBus);
@@ -91,6 +93,7 @@ public class CelestialMod {
             event.accept(ModItems.ADVANCED_BOOK);
             event.accept(ModItems.GUARDIAN_SOUL);
             event.accept(ModItems.CURSED_SOUL);
+            event.accept(ModItems.UNITED_SOUL);
             event.accept(ModItems.CELESTIA_RUNE);
             event.accept(ModItems.CELESTIA_KEY);
         }
@@ -160,11 +163,13 @@ public class CelestialMod {
             event.accept(ModItems.CURSED_SWORD);
             event.accept(ModItems.CURSED_AXE);
             event.accept(ModItems.CURSED_SHIELD);
+            event.accept(ModItems.PAXEL);
         }
         if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
             event.accept(ModItems.CELESTIA_PICKAXE);
             event.accept(ModItems.CELESTIA_SHEARS);
             event.accept(ModItems.CURSED_PICKAXE);
+            event.accept(ModItems.PAXEL);
         }
         if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
             event.accept(ModItems.GUARDIAN_EGG);

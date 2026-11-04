@@ -63,20 +63,28 @@ public final class CelestiaEvents {
         return state.is(BlockTags.MINEABLE_WITH_PICKAXE) || state.is(BlockTags.MINEABLE_WITH_SHOVEL);
     }
 
-    /** Кирко-лопата Селестии мгновенно ломает землю, камень и руды. */
+    /** Паксель: всё, что берётся киркой, топором, лопатой или мотыгой. */
+    private static boolean paxelBlock(BlockState state) {
+        return pickaxeBlock(state) || state.is(BlockTags.MINEABLE_WITH_AXE) || state.is(BlockTags.MINEABLE_WITH_HOE);
+    }
+
+    private static boolean instantFor(ItemStack tool, BlockState state) {
+        if (tool.is(ModItems.PAXEL.get())) return paxelBlock(state);
+        return tool.is(ModItems.CELESTIA_PICKAXE.get()) && pickaxeBlock(state);
+    }
+
+    /** Кирко-лопата Селестии и Паксель мгновенно ломают землю, камень, руды (паксель ещё и дерево). */
     @SubscribeEvent
     public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
-        if (!event.getEntity().getMainHandItem().is(ModItems.CELESTIA_PICKAXE.get())) return;
-        if (pickaxeBlock(event.getState())) {
+        if (instantFor(event.getEntity().getMainHandItem(), event.getState())) {
             event.setNewSpeed(Math.max(event.getNewSpeed(), 100000.0F));
         }
     }
 
-    /** ... и корректно собирает дроп со всего, что относится к кирке и лопате. */
+    /** ... и корректно собирают дроп со всего, что относится к их типам инструмента. */
     @SubscribeEvent
     public static void onHarvestCheck(PlayerEvent.HarvestCheck event) {
-        if (!event.getEntity().getMainHandItem().is(ModItems.CELESTIA_PICKAXE.get())) return;
-        if (pickaxeBlock(event.getTargetBlock())) {
+        if (instantFor(event.getEntity().getMainHandItem(), event.getTargetBlock())) {
             event.setCanHarvest(true);
         }
     }
@@ -92,7 +100,7 @@ public final class CelestiaEvents {
 
         // 1. Блок Селестии можно сломать только кирко-лопатой Селестии
         if (state.is(ModBlocks.CELESTIA_BLOCK.get()) && !tool.is(ModItems.CELESTIA_PICKAXE.get())
-                && !tool.is(ModItems.CURSED_PICKAXE.get())) {
+                && !tool.is(ModItems.CURSED_PICKAXE.get()) && !tool.is(ModItems.PAXEL.get())) {
             event.setCanceled(true);
             return;
         }
@@ -111,7 +119,8 @@ public final class CelestiaEvents {
         }
 
         // 3. Гнев Природы на топоре Селестии: мгновенно срубает всё дерево
-        if (!felling && state.is(BlockTags.LOGS) && tool.is(ModItems.CELESTIA_AXE.get())
+        if (!felling && state.is(BlockTags.LOGS)
+                && (tool.is(ModItems.CELESTIA_AXE.get()) || tool.is(ModItems.PAXEL.get()))
                 && ModEnchantments.getLevel(level, tool, ModEnchantments.NATURES_WRATH) > 0) {
             felling = true;
             try {

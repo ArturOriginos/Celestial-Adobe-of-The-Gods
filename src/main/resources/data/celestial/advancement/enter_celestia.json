@@ -1,0 +1,31 @@
+{
+  "parent": "celestial:celestia_portal",
+  "display": {
+    "icon": {
+      "id": "celestial:celestial_cloud_fluffy"
+    },
+    "title": {
+      "translate": "advancement.celestial.enter_celestia.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.enter_celestia.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "entered": {
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "to": "celestial:celestia"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "entered"
+    ]
+  ]
+}

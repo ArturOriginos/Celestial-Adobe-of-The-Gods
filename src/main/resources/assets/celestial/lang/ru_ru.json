@@ -169,5 +169,12 @@
   "item.celestial.cursed_sword.lore": "Сорок ударов боли в каждом взмахе.",
   "item.celestial.cursed_axe.lore": "Лес падает целиком, как бы он ни был велик.",
   "item.celestial.cursed_pickaxe.lore": "Рушится всё, кроме бедрока и древ.",
-  "item.celestial.cursed_shield.lore": "Каждый удар вернётся тому, кто его нанёс."
+  "item.celestial.cursed_shield.lore": "Каждый удар вернётся тому, кто его нанёс.",
+  "block.celestial.celestia_portal_field": "Поле портала Селестии",
+  "message.celestial.portal_invalid": "Нужна рамка из блоков портала: внутри от 2x3 до 21x21, без углов.",
+  "advancement.celestial.enter_celestia.title": "Над облаками",
+  "advancement.celestial.enter_celestia.desc": "Войдите в измерение Селестия.",
+  "item.celestial.united_soul": "Объединённая душа богов и проклятых",
+  "item.celestial.paxel": "Паксель Богов и Проклятых",
+  "item.celestial.paxel.lore": "Свет и тьма в одной руке: ломает всё, что встанет на пути."
 }

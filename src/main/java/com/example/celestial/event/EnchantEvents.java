@@ -95,7 +95,11 @@ public final class EnchantEvents {
                             || ((tool.is(com.example.celestial.registry.ModItems.CELESTIA_PICKAXE.get())
                             || tool.is(com.example.celestial.registry.ModItems.CURSED_PICKAXE.get()))
                             && (state.is(net.minecraft.tags.BlockTags.MINEABLE_WITH_PICKAXE)
-                            || state.is(net.minecraft.tags.BlockTags.MINEABLE_WITH_SHOVEL)));
+                            || state.is(net.minecraft.tags.BlockTags.MINEABLE_WITH_SHOVEL)))
+                            || (tool.is(com.example.celestial.registry.ModItems.PAXEL.get())
+                            && (state.is(net.minecraft.tags.BlockTags.MINEABLE_WITH_PICKAXE)
+                            || state.is(net.minecraft.tags.BlockTags.MINEABLE_WITH_SHOVEL)
+                            || state.is(net.minecraft.tags.BlockTags.MINEABLE_WITH_AXE)));
                     if (!correct) continue;  // только то, что инструмент реально добывает
 
                     player.gameMode.destroyBlock(pos);

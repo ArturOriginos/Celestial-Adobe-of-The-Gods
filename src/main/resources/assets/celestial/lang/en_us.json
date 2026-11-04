@@ -169,5 +169,12 @@
   "item.celestial.cursed_sword.lore": "Forty strikes of pain in every swing.",
   "item.celestial.cursed_axe.lore": "The whole tree falls, no matter how vast.",
   "item.celestial.cursed_pickaxe.lore": "Everything crumbles but bedrock and trees.",
-  "item.celestial.cursed_shield.lore": "Every blow returns to the one who struck it."
+  "item.celestial.cursed_shield.lore": "Every blow returns to the one who struck it.",
+  "block.celestial.celestia_portal_field": "Celestia Portal Field",
+  "message.celestial.portal_invalid": "You need a frame of portal blocks: 2x3 to 21x21 inside, corners not required.",
+  "advancement.celestial.enter_celestia.title": "Above the Clouds",
+  "advancement.celestial.enter_celestia.desc": "Enter the Celestia dimension.",
+  "item.celestial.united_soul": "United Soul of Gods and the Cursed",
+  "item.celestial.paxel": "Paxel of Gods and the Cursed",
+  "item.celestial.paxel.lore": "Light and dark in one hand: breaks everything in its way."
 }

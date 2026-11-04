@@ -27,6 +27,11 @@ public final class ClientEvents {
         else if (stack.is(ModItems.CURSED_AXE.get())) cursedKey = "item.celestial.cursed_axe.lore";
         else if (stack.is(ModItems.CURSED_PICKAXE.get())) cursedKey = "item.celestial.cursed_pickaxe.lore";
         else if (stack.is(ModItems.CURSED_SHIELD.get())) cursedKey = "item.celestial.cursed_shield.lore";
+        if (stack.is(ModItems.PAXEL.get())) {
+            event.getToolTip().add(Component.empty());
+            event.getToolTip().add(GradientText.ofPaxel(Component.translatable("item.celestial.paxel.lore").getString()));
+            return;
+        }
         if (cursedKey != null) {
             event.getToolTip().add(Component.empty());
             event.getToolTip().add(GradientText.ofCursed(Component.translatable(cursedKey).getString()));

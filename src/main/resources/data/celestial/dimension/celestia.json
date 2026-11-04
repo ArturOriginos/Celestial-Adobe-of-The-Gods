@@ -1,0 +1,10 @@
+{
+  "type": "celestial:celestia",
+  "generator": {
+    "type": "celestial:celestia",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "celestial:celestia"
+    }
+  }
+}

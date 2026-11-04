@@ -11,6 +11,7 @@ import com.example.celestial.item.CelestiaTier;
 import com.example.celestial.item.CursedAxeItem;
 import com.example.celestial.item.CursedPickShovelItem;
 import com.example.celestial.item.CursedShieldItem;
+import com.example.celestial.item.PaxelItem;
 import com.example.celestial.item.CursedSwordItem;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
@@ -40,6 +41,11 @@ public final class ModItems {
     /** Душа проклятого: выпадает из босса Проклятый. */
     public static final DeferredItem<Item> CURSED_SOUL =
             ITEMS.registerSimpleItem("cursed_soul", new Item.Properties().rarity(Rarity.EPIC).fireResistant());
+
+    /** Объединённая душа богов и проклятых: крафт из Души Хранителя Богов и Души проклятого. */
+    public static final DeferredItem<Item> UNITED_SOUL =
+            ITEMS.registerSimpleItem("united_soul", new Item.Properties().rarity(Rarity.EPIC).fireResistant()
+                    .component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true));
 
     /** Руна Селестии: выпадает из Селестийской руды. */
     public static final DeferredItem<Item> CELESTIA_RUNE =
@@ -89,6 +95,10 @@ public final class ModItems {
             () -> new CursedShieldItem(new Item.Properties()
                     .rarity(Rarity.EPIC).fireResistant().stacksTo(1)
                     .component(DataComponents.UNBREAKABLE, new Unbreakable(true))));
+
+    /** Паксель Богов и Проклятых: мульти-тул, мгновенно добывает камень, дерево и землю, 50 урона, неразрушим. */
+    public static final DeferredItem<PaxelItem> PAXEL = ITEMS.register("paxel",
+            () -> new PaxelItem(CelestiaTier.AXE, celestia(49.0, -2.6)));
 
     public static final DeferredItem<DeferredSpawnEggItem> GUARDIAN_EGG = ITEMS.register("guardian_of_gods_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.GUARDIAN, 0xE0A800, 0xFFF3C4, new Item.Properties()));

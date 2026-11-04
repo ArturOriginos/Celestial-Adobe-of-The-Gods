@@ -1,0 +1,7 @@
+{
+  "type": "celestial:cursed_church",
+  "biomes": "celestial:cursed_niflheim",
+  "step": "surface_structures",
+  "spawn_overrides": {},
+  "terrain_adaptation": "none"
+}

@@ -2,6 +2,7 @@ package com.example.celestial.registry;
 
 import static com.example.celestial.CelestialMod.MODID;
 
+import com.example.celestial.world.CelestiaVegetationFeature;
 import com.example.celestial.world.CursedSurfaceFeature;
 import com.example.celestial.world.CursedIslandFeature;
 import com.example.celestial.world.CursedTreeConfig;
@@ -27,6 +28,10 @@ public final class ModFeatures {
             FEATURES.register("cursed_surface", () -> new CursedSurfaceFeature(NoneFeatureConfiguration.CODEC));
     public static final DeferredHolder<Feature<?>, CursedIslandFeature> CURSED_ISLAND =
             FEATURES.register("cursed_island", () -> new CursedIslandFeature(NoneFeatureConfiguration.CODEC));
+
+    /** Растительность и деревья на островах Селестии. */
+    public static final DeferredHolder<Feature<?>, CelestiaVegetationFeature> CELESTIA_VEGETATION =
+            FEATURES.register("celestia_vegetation", () -> new CelestiaVegetationFeature(NoneFeatureConfiguration.CODEC));
 
     private ModFeatures() {}
 }

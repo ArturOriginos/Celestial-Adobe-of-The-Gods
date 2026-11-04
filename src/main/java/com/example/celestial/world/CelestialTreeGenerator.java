@@ -12,9 +12,9 @@ import java.util.Map;
 import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -30,27 +30,36 @@ public final class CelestialTreeGenerator {
                          int branches, int branchMin, int branchRange, int branchLeafR, int branchLeafRy,
                          int spire, boolean roots) {}
 
-    private static final Shape LARGE = new Shape(-1, 1, 20, 6, 9, 6, 7, 4, 4, 8, 6, 3, 4, 3, 4, true);
-    private static final Shape MEDIUM = new Shape(0, 1, 11, 5, 6, 4, 0, 0, 0, 4, 3, 3, 3, 2, 2, false);
-    private static final Shape SMALL = new Shape(0, 0, 6, 3, 4, 3, 0, 0, 0, 0, 0, 1, 0, 0, 2, false);
+    private static final Shape LARGE_SHAPE = new Shape(-1, 1, 20, 6, 9, 6, 7, 4, 4, 8, 6, 3, 4, 3, 4, true);
+    private static final Shape MEDIUM_SHAPE = new Shape(0, 1, 11, 5, 6, 4, 0, 0, 0, 4, 3, 3, 3, 2, 2, false);
+    private static final Shape SMALL_SHAPE = new Shape(0, 0, 6, 3, 4, 3, 0, 0, 0, 0, 0, 1, 0, 0, 2, false);
 
     // сначала стороны света, потом диагонали
     private static final int[][] DIRS = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}, {1, 1}, {-1, 1}, {-1, -1}, {1, -1}};
     private static final int MAX_LEAF_DISTANCE = 6; // дальше листва бы сразу засохла
 
+    public static final int SMALL = 0, MEDIUM = 1, LARGE = 2;
+
     private CelestialTreeGenerator() {}
 
-    public static boolean grow(ServerLevel level, BlockPos origin, RandomSource random) {
+    /** Дерево нужного размера (не поместилось - пробуем поменьше). Работает и в мире, и при генерации чанков. */
+    public static boolean grow(LevelAccessor level, BlockPos origin, RandomSource random, int size) {
+        if (size >= LARGE && tryGrow(level, origin, random, LARGE_SHAPE)) return true;
+        if (size >= MEDIUM && tryGrow(level, origin, random, MEDIUM_SHAPE)) return true;
+        return tryGrow(level, origin, random, SMALL_SHAPE);
+    }
+
+    public static boolean grow(LevelAccessor level, BlockPos origin, RandomSource random) {
         int roll = random.nextInt(100);
-        Shape[] order = roll < 25 ? new Shape[]{LARGE, MEDIUM, SMALL}
-                : roll < 60 ? new Shape[]{MEDIUM, SMALL} : new Shape[]{SMALL};
+        Shape[] order = roll < 25 ? new Shape[]{LARGE_SHAPE, MEDIUM_SHAPE, SMALL_SHAPE}
+                : roll < 60 ? new Shape[]{MEDIUM_SHAPE, SMALL_SHAPE} : new Shape[]{SMALL_SHAPE};
         for (Shape shape : order) {
             if (tryGrow(level, origin, random, shape)) return true; // не поместилось - пробуем поменьше
         }
         return false;
     }
 
-    private static boolean tryGrow(ServerLevel level, BlockPos origin, RandomSource random, Shape s) {
+    private static boolean tryGrow(LevelAccessor level, BlockPos origin, RandomSource random, Shape s) {
         int height = s.minHeight() + random.nextInt(s.heightRange());
 
         for (int y = 0; y < height; y++) {
@@ -159,7 +168,7 @@ public final class CelestialTreeGenerator {
         }
     }
 
-    private static boolean canReplace(ServerLevel level, BlockPos pos) {
+    private static boolean canReplace(LevelAccessor level, BlockPos pos) {
         if (!level.hasChunkAt(pos)) return false;
         BlockState state = level.getBlockState(pos);
         return state.isAir() || state.canBeReplaced() || state.is(BlockTags.LEAVES)

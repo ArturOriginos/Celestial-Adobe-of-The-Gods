@@ -81,6 +81,8 @@ public class CursedBoss extends Monster {
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
                                         MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
         SpawnGroupData data = super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
+        // из структуры (Церковь Проклятых) босс сразу стоит на полу: подъём из-под земли не сохраняется в чанке
+        if (spawnType == MobSpawnType.STRUCTURE) return data;
         this.riseBaseY = this.getY();
         this.riseTicks = RISE_TICKS;
         this.setPos(this.getX(), this.riseBaseY - 4.0D, this.getZ());

@@ -38,21 +38,26 @@ public final class ClientSetup {
                 context -> new GodSpikeRenderer(context, GodSpikeRenderer.CURSED_TEXTURE));
     }
 
-    /** Щит проклятых рисуется как ванильный щит (встроенная модель + свой рендерер). */
+    /** Щит проклятых и Защитная Руна Селестии рисуются как ванильный щит (встроенная модель + свой рендерер). */
     @SubscribeEvent
     public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
-        event.registerItem(new IClientItemExtensions() {
+        event.registerItem(shieldExtension(CursedShieldRenderer.CURSED_TEXTURE), ModItems.CURSED_SHIELD.get());
+        event.registerItem(shieldExtension(CursedShieldRenderer.CELESTIA_TEXTURE), ModItems.CELESTIA_SHIELD.get());
+    }
+
+    private static IClientItemExtensions shieldExtension(ResourceLocation texture) {
+        return new IClientItemExtensions() {
             private CursedShieldRenderer renderer;
 
             @Override
             public BlockEntityWithoutLevelRenderer getCustomRenderer() {
                 if (renderer == null) {
                     Minecraft mc = Minecraft.getInstance();
-                    renderer = new CursedShieldRenderer(mc.getBlockEntityRenderDispatcher(), mc.getEntityModels());
+                    renderer = new CursedShieldRenderer(mc.getBlockEntityRenderDispatcher(), mc.getEntityModels(), texture);
                 }
                 return renderer;
             }
-        }, ModItems.CURSED_SHIELD.get());
+        };
     }
 
     @SubscribeEvent

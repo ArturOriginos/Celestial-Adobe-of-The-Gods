@@ -3,6 +3,8 @@ package com.example.celestial.registry;
 import static com.example.celestial.CelestialMod.MODID;
 
 import com.example.celestial.block.AdvancedEnchantingTableBlock;
+import com.example.celestial.block.CelestiaPortalBlock;
+import com.example.celestial.block.CelestiaPortalFieldBlock;
 import com.example.celestial.block.CelestialLeavesBlock;
 import com.example.celestial.block.CelestialSaplingBlock;
 import com.example.celestial.block.SolarAnvilBlock;
@@ -167,12 +169,19 @@ public final class ModBlocks {
                     .requiresCorrectToolForDrops().sound(SoundType.AMETHYST).lightLevel(state -> 10));
     public static final DeferredItem<BlockItem> CELESTIA_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(CELESTIA_BLOCK);
 
-    /** Портал Селестии: ключ в центре, по бокам души, остальное руны. */
-    public static final DeferredBlock<Block> CELESTIA_PORTAL = BLOCKS.registerBlock(
-            "celestia_portal", Block::new,
+    /** Рамка портала Селестии: ключ в центре, по бокам души, остальное руны. ПКМ ключом по рамке зажигает портал. */
+    public static final DeferredBlock<CelestiaPortalBlock> CELESTIA_PORTAL = BLOCKS.registerBlock(
+            "celestia_portal", CelestiaPortalBlock::new,
             BlockBehaviour.Properties.of().mapColor(MapColor.SNOW).strength(5.0F, 1200.0F)
                     .requiresCorrectToolForDrops().sound(SoundType.AMETHYST).lightLevel(state -> 15));
     public static final DeferredItem<BlockItem> CELESTIA_PORTAL_ITEM = ITEMS.registerSimpleBlockItem(CELESTIA_PORTAL);
+
+    /** Светящееся поле внутри рамки (предмета нет, создаётся ключом). */
+    public static final DeferredBlock<CelestiaPortalFieldBlock> CELESTIA_PORTAL_FIELD = BLOCKS.registerBlock(
+            "celestia_portal_field", CelestiaPortalFieldBlock::new,
+            BlockBehaviour.Properties.of().mapColor(MapColor.GOLD).noCollission().strength(-1.0F)
+                    .sound(SoundType.AMETHYST).lightLevel(state -> 11).noLootTable()
+                    .pushReaction(PushReaction.BLOCK));
 
     // ============ Проклятый Нифельхельм (beta 1.3) ============
     private static BlockBehaviour.Properties nether(float hardness, float resistance, SoundType sound) {

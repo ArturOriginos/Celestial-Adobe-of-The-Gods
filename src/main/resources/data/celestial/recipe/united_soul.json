@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "celestial:guardian_soul"
+    },
+    {
+      "item": "celestial:cursed_soul"
+    }
+  ],
+  "result": {
+    "id": "celestial:united_soul",
+    "count": 1
+  }
+}
