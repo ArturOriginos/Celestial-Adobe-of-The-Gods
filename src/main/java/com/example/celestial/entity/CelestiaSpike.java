@@ -6,7 +6,7 @@ import net.minecraft.world.level.Level;
 
 /** Световой кристалл Бога Селестии: бьёт сильнее шипов Хранителя и Проклятого, растёт со стадией боя. */
 public class CelestiaSpike extends GodSpike {
-    public static final float BASE_DAMAGE = 36.0F; // 18 сердец
+    public static final float BASE_DAMAGE = 20.0F; // 10 сердец
 
     public CelestiaSpike(EntityType<? extends GodSpike> type, Level level) {
         super(type, level);
@@ -16,6 +16,6 @@ public class CelestiaSpike extends GodSpike {
     protected float damage() {
         LivingEntity owner = getSpikeOwner();
         float mult = owner instanceof CelestiaGod god ? god.damageMultiplier() : 1.0F;
-        return BASE_DAMAGE * mult;
+        return Math.min(CelestiaGod.MAX_HIT_DAMAGE, BASE_DAMAGE * mult);
     }
 }

@@ -68,12 +68,14 @@ public class CelestiaGod extends Monster {
     private static final int RISE_TICKS = 70;
 
     // ---------- урон способностей (до множителя стадии 2) ----------
-    public static final float DMG_STRIKE = 70.0F;  // удар столбом света (Власть Селестии)
-    public static final float DMG_PILLAR = 48.0F;  // столп кары
-    public static final float DMG_STAR = 34.0F;    // падающая звезда
-    public static final float DMG_HALO = 36.0F;    // расходящееся кольцо
-    public static final float DMG_BEAM = 52.0F;    // луч
-    public static final float DMG_STEP = 42.0F;    // всплеск после телепорта
+    /** Ни один удар босса (и ближний, и способности) не бьёт сильнее этого значения: 20 здоровья = 10 сердец. */
+    public static final float MAX_HIT_DAMAGE = 20.0F;
+    public static final float DMG_STRIKE = 20.0F;  // удар столбом света (Власть Селестии)
+    public static final float DMG_PILLAR = 20.0F;  // столп кары
+    public static final float DMG_STAR = 12.0F;    // падающая звезда
+    public static final float DMG_HALO = 14.0F;    // расходящееся кольцо
+    public static final float DMG_BEAM = 20.0F;    // луч
+    public static final float DMG_STEP = 16.0F;    // всплеск после телепорта
     public static final float PHASE2_MULT = 1.3F;
 
     // ---------- способности ----------
@@ -133,7 +135,7 @@ public class CelestiaGod extends Monster {
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
                 .add(Attributes.MAX_HEALTH, MAX_HEALTH)
-                .add(Attributes.ATTACK_DAMAGE, 64.0D)
+                .add(Attributes.ATTACK_DAMAGE, 20.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.32D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D)
                 .add(Attributes.ARMOR, 20.0D)
@@ -338,7 +340,7 @@ public class CelestiaGod extends Monster {
         this.playSound(SoundEvents.ENDER_DRAGON_GROWL, 4.0F, 0.7F);
         this.playSound(SoundEvents.BEACON_POWER_SELECT, 4.0F, 0.5F);
         if (this.level() instanceof ServerLevel level) {
-            hurtArea(getX(), getY(), getZ(), 12.0F, 30.0F, true);
+            hurtArea(getX(), getY(), getZ(), 12.0F, 16.0F, true);
             level.sendParticles(ParticleTypes.FLASH, getX(), getY() + 2.5D, getZ(), 1, 0, 0, 0, 0);
             level.sendParticles(ParticleTypes.END_ROD, getX(), getY() + 2.5D, getZ(), 120, 0.5D, 0.5D, 0.5D, 0.9D);
         }
@@ -498,6 +500,8 @@ public class CelestiaGod extends Monster {
         }
         if (t == 60) { // 3. выброс света: кристаллы кольцами
             setStage(ST_ERUPT);
+            // огромный столб света: предупреждение 30 тиков, затем удар
+            spawnEffect(CelestiaEffect.KIND_PILLAR, x, y, z, DOMINION_RADIUS, 0.0F, 30, 20, 0.0F, 0.0F);
             this.playSound(SoundEvents.EVOKER_CAST_SPELL, 4.0F, 0.5F);
             int[] radii = p2 ? new int[]{3, 6, 9, 12, 15} : new int[]{3, 6, 9, 12};
             int[] counts = {6, 12, 18, 24, 30};
@@ -623,43 +627,63 @@ public class CelestiaGod extends Monster {
     }
 
     // =================================================================== способность 5: Луч
+    @Nullable
+    private CelestiaEffect beamFx;
+
+    private static float yawOf(Vec3 d) { return (float) (Mth.atan2(d.x, d.z) * 57.29577951D); }
+    private static float pitchOf(Vec3 d) { return (float) (Mth.atan2(d.y, Math.sqrt(d.x * d.x + d.z * d.z)) * 57.29577951D); }
+
     private void tickBeam(@Nullable LivingEntity focus) {
         int t = abilityTick;
         if (t == 0) {
             setStage(ST_BEAM);
+            beamFx = null;
             this.playSound(SoundEvents.BEACON_POWER_SELECT, 3.5F, 0.6F);
         }
-        if (focus != null && (t < 20 || (t >= 40 && t < 48))) {
+        boolean aiming = t < 20 || (t >= 40 && t < 48);
+        if (focus != null && aiming) {
             Vec3 to = focus.getBoundingBox().getCenter().subtract(this.getEyePosition());
             if (to.lengthSqr() > 1.0E-4D) beamDir = to.normalize();
         }
         if (!(this.level() instanceof ServerLevel level) || beamDir.equals(Vec3.ZERO)) return;
-        boolean aiming = t < 25 || (t >= 40 && t < 50);
-        if (aiming && t % 2 == 0) { // линия прицеливания
-            Vec3 o = this.getEyePosition();
+        Vec3 origin = this.getEyePosition();
+        // луч-предупреждение следует за целью, пока босс целится
+        if (t == 0 || t == 40) beamFx = spawnEffect(CelestiaEffect.KIND_BEAM, origin.x, origin.y, origin.z, 0.5F, 40.0F,
+                t == 0 ? 25 : 10, 10, yawOf(beamDir), pitchOf(beamDir));
+        if (aiming && beamFx != null && beamFx.isAlive()) {
+            beamFx.moveTo(origin.x, origin.y, origin.z, yawOf(beamDir), pitchOf(beamDir));
+        }
+        if (aiming && t % 2 == 0) { // дополнительно - линия из частиц
             for (int i = 2; i < 40; i += 2) {
-                Vec3 p = o.add(beamDir.scale(i));
+                Vec3 p = origin.add(beamDir.scale(i));
                 level.sendParticles(ParticleTypes.FLAME, p.x, p.y, p.z, 1, 0.05D, 0.05D, 0.05D, 0.0D);
             }
         }
         if (t == 25 || t == 50) {
-            fireBeam(level, beamDir);
+            float len = fireBeam(level, beamDir);
+            if (beamFx != null && beamFx.isAlive()) beamFx.setLength(len);
             if (getPhase() >= 2) {
-                fireBeam(level, beamDir.yRot(0.22F));
-                fireBeam(level, beamDir.yRot(-0.22F));
+                for (double ang : new double[]{0.22D, -0.22D}) {
+                    Vec3 d = beamDir.yRot((float) ang);
+                    float l2 = fireBeam(level, d);
+                    spawnEffect(CelestiaEffect.KIND_BEAM, origin.x, origin.y, origin.z, 0.5F, l2, 0, 10, yawOf(d), pitchOf(d));
+                }
             }
         }
     }
 
-    private void fireBeam(ServerLevel level, Vec3 dir) {
+    /** Наносит урон по лучу и возвращает его длину (до первого блока). */
+    private float fireBeam(ServerLevel level, Vec3 dir) {
         Vec3 origin = this.getEyePosition();
         level.playSound(null, origin.x, origin.y, origin.z, SoundEvents.DRAGON_FIREBALL_EXPLODE, SoundSource.HOSTILE, 4.0F, 1.4F);
         Set<LivingEntity> victims = new HashSet<>();
+        float length = 40.0F;
         for (int i = 1; i <= 80; i++) {
             Vec3 p = origin.add(dir.scale(i * 0.5D));
             BlockPos bp = BlockPos.containing(p);
             if (!level.getBlockState(bp).getCollisionShape(level, bp).isEmpty()) {
                 level.sendParticles(ParticleTypes.FLASH, p.x, p.y, p.z, 1, 0, 0, 0, 0);
+                length = i * 0.5F;
                 break;
             }
             level.sendParticles(ParticleTypes.END_ROD, p.x, p.y, p.z, 2, 0.12D, 0.12D, 0.12D, 0.01D);
@@ -668,6 +692,7 @@ public class CelestiaGod extends Monster {
             }
         }
         for (LivingEntity e : victims) hit(e, DMG_BEAM * damageMultiplier(), false);
+        return length;
     }
 
     // =================================================================== способность 6: Шаг бога
@@ -711,7 +736,23 @@ public class CelestiaGod extends Monster {
 
     // =================================================================== отложенные удары
     private void addStrike(double x, double z, double nearY, int delay, float radius, float damage, int kind) {
-        strikes.add(new Strike(x, groundY(x, nearY, z), z, delay, radius, damage, kind));
+        double gy = groundY(x, nearY, z);
+        strikes.add(new Strike(x, gy, z, delay, radius, damage, kind));
+        // визуал: предупреждающее кольцо + столп света / падающая звезда
+        spawnEffect(kind == 0 ? CelestiaEffect.KIND_PILLAR : CelestiaEffect.KIND_STAR, x, gy, z, radius, 0.0F, delay,
+                kind == 0 ? 16 : 10, 0.0F, 0.0F);
+    }
+
+    @Nullable
+    private CelestiaEffect spawnEffect(int kind, double x, double y, double z, float radius, float length,
+                                       int warmup, int life, float yaw, float pitch) {
+        if (!(this.level() instanceof ServerLevel level)) return null;
+        CelestiaEffect fx = ModEntities.CELESTIA_EFFECT.get().create(level);
+        if (fx == null) return null;
+        fx.setup(kind, radius, length, warmup, life);
+        fx.moveTo(x, y, z, yaw, pitch);
+        level.addFreshEntity(fx);
+        return fx;
     }
 
     private void tickStrikes() {
@@ -781,7 +822,7 @@ public class CelestiaGod extends Monster {
     }
 
     private void hit(LivingEntity e, float damage, boolean knockUp) {
-        if (e.hurt(this.damageSources().indirectMagic(this, this), damage) && knockUp) {
+        if (e.hurt(this.damageSources().indirectMagic(this, this), Math.min(damage, MAX_HIT_DAMAGE)) && knockUp) {
             e.setDeltaMovement(e.getDeltaMovement().add(0.0D, 0.9D, 0.0D));
             e.hurtMarked = true;
         }

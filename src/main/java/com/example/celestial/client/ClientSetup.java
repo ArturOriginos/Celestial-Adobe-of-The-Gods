@@ -37,6 +37,7 @@ public final class ClientSetup {
         event.registerEntityRenderer(ModEntities.GOD_SPIKE.get(), GodSpikeRenderer::new);
         event.registerEntityRenderer(ModEntities.CURSED_BOSS.get(), CursedBossRenderer::new);
         event.registerEntityRenderer(ModEntities.CELESTIA_GOD.get(), CelestiaGodRenderer::new);
+        event.registerEntityRenderer(ModEntities.CELESTIA_EFFECT.get(), CelestiaEffectRenderer::new);
         event.registerEntityRenderer(ModEntities.CELESTIA_SPIKE.get(),
                 context -> new GodSpikeRenderer(context, GodSpikeRenderer.CELESTIA_TEXTURE));
         event.registerEntityRenderer(ModEntities.CURSED_SPIKE.get(),

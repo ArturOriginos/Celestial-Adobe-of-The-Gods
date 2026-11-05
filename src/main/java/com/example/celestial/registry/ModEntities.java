@@ -2,6 +2,7 @@ package com.example.celestial.registry;
 
 import static com.example.celestial.CelestialMod.MODID;
 
+import com.example.celestial.entity.CelestiaEffect;
 import com.example.celestial.entity.CelestiaGod;
 import com.example.celestial.entity.CelestiaSpike;
 import com.example.celestial.entity.CursedBoss;
@@ -64,6 +65,18 @@ public final class ModEntities {
                     .clientTrackingRange(8)
                     .updateInterval(2)
                     .build("celestia_spike"));
+
+    /** Визуальные эффекты способностей Бога Селестии (столпы, звёзды, лучи). Не сохраняются в мире. */
+    public static final DeferredHolder<EntityType<?>, EntityType<CelestiaEffect>> CELESTIA_EFFECT =
+            ENTITIES.register("celestia_effect", () -> EntityType.Builder
+                    .of(CelestiaEffect::new, MobCategory.MISC)
+                    .sized(0.3F, 0.3F)
+                    .noSave()
+                    .noSummon()
+                    .fireImmune()
+                    .clientTrackingRange(10)
+                    .updateInterval(1)
+                    .build("celestia_effect"));
 
     private ModEntities() {}
 }
