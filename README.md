@@ -2,7 +2,7 @@
 
 **English** | [Русский](README.ru.md)
 
-A NeoForge 1.21.1 mod about the sky realm of the gods: advanced enchanting, unbreakable Celestia weapons and tools, the Guardian of the Gods, the Celestia dimension of floating islands, the Cursed Niflheim biome in the Nether with its boss, and the ultimate tool, the Paxel of Gods and the Cursed. Current version: **1.1.1**.
+A NeoForge 1.21.1 mod about the sky realm of the gods: advanced enchanting, unbreakable Celestia weapons and tools, the Guardian of the Gods, the Celestia dimension of floating islands, the Cursed Niflheim biome in the Nether with its boss, and the ultimate tool, the Paxel of Gods and the Cursed. Current version: **1.1.2**.
 
 All items and blocks are in the creative tab **"Celestial: Abode of the Gods"**. Server config: `world/serverconfig/celestial-server.toml`.
 
@@ -57,6 +57,7 @@ All items and blocks are in the creative tab **"Celestial: Abode of the Gods"**.
 
 Versioning: small edits bump the third number (1.7.1, 1.7.2), big updates bump the second (1.7, 1.8).
 
+- **1.1.2** - Fixed the build error in the Celestia armor halo code (wrong `PlayerSkin` import).
 - **1.1.1** - The Celestia Shield texture is redrawn on the Cursed Shield layout (same shape, no stray edge strip) in Celestia colors: white and lavender field, golden border and cross, blue gem.
 - **1.1** - **Celestia Chestplate** and **Celestia Boots**: 30 armor each, a glowing halo floats above the wearer. Made in the Solar Anvil: Netherite Chestplate / Boots + Guardian Soul (30 levels).
 - **1.0** - New final boss **God of Celestia** (1000 HP, two phases, 30 s of immortality at half health, custom health bar, Paxel in hand that never drops). Drops the **Ring of Divine Flight** (creative flight while in the inventory) and the **Official Cheat Permit** (a shimmering gray paper that does nothing). New Celestia structures **Celestial Stash** (common) and **Celestial Adobe** (rare, the God of Celestia spawns inside).
