@@ -35,7 +35,9 @@ public class CelestiaGodRenderer extends HumanoidMobRenderer<CelestiaGod, Celest
     @Override
     protected void scale(CelestiaGod entity, PoseStack poseStack, float partialTick) {
         float bob = Mth.sin((entity.tickCount + partialTick) * 0.08F) * 0.12F;
-        poseStack.translate(0.0F, LIFT + bob + entity.getLift(partialTick), 0.0F);
+        // scale() вызывается уже после poseStack.scale(-1, -1, 1), поэтому ось Y здесь перевёрнута:
+        // чтобы поднять модель вверх, сдвиг нужен со знаком минус (иначе босс «проваливается» в землю).
+        poseStack.translate(0.0F, -(LIFT + bob + entity.getLift(partialTick)), 0.0F);
         poseStack.scale(SCALE, SCALE, SCALE);
     }
 

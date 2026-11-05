@@ -231,7 +231,7 @@ def paint_face(style, face, fw, fh, dims):
             rgb[spikes] = LAV_L; a[spikes] = 1
             g[:] = rgb * 0.9; ga = a.copy()
         else:
-            rgb[:] = GOLD_M; a = np.ones(sh) * 1.0; g[:] = rgb; ga[:] = 1
+            rgb[:] = GOLD_M; a = np.zeros(sh); g[:] = 0; ga[:] = 0   # торцы диска прозрачные
     elif style == "helmet":
         rgb = mix(LAV_L, LAV_M, T * 0.9) + noise(sh + (1,), 5)
         if face in ("top",):

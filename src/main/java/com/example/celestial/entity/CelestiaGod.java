@@ -215,7 +215,8 @@ public class CelestiaGod extends Monster {
 
     @Override
     protected void dropCustomDeathLoot(ServerLevel level, DamageSource source, boolean recentlyHit) {
-        // экипировка (паксель) не выпадает никогда
+        // экипировка (паксель) не выпадает никогда, зато Кольцо полёта богов выпадает всегда (100%)
+        this.spawnAtLocation(new ItemStack(ModItems.FLIGHT_RING.get()));
     }
 
     // =================================================================== тик

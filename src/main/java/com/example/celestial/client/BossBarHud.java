@@ -47,11 +47,13 @@ public final class BossBarHud {
     private static final int CF_W = 542, CF_H = 174, CF_FILL_W = 344, CF_FILL_H = 18, CF_SEG = 172;
     private static final int CF_LEFT_X = 69, CF_RIGHT_X = 301, CF_TRACK_Y = 80;
 
-    // --- полоска Бога Селестии: золотая рамка 2109x613, стеклянный канал по центру ---
+    // --- полоска Бога Селестии: отдельная рамка (2172x724, канал пустой) и отдельная золотая полоса (1776x133) ---
     private static final ResourceLocation GOD_FRAME = tex("celestia_god_frame");
-    private static final int GD_W = 2109, GD_H = 613;
-    private static final int GD_CH_X0 = 251, GD_CH_X1 = 1846, GD_CH_Y0 = 313, GD_CH_Y1 = 383;
-    private static final int GD_ORN_X = 970, GD_ORN_W = 170; // центральный орнамент рисуется поверх канала
+    private static final ResourceLocation GOD_FILL = tex("celestia_god_fill");
+    private static final int GD_W = 2172, GD_H = 724;
+    private static final int GD_FILL_W = 1776, GD_FILL_H = 133;
+    // канал внутри рамки (в пикселях рамки): между верхними и нижними орнаментами и между боковыми
+    private static final int GD_CH_X0 = 230, GD_CH_X1 = 1940, GD_CH_Y0 = 291, GD_CH_Y1 = 421;
 
     private BossBarHud() {}
 
@@ -59,7 +61,7 @@ public final class BossBarHud {
         event.setCanceled(true);
         GuiGraphics g = event.getGuiGraphics();
         Font font = Minecraft.getInstance().font;
-        int w = 380;
+        int w = 400;
         float sc = w / (float) GD_W;
         int h = Math.round(GD_H * sc);
         int x = (g.guiWidth() - w) / 2;
@@ -67,17 +69,19 @@ public final class BossBarHud {
         int cx = x + w / 2;
         float progress = Math.max(0.0F, Math.min(1.0F, boss.getProgress()));
 
-        g.blit(GOD_FRAME, x, y, w, h, 0, 0, GD_W, GD_H, GD_W, GD_H);
-
         int c0 = x + Math.round(GD_CH_X0 * sc), c1 = x + Math.round(GD_CH_X1 * sc);
         int y0 = y + Math.round(GD_CH_Y0 * sc), y1 = y + Math.round(GD_CH_Y1 * sc);
-        int fillEnd = c0 + Math.round((c1 - c0) * progress);
-        g.fill(fillEnd, y0, c1, y1, 0xE8121634);           // пустая часть канала
-        if (immortal) g.fill(c0, y0, fillEnd, y1, 0x6088A8FF); // бессмертие: голубое свечение
+        int fillW = Math.round((c1 - c0) * progress);
+
+        g.fill(c0, y0, c1, y1, 0xFF0F1230);                       // пустой канал
+        if (fillW > 0) {                                          // золотая полоса: чем меньше здоровья, тем короче
+            g.blit(GOD_FILL, c0, y0, fillW, y1 - y0, 0, 0,
+                    Math.max(1, Math.round(GD_FILL_W * progress)), GD_FILL_H, GD_FILL_W, GD_FILL_H);
+            if (immortal) g.fill(c0, y0, c0 + fillW, y1, 0x6088A8FF); // бессмертие: голубое свечение
+        }
         g.fill((c0 + c1) / 2, y0, (c0 + c1) / 2 + 1, y1, 0x90B07A10); // отметка второй стадии (50%)
-        // орнамент по центру поверх канала
-        g.blit(GOD_FRAME, x + Math.round(GD_ORN_X * sc), y, Math.max(1, Math.round(GD_ORN_W * sc)), h,
-                GD_ORN_X, 0, GD_ORN_W, GD_H, GD_W, GD_H);
+
+        g.blit(GOD_FRAME, x, y, w, h, 0, 0, GD_W, GD_H, GD_W, GD_H);  // рамка поверх
 
         Component name = boss.getName();
         g.drawString(font, name, cx - font.width(name) / 2, y - 9, immortal ? 0xFFBFD4FF : 0xFFFFE08A, true);

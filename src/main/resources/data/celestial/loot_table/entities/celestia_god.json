@@ -37,16 +37,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "celestial:ring_of_gods_flight"
-        }
-      ]
-    },
-    {
-      "rolls": 1.0,
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
           "name": "celestial:official_cheat_permit"
         }
       ]
