@@ -1,0 +1,12 @@
+{
+  "type": "celestial:celestia_blueprint",
+  "biomes": "celestial:celestia",
+  "step": "surface_structures",
+  "spawn_overrides": {},
+  "terrain_adaptation": "none",
+  "blueprint": "celestial_adobe",
+  "max_slope": 6,
+  "foundation": 14,
+  "boss_entity": "celestial:celestia_god",
+  "boss_spawn": [17, 6, 25]
+}

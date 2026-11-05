@@ -76,13 +76,20 @@ public class GodSpike extends Entity {
         }
     }
 
+    /** Кто призвал шип (нужен потомкам, чтобы масштабировать урон). */
+    @Nullable
+    protected LivingEntity getSpikeOwner() {
+        return owner;
+    }
+
     /** Урон шипа (у шипа Проклятого переопределяется). */
     protected float damage() {
         return DAMAGE;
     }
 
     private void hit(LivingEntity target) {
-        if (!target.isAlive() || target.isInvulnerable() || target == owner || target instanceof GuardianOfGods || target instanceof CursedBoss) return;
+        if (!target.isAlive() || target.isInvulnerable() || target == owner || target instanceof GuardianOfGods || target instanceof CursedBoss
+                || target instanceof CelestiaGod) return;
         if (target.hurt(this.damageSources().indirectMagic(this, owner), damage())) {
             target.setDeltaMovement(target.getDeltaMovement().add(0.0, 0.8, 0.0));
             target.hurtMarked = true;

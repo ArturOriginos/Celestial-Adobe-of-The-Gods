@@ -2,6 +2,8 @@ package com.example.celestial.registry;
 
 import static com.example.celestial.CelestialMod.MODID;
 
+import com.example.celestial.world.CelestiaBlueprintPiece;
+import com.example.celestial.world.CelestiaBlueprintStructure;
 import com.example.celestial.world.CursedChurchPiece;
 import com.example.celestial.world.CursedChurchStructure;
 import com.example.celestial.world.GiantTreePiece;
@@ -31,6 +33,15 @@ public final class ModStructures {
     public static final DeferredHolder<StructurePieceType, StructurePieceType> CURSED_CHURCH_PIECE =
             PIECE_TYPES.register("cursed_church",
                     () -> (StructurePieceType.ContextlessType) CursedChurchPiece::new);
+
+    /** Универсальная структура из чертежа (Celestial Stash, Celestial Adobe). */
+    public static final DeferredHolder<StructureType<?>, StructureType<CelestiaBlueprintStructure>> CELESTIA_BLUEPRINT =
+            STRUCTURE_TYPES.register("celestia_blueprint",
+                    () -> (StructureType<CelestiaBlueprintStructure>) () -> CelestiaBlueprintStructure.CODEC);
+
+    public static final DeferredHolder<StructurePieceType, StructurePieceType> CELESTIA_BLUEPRINT_PIECE =
+            PIECE_TYPES.register("celestia_blueprint",
+                    () -> (StructurePieceType.ContextlessType) CelestiaBlueprintPiece::new);
 
     private ModStructures() {}
 }

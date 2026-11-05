@@ -1,0 +1,96 @@
+{
+  "format": "blueprintwand-1",
+  "name": "Celestial_Stash",
+  "minecraft_version": "1.21.1",
+  "dimension": "celestial:celestia",
+  "size": {"x": 10, "y": 6, "z": 9},
+  "origin_world": {"x": -88, "y": 40, "z": 422},
+  "non_air_blocks": 88,
+  "how_to_read": "layers[i] is the horizontal slice at y=i (0 = bottom). rows[j] is z=j (0 = north, smaller z). Character index k inside a row is x=k (0 = west, smaller x). Each character is a key of palette; '.' is air. Coordinates are relative to origin_world.",
+  "palette": {
+    ".": "minecraft:air",
+    "A": "celestial:celestial_brick_slab[type=bottom,waterlogged=false]",
+    "B": "celestial:celestial_brick_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]",
+    "C": "celestial:celestial_bricks",
+    "D": "celestial:celestial_brick_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+    "E": "celestial:celestial_ore",
+    "F": "celestial:celestial_brick_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]",
+    "G": "celestial:celestia_block",
+    "H": "celestial:celestial_brick_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]",
+    "I": "celestial:celestial_brick_slab[type=top,waterlogged=false]",
+    "J": "celestial:celestial_brick_stairs[facing=east,half=bottom,shape=outer_right,waterlogged=false]",
+    "K": "celestial:celestial_brick_stairs[facing=west,half=bottom,shape=outer_left,waterlogged=false]",
+    "L": "celestial:celestial_glowstone",
+    "M": "celestial:celestial_brick_stairs[facing=east,half=bottom,shape=outer_left,waterlogged=false]",
+    "N": "celestial:celestial_brick_stairs[facing=north,half=bottom,shape=outer_left,waterlogged=false]"
+  },
+  "block_entities": [],
+  "layers": [
+    {"y": 0, "rows": [
+      "..........",
+      "..AABBAA..",
+      "..ACCCCA..",
+      "..DCEECF..",
+      "..DCGECF..",
+      "..ACCCCA..",
+      "..AAHHAA..",
+      "..........",
+      ".........."
+    ]},
+    {"y": 1, "rows": [
+      "..........",
+      "..........",
+      "...C..C...",
+      "..........",
+      "..........",
+      "...C..C...",
+      "..........",
+      "..........",
+      ".........."
+    ]},
+    {"y": 2, "rows": [
+      "..........",
+      "..........",
+      "...C..C...",
+      "..........",
+      "..........",
+      "...C..C...",
+      "..........",
+      "..........",
+      ".........."
+    ]},
+    {"y": 3, "rows": [
+      "..........",
+      "..IIIIII..",
+      "..IC..CI..",
+      "..I....I..",
+      "..I....I..",
+      "..IC..CI..",
+      "..IIIIII..",
+      "..........",
+      ".........."
+    ]},
+    {"y": 4, "rows": [
+      "..........",
+      "..........",
+      "...JBBK...",
+      "...DLLF...",
+      "...DLLF...",
+      "...MHHN...",
+      "..........",
+      "..........",
+      ".........."
+    ]},
+    {"y": 5, "rows": [
+      "..........",
+      "..........",
+      "..........",
+      "....AA....",
+      "....AA....",
+      "..........",
+      "..........",
+      "..........",
+      ".........."
+    ]}
+  ]
+}

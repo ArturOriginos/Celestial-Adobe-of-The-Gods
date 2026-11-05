@@ -182,5 +182,20 @@
   "block.celestial.celestial_bricks": "Celestia Bricks",
   "block.celestial.celestial_glass": "Celestia Glass",
   "block.celestial.celestial_brick_stairs": "Celestia Brick Stairs",
-  "block.celestial.celestial_brick_slab": "Celestia Brick Slab"
+  "block.celestial.celestial_brick_slab": "Celestia Brick Slab",
+  "entity.celestial.celestia_god": "God of Celestia",
+  "entity.celestial.celestia_god.immortal": "God of Celestia — Immortal",
+  "entity.celestial.celestia_spike": "Celestia Crystal",
+  "item.celestial.celestia_god_spawn_egg": "God of Celestia Spawn Egg",
+  "celestial.god.phase2": "The God of Celestia awakens! Immortal for 30 seconds...",
+  "celestial.god.vulnerable": "The immortality is over — strike!",
+  "celestial.god.ability.dominion": "Dominion of Celestia!",
+  "celestial.god.ability.star_rain": "Star Rain!",
+  "celestial.god.ability.pillars": "Pillars of Judgement!",
+  "celestial.god.ability.halo": "Rings of Celestia!",
+  "celestial.god.ability.beam": "Beam of Celestia!",
+  "item.celestial.ring_of_gods_flight": "Ring of Divine Flight",
+  "item.celestial.ring_of_gods_flight.desc": "Grants creative flight while in your inventory",
+  "item.celestial.official_cheat_permit": "Official Cheat Permit",
+  "item.celestial.official_cheat_permit.desc": "Does nothing. Just paper."
 }

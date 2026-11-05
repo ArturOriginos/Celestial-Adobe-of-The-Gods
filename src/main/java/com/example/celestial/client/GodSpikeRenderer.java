@@ -20,6 +20,8 @@ public class GodSpikeRenderer extends EntityRenderer<GodSpike> {
             ResourceLocation.fromNamespaceAndPath(MODID, "textures/entity/god_spike.png");
     public static final ResourceLocation CURSED_TEXTURE =
             ResourceLocation.fromNamespaceAndPath(MODID, "textures/entity/cursed_spike.png");
+    public static final ResourceLocation CELESTIA_TEXTURE =
+            ResourceLocation.fromNamespaceAndPath(MODID, "textures/entity/celestia_spike.png");
     private final ResourceLocation texture;
     private final EvokerFangsModel<GodSpike> model;
 

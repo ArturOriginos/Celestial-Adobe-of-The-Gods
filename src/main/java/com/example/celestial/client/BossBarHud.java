@@ -1,6 +1,7 @@
 package com.example.celestial.client;
 
 import com.example.celestial.CelestialMod;
+import com.example.celestial.entity.CelestiaGod;
 import com.example.celestial.entity.CursedBoss;
 import com.example.celestial.entity.GuardianOfGods;
 import java.util.Map;
@@ -46,7 +47,46 @@ public final class BossBarHud {
     private static final int CF_W = 542, CF_H = 174, CF_FILL_W = 344, CF_FILL_H = 18, CF_SEG = 172;
     private static final int CF_LEFT_X = 69, CF_RIGHT_X = 301, CF_TRACK_Y = 80;
 
+    // --- полоска Бога Селестии: золотая рамка 2109x613, стеклянный канал по центру ---
+    private static final ResourceLocation GOD_FRAME = tex("celestia_god_frame");
+    private static final int GD_W = 2109, GD_H = 613;
+    private static final int GD_CH_X0 = 251, GD_CH_X1 = 1846, GD_CH_Y0 = 313, GD_CH_Y1 = 383;
+    private static final int GD_ORN_X = 970, GD_ORN_W = 170; // центральный орнамент рисуется поверх канала
+
     private BossBarHud() {}
+
+    private static void drawGod(CustomizeGuiOverlayEvent.BossEventProgress event, LerpingBossEvent boss, boolean immortal) {
+        event.setCanceled(true);
+        GuiGraphics g = event.getGuiGraphics();
+        Font font = Minecraft.getInstance().font;
+        int w = 380;
+        float sc = w / (float) GD_W;
+        int h = Math.round(GD_H * sc);
+        int x = (g.guiWidth() - w) / 2;
+        int y = event.getY() + 14;
+        int cx = x + w / 2;
+        float progress = Math.max(0.0F, Math.min(1.0F, boss.getProgress()));
+
+        g.blit(GOD_FRAME, x, y, w, h, 0, 0, GD_W, GD_H, GD_W, GD_H);
+
+        int c0 = x + Math.round(GD_CH_X0 * sc), c1 = x + Math.round(GD_CH_X1 * sc);
+        int y0 = y + Math.round(GD_CH_Y0 * sc), y1 = y + Math.round(GD_CH_Y1 * sc);
+        int fillEnd = c0 + Math.round((c1 - c0) * progress);
+        g.fill(fillEnd, y0, c1, y1, 0xE8121634);           // пустая часть канала
+        if (immortal) g.fill(c0, y0, fillEnd, y1, 0x6088A8FF); // бессмертие: голубое свечение
+        g.fill((c0 + c1) / 2, y0, (c0 + c1) / 2 + 1, y1, 0x90B07A10); // отметка второй стадии (50%)
+        // орнамент по центру поверх канала
+        g.blit(GOD_FRAME, x + Math.round(GD_ORN_X * sc), y, Math.max(1, Math.round(GD_ORN_W * sc)), h,
+                GD_ORN_X, 0, GD_ORN_W, GD_H, GD_W, GD_H);
+
+        Component name = boss.getName();
+        g.drawString(font, name, cx - font.width(name) / 2, y - 9, immortal ? 0xFFBFD4FF : 0xFFFFE08A, true);
+        int hp = (int) Math.ceil(progress * CelestiaGod.MAX_HEALTH);
+        String text = hp + " / " + (int) CelestiaGod.MAX_HEALTH;
+        g.drawString(font, text, cx - font.width(text) / 2, y + h + 1, 0xFFFFF1C2, true);
+
+        event.setIncrement(h + 24);
+    }
 
     private static void drawCursed(CustomizeGuiOverlayEvent.BossEventProgress event, LerpingBossEvent boss) {
         event.setCanceled(true);
@@ -90,6 +130,14 @@ public final class BossBarHud {
     public static void onBossBar(CustomizeGuiOverlayEvent.BossEventProgress event) {
         LerpingBossEvent boss = event.getBossEvent();
         if (!(boss.getName().getContents() instanceof TranslatableContents tc)) return;
+        if (tc.getKey().equals("entity.celestial.celestia_god")) {
+            drawGod(event, boss, false);
+            return;
+        }
+        if (tc.getKey().equals("entity.celestial.celestia_god.immortal")) {
+            drawGod(event, boss, true);
+            return;
+        }
         if (tc.getKey().equals("entity.celestial.cursed_boss")) {
             drawCursed(event, boss);
             return;

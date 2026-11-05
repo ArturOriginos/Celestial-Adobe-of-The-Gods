@@ -3,6 +3,7 @@ package com.example.celestial;
 import com.example.celestial.menu.AdvancedEnchantingMenu;
 import com.example.celestial.network.EnchantRequestPayload;
 import com.example.celestial.registry.ModBlocks;
+import com.example.celestial.entity.CelestiaGod;
 import com.example.celestial.entity.CursedBoss;
 import com.example.celestial.entity.GuardianOfGods;
 import com.example.celestial.registry.ModChunkGenerators;
@@ -82,6 +83,7 @@ public class CelestialMod {
     private void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(ModEntities.GUARDIAN.get(), GuardianOfGods.createAttributes().build());
         event.put(ModEntities.CURSED_BOSS.get(), CursedBoss.createAttributes().build());
+        event.put(ModEntities.CELESTIA_GOD.get(), CelestiaGod.createAttributes().build());
     }
 
     private void addCreativeTab(BuildCreativeModeTabContentsEvent event) {
@@ -178,6 +180,9 @@ public class CelestialMod {
         if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
             event.accept(ModItems.GUARDIAN_EGG);
             event.accept(ModItems.CURSED_BOSS_EGG);
+            event.accept(ModItems.CELESTIA_GOD_EGG);
+            event.accept(ModItems.FLIGHT_RING);
+            event.accept(ModItems.CHEAT_PERMIT);
         }
     }
 }

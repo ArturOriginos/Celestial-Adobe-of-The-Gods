@@ -34,14 +34,18 @@ public final class ClientSetup {
         event.registerEntityRenderer(ModEntities.GUARDIAN.get(), GuardianRenderer::new);
         event.registerEntityRenderer(ModEntities.GOD_SPIKE.get(), GodSpikeRenderer::new);
         event.registerEntityRenderer(ModEntities.CURSED_BOSS.get(), CursedBossRenderer::new);
+        event.registerEntityRenderer(ModEntities.CELESTIA_GOD.get(), CelestiaGodRenderer::new);
+        event.registerEntityRenderer(ModEntities.CELESTIA_SPIKE.get(),
+                context -> new GodSpikeRenderer(context, GodSpikeRenderer.CELESTIA_TEXTURE));
         event.registerEntityRenderer(ModEntities.CURSED_SPIKE.get(),
                 context -> new GodSpikeRenderer(context, GodSpikeRenderer.CURSED_TEXTURE));
     }
 
-    /** Щит проклятых рисуется как ванильный щит (Защитная Руна Селестии теперь воксельная 3D-модель) (встроенная модель + свой рендерер). */
+    /** Щит проклятых и Защитная Руна Селестии рисуются как ванильный щит (встроенная модель + свой рендерер) (встроенная модель + свой рендерер). */
     @SubscribeEvent
     public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
         event.registerItem(shieldExtension(CursedShieldRenderer.CURSED_TEXTURE), ModItems.CURSED_SHIELD.get());
+        event.registerItem(shieldExtension(CursedShieldRenderer.CELESTIA_TEXTURE), ModItems.CELESTIA_SHIELD.get());
     }
 
     private static IClientItemExtensions shieldExtension(ResourceLocation texture) {
@@ -62,6 +66,7 @@ public final class ClientSetup {
     @SubscribeEvent
     public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(CursedBossModel.LAYER, CursedBossModel::createBodyLayer);
+        event.registerLayerDefinition(CelestiaGodModel.LAYER, CelestiaGodModel::createBodyLayer);
     }
 
     /** Свойство модели "enchanted": книга с зачарованиями получает второй (переливающийся) спрайт. */

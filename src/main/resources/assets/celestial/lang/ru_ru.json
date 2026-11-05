@@ -182,5 +182,20 @@
   "block.celestial.celestial_bricks": "Селестийский кирпич",
   "block.celestial.celestial_glass": "Селестийское стекло",
   "block.celestial.celestial_brick_stairs": "Селестийские кирпичные ступеньки",
-  "block.celestial.celestial_brick_slab": "Селестийская кирпичная плита"
+  "block.celestial.celestial_brick_slab": "Селестийская кирпичная плита",
+  "entity.celestial.celestia_god": "Бог Селестии",
+  "entity.celestial.celestia_god.immortal": "Бог Селестии — Бессмертие",
+  "entity.celestial.celestia_spike": "Кристалл Селестии",
+  "item.celestial.celestia_god_spawn_egg": "Яйцо призыва: Бог Селестии",
+  "celestial.god.phase2": "Бог Селестии пробуждается! Он бессмертен 30 секунд...",
+  "celestial.god.vulnerable": "Бессмертие закончилось — бейте!",
+  "celestial.god.ability.dominion": "Власть Селестии!",
+  "celestial.god.ability.star_rain": "Звёздопад!",
+  "celestial.god.ability.pillars": "Столпы кары!",
+  "celestial.god.ability.halo": "Кольца Селестии!",
+  "celestial.god.ability.beam": "Луч Селестии!",
+  "item.celestial.ring_of_gods_flight": "Кольцо полёта богов",
+  "item.celestial.ring_of_gods_flight.desc": "Даёт креативный полёт, пока лежит в инвентаре",
+  "item.celestial.official_cheat_permit": "Официальное разрешение на читы",
+  "item.celestial.official_cheat_permit.desc": "Ничего не делает. Просто бумага."
 }

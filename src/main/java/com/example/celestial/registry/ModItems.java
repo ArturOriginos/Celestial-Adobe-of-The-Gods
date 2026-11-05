@@ -2,6 +2,8 @@ package com.example.celestial.registry;
 
 import static com.example.celestial.CelestialMod.MODID;
 
+import com.example.celestial.item.FlightRingItem;
+import com.example.celestial.item.CheatPermitItem;
 import com.example.celestial.item.CelestiaAxeItem;
 import com.example.celestial.item.CelestiaPickShovelItem;
 import com.example.celestial.item.CelestiaShearsItem;
@@ -105,6 +107,18 @@ public final class ModItems {
 
     public static final DeferredItem<DeferredSpawnEggItem> CURSED_BOSS_EGG = ITEMS.register("cursed_boss_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.CURSED_BOSS, 0x1A0A12, 0xD01824, new Item.Properties()));
+
+    public static final DeferredItem<DeferredSpawnEggItem> CELESTIA_GOD_EGG = ITEMS.register("celestia_god_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.CELESTIA_GOD, 0xF6D77A, 0x8F8BD8, new Item.Properties()));
+
+    /** Кольцо полёта богов: падает с Бога Селестии, даёт полёт, пока лежит в инвентаре. */
+    public static final DeferredItem<Item> FLIGHT_RING = ITEMS.register("ring_of_gods_flight",
+            () -> new FlightRingItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()
+                    .component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)));
+
+    /** «Официальное разрешение на читы»: падает с Бога Селестии, ничего не делает. */
+    public static final DeferredItem<Item> CHEAT_PERMIT = ITEMS.register("official_cheat_permit",
+            () -> new CheatPermitItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
 
     private static Item.Properties celestia(double damage, double speed) {
         ItemAttributeModifiers attributes = ItemAttributeModifiers.builder()

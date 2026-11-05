@@ -1,0 +1,11 @@
+{
+  "structures": [
+    { "structure": "celestial:celestial_adobe", "weight": 1 }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 28,
+    "separation": 12,
+    "salt": 4417705
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "celestial:celestia_blueprint",
+  "biomes": "celestial:celestia",
+  "step": "surface_structures",
+  "spawn_overrides": {},
+  "terrain_adaptation": "none",
+  "blueprint": "celestial_stash",
+  "max_slope": 4,
+  "foundation": 10
+}

@@ -2,7 +2,7 @@
 
 **English** | [Русский](README.ru.md)
 
-A NeoForge 1.21.1 mod about the sky realm of the gods: advanced enchanting, unbreakable Celestia weapons and tools, the Guardian of the Gods, the Celestia dimension of floating islands, the Cursed Niflheim biome in the Nether with its boss, and the ultimate tool, the Paxel of Gods and the Cursed. Current version: **1.8-beta**.
+A NeoForge 1.21.1 mod about the sky realm of the gods: advanced enchanting, unbreakable Celestia weapons and tools, the Guardian of the Gods, the Celestia dimension of floating islands, the Cursed Niflheim biome in the Nether with its boss, and the ultimate tool, the Paxel of Gods and the Cursed. Current version: **2.0-beta**.
 
 All items and blocks are in the creative tab **"Celestial: Abode of the Gods"**. Server config: `world/serverconfig/celestial-server.toml`.
 
@@ -20,7 +20,7 @@ All items and blocks are in the creative tab **"Celestial: Abode of the Gods"**.
 - Crafting (soul in the center, one row): sword = 2 netherite swords, axe = 2 netherite axes, pickaxe-shovel = netherite pickaxe + netherite shovel, shield = 2 normal shields. Celestia Shears = 2 shears + soul.
 - All Celestia items are unbreakable. Their names shimmer white-gold. Tools are twice as fast as netherite. The pickaxe-shovel breaks stone, dirt and ores instantly.
 - **Celestia Block**: 8 runes + soul, can only be broken with a Celestia or Cursed pickaxe.
-- All Celestia tools, the shield and the shears have 3D (voxel) models. The Celestia Shield is displayed and held like a shield.
+- The Celestia Sword, Axe, Pickaxe and Shears have 3D (voxel) models. The **Protective Rune of Celestia** (shield) is a flat texture drawn like a real shield, with its own winged-star design.
 
 ## World of Celestia
 
@@ -57,8 +57,10 @@ All items and blocks are in the creative tab **"Celestial: Abode of the Gods"**.
 
 Versioning: small edits bump the third number (1.7.1, 1.7.2), big updates bump the second (1.7, 1.8).
 
+- **2.0** - New final boss **God of Celestia** (1000 HP, two phases, 30 s of immortality at half health, custom health bar, Paxel in hand that never drops). Drops the **Ring of Divine Flight** (creative flight while in the inventory) and the **Official Cheat Permit** (a shimmering gray paper that does nothing). New Celestia structures **Celestial Stash** (common) and **Celestial Adobe** (rare, the God of Celestia spawns inside).
+- **1.8.1** - The Celestia shield is a real flat shield again (like the Cursed Shield) with a new shape and a winged-star design on the front.
 - **1.8** - Celestia Bricks, Celestia Brick Stairs, Celestia Brick Slab and Celestia Glass (with recipes, stonecutter and loot).
-- **1.7.2** - New 3D models for Celestia Sword, Axe, Pickaxe and Shears. New 3D model for the Celestia Shield, shown and held like a shield (with a separate blocking pose). Advancement for the Paxel. README in English and Russian.
+- **1.7.2** - New 3D models for Celestia Sword, Axe, Pickaxe and Shears. (The voxel shield of this version was replaced in 1.8.1.) Advancement for the Paxel. README in English and Russian.
 - **1.7.1** - Paxel is twice as big in the hand (first and third person).
 - **1.7** - Paxel of Gods and the Cursed.
 - **1.6.1** - Cursed Church with the Cursed boss, United Soul, Celestia Shield displayed as a shield.

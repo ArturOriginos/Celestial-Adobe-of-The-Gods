@@ -2,6 +2,8 @@ package com.example.celestial.registry;
 
 import static com.example.celestial.CelestialMod.MODID;
 
+import com.example.celestial.entity.CelestiaGod;
+import com.example.celestial.entity.CelestiaSpike;
 import com.example.celestial.entity.CursedBoss;
 import com.example.celestial.entity.CursedSpike;
 import com.example.celestial.entity.GodSpike;
@@ -46,6 +48,22 @@ public final class ModEntities {
                     .clientTrackingRange(8)
                     .updateInterval(2)
                     .build("cursed_spike"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<CelestiaGod>> CELESTIA_GOD =
+            ENTITIES.register("celestia_god", () -> EntityType.Builder
+                    .of(CelestiaGod::new, MobCategory.MONSTER)
+                    .sized(1.9F, 5.3F)
+                    .fireImmune()
+                    .clientTrackingRange(12)
+                    .build("celestia_god"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<CelestiaSpike>> CELESTIA_SPIKE =
+            ENTITIES.register("celestia_spike", () -> EntityType.Builder
+                    .of(CelestiaSpike::new, MobCategory.MISC)
+                    .sized(0.5F, 0.8F)
+                    .clientTrackingRange(8)
+                    .updateInterval(2)
+                    .build("celestia_spike"));
 
     private ModEntities() {}
 }
