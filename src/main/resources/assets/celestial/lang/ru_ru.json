@@ -197,5 +197,7 @@
   "item.celestial.ring_of_gods_flight": "Кольцо полёта богов",
   "item.celestial.ring_of_gods_flight.desc": "Даёт креативный полёт, пока лежит в инвентаре",
   "item.celestial.official_cheat_permit": "Официальное разрешение на читы",
-  "item.celestial.official_cheat_permit.desc": "Ничего не делает. Просто бумага."
+  "item.celestial.official_cheat_permit.desc": "Ничего не делает. Просто бумага.",
+  "item.celestial.celestia_chestplate": "Нагрудник Селестии",
+  "item.celestial.celestia_boots": "Ботинки Селестии"
 }

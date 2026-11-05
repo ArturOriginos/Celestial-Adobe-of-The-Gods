@@ -197,5 +197,7 @@
   "item.celestial.ring_of_gods_flight": "Ring of Divine Flight",
   "item.celestial.ring_of_gods_flight.desc": "Grants creative flight while in your inventory",
   "item.celestial.official_cheat_permit": "Official Cheat Permit",
-  "item.celestial.official_cheat_permit.desc": "Does nothing. Just paper."
+  "item.celestial.official_cheat_permit.desc": "Does nothing. Just paper.",
+  "item.celestial.celestia_chestplate": "Celestia Chestplate",
+  "item.celestial.celestia_boots": "Celestia Boots"
 }

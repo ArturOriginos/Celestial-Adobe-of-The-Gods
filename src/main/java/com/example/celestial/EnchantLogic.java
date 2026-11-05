@@ -37,6 +37,26 @@ public final class EnchantLogic {
         return stack.is(ModItems.CURSED_SOUL.get());
     }
 
+    /** Душа Хранителя богов: с ней в Солнечной наковальне делается броня Селестии. */
+    public static boolean isGuardianSoul(ItemStack stack) {
+        return stack.is(ModItems.GUARDIAN_SOUL.get());
+    }
+
+    /**
+     * Солнечная наковальня: незеритовый нагрудник/ботинки + душа Хранителя богов => броня Селестии.
+     * Зачарования переходят на новый предмет. Если предмет не подходит - пустой стек.
+     */
+    public static ItemStack celestiaArmorUpgrade(ItemStack tool) {
+        Item result = null;
+        if (tool.is(Items.NETHERITE_CHESTPLATE)) result = ModItems.CELESTIA_CHESTPLATE.get();
+        else if (tool.is(Items.NETHERITE_BOOTS)) result = ModItems.CELESTIA_BOOTS.get();
+        if (result == null) return ItemStack.EMPTY;
+        ItemStack out = new ItemStack(result);
+        ItemEnchantments enchants = tool.get(DataComponents.ENCHANTMENTS);
+        if (enchants != null && !enchants.isEmpty()) out.set(DataComponents.ENCHANTMENTS, enchants);
+        return out;
+    }
+
     /**
      * Солнечная наковальня: предмет Селестии + душа проклятого => такой же предмет проклятых.
      * Зачарования переходят на новый предмет. Если предмет не подходит - пустой стек.

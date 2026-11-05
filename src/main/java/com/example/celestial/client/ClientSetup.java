@@ -10,6 +10,8 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.world.entity.player.PlayerSkin;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -63,10 +65,22 @@ public final class ClientSetup {
         };
     }
 
+    /** Нимб брони Селестии добавляется ко всем скинам игрока (широкий и тонкий). */
+    @SubscribeEvent
+    public static void addPlayerLayers(EntityRenderersEvent.AddLayers event) {
+        for (PlayerSkin.Model skin : event.getSkins()) {
+            var renderer = event.getSkin(skin);
+            if (renderer instanceof PlayerRenderer playerRenderer) {
+                playerRenderer.addLayer(new CelestiaHaloLayer(playerRenderer, event.getEntityModels()));
+            }
+        }
+    }
+
     @SubscribeEvent
     public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(CursedBossModel.LAYER, CursedBossModel::createBodyLayer);
         event.registerLayerDefinition(CelestiaGodModel.LAYER, CelestiaGodModel::createBodyLayer);
+        event.registerLayerDefinition(CelestiaHaloLayer.LAYER, CelestiaHaloLayer::createLayer);
     }
 
     /** Свойство модели "enchanted": книга с зачарованиями получает второй (переливающийся) спрайт. */

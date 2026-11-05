@@ -12,6 +12,7 @@ import com.example.celestial.registry.ModEffects;
 import com.example.celestial.registry.ModEntities;
 import com.example.celestial.registry.ModFeatures;
 import com.example.celestial.registry.ModStructures;
+import com.example.celestial.registry.ModArmorMaterials;
 import com.example.celestial.registry.ModItems;
 import com.example.celestial.registry.ModMenus;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -34,6 +35,7 @@ public class CelestialMod {
     public CelestialMod(IEventBus modBus, ModContainer container) {
         ModBlocks.BLOCKS.register(modBus);
         ModBlocks.ITEMS.register(modBus);
+        ModArmorMaterials.MATERIALS.register(modBus);
         ModItems.ITEMS.register(modBus);
         ModEffects.EFFECTS.register(modBus);
         ModEntities.ENTITIES.register(modBus);
@@ -181,6 +183,8 @@ public class CelestialMod {
             event.accept(ModItems.GUARDIAN_EGG);
             event.accept(ModItems.CURSED_BOSS_EGG);
             event.accept(ModItems.CELESTIA_GOD_EGG);
+            event.accept(ModItems.CELESTIA_CHESTPLATE);
+            event.accept(ModItems.CELESTIA_BOOTS);
             event.accept(ModItems.FLIGHT_RING);
             event.accept(ModItems.CHEAT_PERMIT);
         }

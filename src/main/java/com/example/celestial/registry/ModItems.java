@@ -21,6 +21,7 @@ import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
@@ -110,6 +111,15 @@ public final class ModItems {
 
     public static final DeferredItem<DeferredSpawnEggItem> CELESTIA_GOD_EGG = ITEMS.register("celestia_god_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.CELESTIA_GOD, 0xF6D77A, 0x8F8BD8, new Item.Properties()));
+
+    /** Броня Селестии: по 30 защиты, нимб над игроком. Делается в Солнечной наковальне: незеритовая часть + душа Хранителя богов. */
+    public static final DeferredItem<ArmorItem> CELESTIA_CHESTPLATE = ITEMS.register("celestia_chestplate",
+            () -> new ArmorItem(ModArmorMaterials.CELESTIA, ArmorItem.Type.CHESTPLATE,
+                    new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+
+    public static final DeferredItem<ArmorItem> CELESTIA_BOOTS = ITEMS.register("celestia_boots",
+            () -> new ArmorItem(ModArmorMaterials.CELESTIA, ArmorItem.Type.BOOTS,
+                    new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
 
     /** Кольцо полёта богов: падает с Бога Селестии, даёт полёт, пока лежит в инвентаре. */
     public static final DeferredItem<Item> FLIGHT_RING = ITEMS.register("ring_of_gods_flight",
