@@ -2,7 +2,7 @@
 
 **English** | [Русский](README.ru.md)
 
-A NeoForge 1.21.1 mod about the sky realm of the gods: advanced enchanting, unbreakable Celestia weapons and tools, the Guardian of the Gods, the Celestia dimension of floating islands, the Cursed Niflheim biome in the Nether with its boss, and the ultimate tool, the Paxel of Gods and the Cursed. Current version: **1.2**.
+A NeoForge 1.21.1 mod about the sky realm of the gods: advanced enchanting, unbreakable Celestia weapons and tools, the Guardian of the Gods, the Celestia dimension of floating islands, the Cursed Niflheim biome in the Nether with its boss, and the ultimate tool, the Paxel of Gods and the Cursed. Current version: **1.3**.
 
 All items and blocks are in the creative tab **"Celestial: Abode of the Gods"**. Server config: `world/serverconfig/celestial-server.toml`.
 
@@ -57,6 +57,7 @@ All items and blocks are in the creative tab **"Celestial: Abode of the Gods"**.
 
 Versioning: small edits bump the third number (1.7.1, 1.7.2), big updates bump the second (1.7, 1.8).
 
+- **1.3** - New advancements: Cursed items (soul, sword, axe, pickaxe-shovel, shield, full arsenal), killing the Cursed One, killing the God of Celestia, and the full Celestia armor set.
 - **1.2** - God of Celestia: Star Rain, Pillars of Judgement and the Beam now have real visuals (light pillars, falling stars, beams); every hit of the boss is capped at 20 health. Celestia armor can be enchanted at the Grace of the Gods of Celestia table. Full set (chestplate + boots) gives +20 max health (one more row of hearts) and a light-yellow armor bar.
 - **1.1.2** - Fixed the build error in the Celestia armor halo code (wrong `PlayerSkin` import).
 - **1.1.1** - The Celestia Shield texture is redrawn on the Cursed Shield layout (same shape, no stray edge strip) in Celestia colors: white and lavender field, golden border and cross, blue gem.

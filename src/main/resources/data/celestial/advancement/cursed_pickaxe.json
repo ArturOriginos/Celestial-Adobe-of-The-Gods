@@ -1,0 +1,35 @@
+{
+  "parent": "celestial:cursed_soul",
+  "display": {
+    "icon": {
+      "id": "celestial:cursed_pickaxe"
+    },
+    "title": {
+      "translate": "advancement.celestial.cursed_pickaxe.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.cursed_pickaxe.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_cursed_pickaxe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:cursed_pickaxe"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_cursed_pickaxe"
+    ]
+  ]
+}

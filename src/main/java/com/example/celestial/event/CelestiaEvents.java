@@ -197,6 +197,21 @@ public final class CelestiaEvents {
         }
     }
 
+    /** Достижения за убийство Проклятого и Бога Селестии: получают убийца и все игроки рядом (в радиусе 64 блоков). */
+    @SubscribeEvent
+    public static void onNewBossDeath(LivingDeathEvent event) {
+        LivingEntity boss = event.getEntity();
+        String id = boss instanceof com.example.celestial.entity.CursedBoss ? "kill_cursed_boss"
+                : boss instanceof com.example.celestial.entity.CelestiaGod ? "kill_celestia_god" : null;
+        if (id == null || !(boss.level() instanceof ServerLevel level)) return;
+        java.util.Set<ServerPlayer> winners = new java.util.HashSet<>();
+        if (event.getSource().getEntity() instanceof ServerPlayer killer) winners.add(killer);
+        for (ServerPlayer p : level.players()) {
+            if (!p.isSpectator() && p.distanceToSqr(boss) < 64.0D * 64.0D) winners.add(p);
+        }
+        for (ServerPlayer p : winners) ModAdvancements.grant(p, id);
+    }
+
     private static final String WITHER_KILLS = "celestial_wither_kills";
 
     /** Эндер Дракон: душа выпадает всегда. Визер: шанс 25%, а каждое 5-е убийство без дропа - гарантированная душа. */

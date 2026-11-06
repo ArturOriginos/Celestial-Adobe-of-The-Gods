@@ -1,0 +1,38 @@
+{
+  "parent": "celestial:guardian_soul",
+  "display": {
+    "icon": {
+      "id": "celestial:celestia_chestplate"
+    },
+    "title": {
+      "translate": "advancement.celestial.celestia_armor_set.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.celestia_armor_set.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_celestia_armor_set": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:celestia_chestplate"
+          },
+          {
+            "items": "celestial:celestia_boots"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_celestia_armor_set"
+    ]
+  ]
+}

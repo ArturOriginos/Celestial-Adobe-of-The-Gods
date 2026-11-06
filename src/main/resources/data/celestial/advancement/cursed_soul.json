@@ -1,0 +1,35 @@
+{
+  "parent": "celestial:kill_cursed_boss",
+  "display": {
+    "icon": {
+      "id": "celestial:cursed_soul"
+    },
+    "title": {
+      "translate": "advancement.celestial.cursed_soul.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.cursed_soul.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_cursed_soul": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:cursed_soul"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_cursed_soul"
+    ]
+  ]
+}

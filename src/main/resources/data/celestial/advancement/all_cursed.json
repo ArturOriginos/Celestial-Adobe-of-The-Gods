@@ -1,0 +1,44 @@
+{
+  "parent": "celestial:cursed_soul",
+  "display": {
+    "icon": {
+      "id": "celestial:cursed_sword"
+    },
+    "title": {
+      "translate": "advancement.celestial.all_cursed.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.all_cursed.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_all_cursed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:cursed_sword"
+          },
+          {
+            "items": "celestial:cursed_axe"
+          },
+          {
+            "items": "celestial:cursed_pickaxe"
+          },
+          {
+            "items": "celestial:cursed_shield"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_all_cursed"
+    ]
+  ]
+}

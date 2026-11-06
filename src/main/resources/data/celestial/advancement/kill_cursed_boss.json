@@ -1,0 +1,28 @@
+{
+  "parent": "celestial:guardian_soul",
+  "display": {
+    "icon": {
+      "id": "celestial:cursed_soul"
+    },
+    "title": {
+      "translate": "advancement.celestial.kill_cursed_boss.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.kill_cursed_boss.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "trigger": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "trigger"
+    ]
+  ]
+}

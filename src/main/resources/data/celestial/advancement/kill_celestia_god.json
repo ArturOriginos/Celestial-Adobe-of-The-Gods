@@ -1,0 +1,28 @@
+{
+  "parent": "celestial:kill_cursed_boss",
+  "display": {
+    "icon": {
+      "id": "celestial:ring_of_gods_flight"
+    },
+    "title": {
+      "translate": "advancement.celestial.kill_celestia_god.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.kill_celestia_god.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "trigger": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "trigger"
+    ]
+  ]
+}

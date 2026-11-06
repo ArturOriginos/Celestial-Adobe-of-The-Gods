@@ -1,0 +1,35 @@
+{
+  "parent": "celestial:cursed_soul",
+  "display": {
+    "icon": {
+      "id": "celestial:cursed_shield"
+    },
+    "title": {
+      "translate": "advancement.celestial.cursed_shield.title"
+    },
+    "description": {
+      "translate": "advancement.celestial.cursed_shield.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_cursed_shield": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "celestial:cursed_shield"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_cursed_shield"
+    ]
+  ]
+}
