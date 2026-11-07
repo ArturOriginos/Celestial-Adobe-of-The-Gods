@@ -31,6 +31,24 @@ public final class GradientText {
         return out;
     }
 
+    /** Золото -> белый -> лаванда для описания Совершенного Пакселя. */
+    public static MutableComponent ofPerfectPaxel(String text) {
+        int[][] stops = {{255, 200, 64}, {255, 250, 235}, {170, 150, 255}};
+        MutableComponent out = Component.empty();
+        int n = Math.max(1, text.length() - 1);
+        for (int i = 0; i < text.length(); i++) {
+            double pos = 2.0 * i / n;
+            int a = (int) Math.min(1, Math.floor(pos));
+            double f = pos - a;
+            int r = (int) Math.round(stops[a][0] + (stops[a + 1][0] - stops[a][0]) * f);
+            int g = (int) Math.round(stops[a][1] + (stops[a + 1][1] - stops[a][1]) * f);
+            int b = (int) Math.round(stops[a][2] + (stops[a + 1][2] - stops[a][2]) * f);
+            int rgb = (r << 16) | (g << 8) | b;
+            out.append(Component.literal(String.valueOf(text.charAt(i))).withStyle(s -> s.withColor(rgb)));
+        }
+        return out;
+    }
+
     /** Красный градиент для описаний предметов проклятых. */
     public static MutableComponent ofCursed(String text) {
         MutableComponent out = Component.empty();

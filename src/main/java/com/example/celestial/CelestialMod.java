@@ -98,6 +98,7 @@ public class CelestialMod {
             event.accept(ModItems.GUARDIAN_SOUL);
             event.accept(ModItems.CURSED_SOUL);
             event.accept(ModItems.UNITED_SOUL);
+            event.accept(ModItems.CELESTIA_GOD_SOUL);
             event.accept(ModItems.CELESTIA_RUNE);
             event.accept(ModItems.CELESTIA_KEY);
         }
@@ -172,12 +173,14 @@ public class CelestialMod {
             event.accept(ModItems.CURSED_AXE);
             event.accept(ModItems.CURSED_SHIELD);
             event.accept(ModItems.PAXEL);
+            event.accept(ModItems.PERFECT_PAXEL);
         }
         if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
             event.accept(ModItems.CELESTIA_PICKAXE);
             event.accept(ModItems.CELESTIA_SHEARS);
             event.accept(ModItems.CURSED_PICKAXE);
             event.accept(ModItems.PAXEL);
+            event.accept(ModItems.PERFECT_PAXEL);
         }
         if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
             event.accept(ModItems.GUARDIAN_EGG);

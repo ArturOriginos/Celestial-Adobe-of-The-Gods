@@ -14,6 +14,7 @@ import com.example.celestial.item.CursedAxeItem;
 import com.example.celestial.item.CursedPickShovelItem;
 import com.example.celestial.item.CursedShieldItem;
 import com.example.celestial.item.PaxelItem;
+import com.example.celestial.item.PerfectPaxelItem;
 import com.example.celestial.item.CursedSwordItem;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
@@ -48,6 +49,11 @@ public final class ModItems {
     /** Объединённая душа богов и проклятых: крафт из Души Хранителя Богов и Души проклятого. */
     public static final DeferredItem<Item> UNITED_SOUL =
             ITEMS.registerSimpleItem("united_soul", new Item.Properties().rarity(Rarity.EPIC).fireResistant()
+                    .component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true));
+
+    /** Душа Бога Селестии: падает с одноимённого босса, нужна для Совершенного Пакселя. */
+    public static final DeferredItem<Item> CELESTIA_GOD_SOUL =
+            ITEMS.registerSimpleItem("celestia_god_soul", new Item.Properties().rarity(Rarity.EPIC).fireResistant()
                     .component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true));
 
     /** Руна Селестии: выпадает из Селестийской руды. */
@@ -102,6 +108,15 @@ public final class ModItems {
     /** Паксель Богов и Проклятых: мульти-тул, мгновенно добывает камень, дерево и землю, 50 урона, неразрушим. */
     public static final DeferredItem<PaxelItem> PAXEL = ITEMS.register("paxel",
             () -> new PaxelItem(CelestiaTier.AXE, celestia(49.0, -2.6)));
+
+    /** Совершенный Паксель: как Паксель Богов и Проклятых, но 250 урона (1 рука + 249). Солнечная наковальня: Паксель + Душа Бога Селестии. */
+    public static final DeferredItem<PerfectPaxelItem> PERFECT_PAXEL = ITEMS.register("perfect_paxel",
+            () -> new PerfectPaxelItem(CelestiaTier.AXE, celestia(249.0, -2.6)));
+
+    /** Любой из пакселей (обычный или совершенный): общее поведение мульти-тула. */
+    public static boolean isPaxel(net.minecraft.world.item.ItemStack stack) {
+        return stack.is(PAXEL.get()) || stack.is(PERFECT_PAXEL.get());
+    }
 
     public static final DeferredItem<DeferredSpawnEggItem> GUARDIAN_EGG = ITEMS.register("guardian_of_gods_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.GUARDIAN, 0xE0A800, 0xFFF3C4, new Item.Properties()));

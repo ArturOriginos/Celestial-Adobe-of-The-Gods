@@ -69,7 +69,7 @@ public final class CelestiaEvents {
     }
 
     private static boolean instantFor(ItemStack tool, BlockState state) {
-        if (tool.is(ModItems.PAXEL.get())) return paxelBlock(state);
+        if (ModItems.isPaxel(tool)) return paxelBlock(state);
         return tool.is(ModItems.CELESTIA_PICKAXE.get()) && pickaxeBlock(state);
     }
 
@@ -100,7 +100,7 @@ public final class CelestiaEvents {
 
         // 1. Блок Селестии можно сломать только кирко-лопатой Селестии
         if (state.is(ModBlocks.CELESTIA_BLOCK.get()) && !tool.is(ModItems.CELESTIA_PICKAXE.get())
-                && !tool.is(ModItems.CURSED_PICKAXE.get()) && !tool.is(ModItems.PAXEL.get())) {
+                && !tool.is(ModItems.CURSED_PICKAXE.get()) && !ModItems.isPaxel(tool)) {
             event.setCanceled(true);
             return;
         }
@@ -120,7 +120,7 @@ public final class CelestiaEvents {
 
         // 3. Гнев Природы на топоре Селестии: мгновенно срубает всё дерево
         if (!felling && state.is(BlockTags.LOGS)
-                && (tool.is(ModItems.CELESTIA_AXE.get()) || tool.is(ModItems.PAXEL.get()))
+                && (tool.is(ModItems.CELESTIA_AXE.get()) || ModItems.isPaxel(tool))
                 && ModEnchantments.getLevel(level, tool, ModEnchantments.NATURES_WRATH) > 0) {
             felling = true;
             try {

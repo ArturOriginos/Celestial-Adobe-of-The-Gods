@@ -42,6 +42,23 @@ public final class EnchantLogic {
         return stack.is(ModItems.GUARDIAN_SOUL.get());
     }
 
+    /** Душа Бога Селестии: с ней в Солнечной наковальне Паксель становится Совершенным. */
+    public static boolean isCelestiaGodSoul(ItemStack stack) {
+        return stack.is(ModItems.CELESTIA_GOD_SOUL.get());
+    }
+
+    /**
+     * Солнечная наковальня: Паксель Богов и Проклятых + Душа Бога Селестии => Совершенный Паксель.
+     * Зачарования переходят на новый предмет. Если предмет не подходит - пустой стек.
+     */
+    public static ItemStack perfectPaxelUpgrade(ItemStack tool) {
+        if (!tool.is(ModItems.PAXEL.get())) return ItemStack.EMPTY;
+        ItemStack out = new ItemStack(ModItems.PERFECT_PAXEL.get());
+        ItemEnchantments enchants = tool.get(DataComponents.ENCHANTMENTS);
+        if (enchants != null && !enchants.isEmpty()) out.set(DataComponents.ENCHANTMENTS, enchants);
+        return out;
+    }
+
     /**
      * Солнечная наковальня: незеритовый нагрудник/ботинки + душа Хранителя богов => броня Селестии.
      * Зачарования переходят на новый предмет. Если предмет не подходит - пустой стек.
