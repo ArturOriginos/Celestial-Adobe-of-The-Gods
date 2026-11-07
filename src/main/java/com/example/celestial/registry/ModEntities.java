@@ -6,6 +6,12 @@ import com.example.celestial.entity.CelestiaEffect;
 import com.example.celestial.entity.CelestiaGod;
 import com.example.celestial.entity.CelestiaSpike;
 import com.example.celestial.entity.CursedBoss;
+import com.example.celestial.entity.CursedChicken;
+import com.example.celestial.entity.CursedCow;
+import com.example.celestial.entity.CursedPig;
+import com.example.celestial.entity.CursedSheep;
+import com.example.celestial.entity.CursedSkeleton;
+import com.example.celestial.entity.CursedZombie;
 import com.example.celestial.entity.CursedSpike;
 import com.example.celestial.entity.GodSpike;
 import com.example.celestial.entity.GuardianOfGods;
@@ -77,6 +83,49 @@ public final class ModEntities {
                     .clientTrackingRange(10)
                     .updateInterval(1)
                     .build("celestia_effect"));
+
+    // ----------------------------------------------------------- Проклятые мобы (без естественного спавна)
+    public static final DeferredHolder<EntityType<?>, EntityType<CursedPig>> CURSED_PIG =
+            ENTITIES.register("cursed_pig", () -> EntityType.Builder
+                    .of(CursedPig::new, MobCategory.CREATURE)
+                    .sized(0.9F, 0.9F)
+                    .clientTrackingRange(8)
+                    .build("cursed_pig"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<CursedCow>> CURSED_COW =
+            ENTITIES.register("cursed_cow", () -> EntityType.Builder
+                    .of(CursedCow::new, MobCategory.CREATURE)
+                    .sized(0.9F, 1.4F)
+                    .clientTrackingRange(8)
+                    .build("cursed_cow"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<CursedSheep>> CURSED_SHEEP =
+            ENTITIES.register("cursed_sheep", () -> EntityType.Builder
+                    .of(CursedSheep::new, MobCategory.CREATURE)
+                    .sized(0.9F, 1.3F)
+                    .clientTrackingRange(8)
+                    .build("cursed_sheep"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<CursedChicken>> CURSED_CHICKEN =
+            ENTITIES.register("cursed_chicken", () -> EntityType.Builder
+                    .of(CursedChicken::new, MobCategory.CREATURE)
+                    .sized(0.4F, 0.7F)
+                    .clientTrackingRange(8)
+                    .build("cursed_chicken"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<CursedZombie>> CURSED_ZOMBIE =
+            ENTITIES.register("cursed_zombie", () -> EntityType.Builder
+                    .of(CursedZombie::new, MobCategory.MONSTER)
+                    .sized(0.6F, 1.95F)
+                    .clientTrackingRange(8)
+                    .build("cursed_zombie"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<CursedSkeleton>> CURSED_SKELETON =
+            ENTITIES.register("cursed_skeleton", () -> EntityType.Builder
+                    .of(CursedSkeleton::new, MobCategory.MONSTER)
+                    .sized(0.6F, 1.99F)
+                    .clientTrackingRange(8)
+                    .build("cursed_skeleton"));
 
     private ModEntities() {}
 }

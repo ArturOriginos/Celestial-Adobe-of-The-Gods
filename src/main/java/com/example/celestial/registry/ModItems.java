@@ -127,6 +127,25 @@ public final class ModItems {
     public static final DeferredItem<DeferredSpawnEggItem> CELESTIA_GOD_EGG = ITEMS.register("celestia_god_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.CELESTIA_GOD, 0xF6D77A, 0x8F8BD8, new Item.Properties()));
 
+
+    public static final DeferredItem<DeferredSpawnEggItem> CURSED_PIG_EGG = ITEMS.register("cursed_pig_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.CURSED_PIG, 0x2A0E16, 0xF0708A, new Item.Properties()));
+
+    public static final DeferredItem<DeferredSpawnEggItem> CURSED_COW_EGG = ITEMS.register("cursed_cow_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.CURSED_COW, 0x1A0A12, 0xB01824, new Item.Properties()));
+
+    public static final DeferredItem<DeferredSpawnEggItem> CURSED_SHEEP_EGG = ITEMS.register("cursed_sheep_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.CURSED_SHEEP, 0x2E1A3A, 0xD01824, new Item.Properties()));
+
+    public static final DeferredItem<DeferredSpawnEggItem> CURSED_CHICKEN_EGG = ITEMS.register("cursed_chicken_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.CURSED_CHICKEN, 0x1A0A12, 0xFF8A1E, new Item.Properties()));
+
+    public static final DeferredItem<DeferredSpawnEggItem> CURSED_ZOMBIE_EGG = ITEMS.register("cursed_zombie_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.CURSED_ZOMBIE, 0x16302A, 0xD01824, new Item.Properties()));
+
+    public static final DeferredItem<DeferredSpawnEggItem> CURSED_SKELETON_EGG = ITEMS.register("cursed_skeleton_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.CURSED_SKELETON, 0x2A2A32, 0xD01824, new Item.Properties()));
+
     /** Броня Селестии: по 30 защиты, нимб над игроком. Делается в Солнечной наковальне: незеритовая часть + душа Хранителя богов. */
     public static final DeferredItem<ArmorItem> CELESTIA_CHESTPLATE = ITEMS.register("celestia_chestplate",
             () -> new ArmorItem(ModArmorMaterials.CELESTIA, ArmorItem.Type.CHESTPLATE,

@@ -86,6 +86,12 @@ public class CelestialMod {
         event.put(ModEntities.GUARDIAN.get(), GuardianOfGods.createAttributes().build());
         event.put(ModEntities.CURSED_BOSS.get(), CursedBoss.createAttributes().build());
         event.put(ModEntities.CELESTIA_GOD.get(), CelestiaGod.createAttributes().build());
+        event.put(ModEntities.CURSED_PIG.get(), net.minecraft.world.entity.animal.Pig.createAttributes().build());
+        event.put(ModEntities.CURSED_COW.get(), net.minecraft.world.entity.animal.Cow.createAttributes().build());
+        event.put(ModEntities.CURSED_SHEEP.get(), net.minecraft.world.entity.animal.Sheep.createAttributes().build());
+        event.put(ModEntities.CURSED_CHICKEN.get(), net.minecraft.world.entity.animal.Chicken.createAttributes().build());
+        event.put(ModEntities.CURSED_ZOMBIE.get(), net.minecraft.world.entity.monster.Zombie.createAttributes().build());
+        event.put(ModEntities.CURSED_SKELETON.get(), net.minecraft.world.entity.monster.AbstractSkeleton.createAttributes().build());
     }
 
     private void addCreativeTab(BuildCreativeModeTabContentsEvent event) {
@@ -186,6 +192,12 @@ public class CelestialMod {
             event.accept(ModItems.GUARDIAN_EGG);
             event.accept(ModItems.CURSED_BOSS_EGG);
             event.accept(ModItems.CELESTIA_GOD_EGG);
+            event.accept(ModItems.CURSED_PIG_EGG);
+            event.accept(ModItems.CURSED_COW_EGG);
+            event.accept(ModItems.CURSED_SHEEP_EGG);
+            event.accept(ModItems.CURSED_CHICKEN_EGG);
+            event.accept(ModItems.CURSED_ZOMBIE_EGG);
+            event.accept(ModItems.CURSED_SKELETON_EGG);
             event.accept(ModItems.CELESTIA_CHESTPLATE);
             event.accept(ModItems.CELESTIA_BOOTS);
             event.accept(ModItems.FLIGHT_RING);

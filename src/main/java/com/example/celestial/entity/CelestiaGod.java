@@ -29,6 +29,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -925,6 +926,58 @@ public class CelestiaGod extends Monster {
     public float getArmZ(float pt) { return Mth.lerp(pt, armZ0, armZ); }
     public float getRingScale(float pt) { return Mth.lerp(pt, ringScale0, ringScale); }
     public float getLift(float pt) { return Mth.lerp(pt, lift0, lift); }
+
+    // =================================================================== смерть
+
+    /** Длительность анимации смерти: 3 секунды. */
+    public static final int DEATH_TICKS = 60;
+
+    /**
+     * Анимация смерти (~3 с): бог не падает, а медленно поднимается, дрожит и светится,
+     * вокруг расходятся кольца частиц, затем яркая вспышка и исчезновение.
+     */
+    @Override
+    protected void tickDeath() {
+        this.deathTime++;
+        this.setNoGravity(true);
+        this.setDeltaMovement(0.0D, 0.035D, 0.0D);
+        if (!(this.level() instanceof ServerLevel server)) return;
+
+        this.bossEvent.setProgress(0.0F);
+        float t = (float) this.deathTime / DEATH_TICKS;
+        double cx = this.getX(), cy = this.getY() + this.getBbHeight() * 0.55D, cz = this.getZ();
+
+        if (this.deathTime == 1) {
+            this.playSound(SoundEvents.BEACON_DEACTIVATE, 4.0F, 0.6F);
+        }
+        // лучи света, поднимающиеся от тела
+        server.sendParticles(ParticleTypes.END_ROD, this.getRandomX(0.8D), this.getY() + this.random.nextDouble() * this.getBbHeight(),
+                this.getRandomZ(0.8D), 2 + (int) (t * 6), 0.0D, 0.12D, 0.0D, 0.02D);
+        // расширяющееся кольцо каждые 10 тиков
+        if (this.deathTime % 10 == 0) {
+            double radius = 0.8D + 3.2D * t;
+            for (int i = 0; i < 28; i++) {
+                double ang = Math.PI * 2.0D * i / 28.0D;
+                server.sendParticles(ParticleTypes.END_ROD, cx + Math.cos(ang) * radius, cy, cz + Math.sin(ang) * radius,
+                        1, 0.0D, 0.02D, 0.0D, 0.0D);
+            }
+            this.playSound(SoundEvents.AMETHYST_BLOCK_CHIME, 3.5F, 0.6F + 1.2F * t);
+        }
+        if (this.deathTime % 15 == 0) {
+            this.playSound(SoundEvents.ENDER_DRAGON_GROWL, 3.0F, 0.5F + 0.6F * t);
+        }
+        // финал: вспышка и исчезновение
+        if (this.deathTime >= DEATH_TICKS && !this.isRemoved()) {
+            server.sendParticles(ParticleTypes.FLASH, cx, cy, cz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+            server.sendParticles(ParticleTypes.EXPLOSION_EMITTER, cx, cy, cz, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+            server.sendParticles(ParticleTypes.END_ROD, cx, cy, cz, 160, 1.2D, 1.4D, 1.2D, 0.25D);
+            server.sendParticles(ParticleTypes.TOTEM_OF_UNDYING, cx, cy, cz, 90, 1.0D, 1.2D, 1.0D, 0.4D);
+            server.playSound(null, cx, cy, cz, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.HOSTILE, 5.0F, 0.7F);
+            server.playSound(null, cx, cy, cz, SoundEvents.ENDER_DRAGON_DEATH, SoundSource.HOSTILE, 5.0F, 1.2F);
+            this.bossEvent.removeAllPlayers();
+            this.remove(Entity.RemovalReason.KILLED);
+        }
+    }
 
     // =================================================================== звуки
     @Override

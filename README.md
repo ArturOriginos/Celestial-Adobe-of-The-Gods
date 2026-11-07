@@ -1,10 +1,10 @@
-# Celestial: Abode of the Gods
+# Celestial chapter 2 (1.1)
 
 **English** | [Русский](README.ru.md)
 
 A NeoForge 1.21.1 mod about the sky realm of the gods: advanced enchanting, unbreakable Celestia weapons and tools, the Guardian of the Gods, the Celestia dimension of floating islands, the Cursed Niflheim biome in the Nether with its boss, and the ultimate tool, the Paxel of Gods and the Cursed. Current version: **1.3**.
 
-All items and blocks are in the creative tab **"Celestial: Abode of the Gods"**. Server config: `world/serverconfig/celestial-server.toml`.
+All items and blocks are in the creative tab **"Celestial chapter 2"**. Server config: `world/serverconfig/celestial-server.toml`.
 
 ## Enchanting
 

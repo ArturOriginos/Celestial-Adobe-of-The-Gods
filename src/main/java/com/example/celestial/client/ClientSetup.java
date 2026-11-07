@@ -38,6 +38,12 @@ public final class ClientSetup {
         event.registerEntityRenderer(ModEntities.CURSED_BOSS.get(), CursedBossRenderer::new);
         event.registerEntityRenderer(ModEntities.CELESTIA_GOD.get(), CelestiaGodRenderer::new);
         event.registerEntityRenderer(ModEntities.CELESTIA_EFFECT.get(), CelestiaEffectRenderer::new);
+        event.registerEntityRenderer(ModEntities.CURSED_PIG.get(), CursedMobRenderers.PigR::new);
+        event.registerEntityRenderer(ModEntities.CURSED_COW.get(), CursedMobRenderers.CowR::new);
+        event.registerEntityRenderer(ModEntities.CURSED_SHEEP.get(), CursedMobRenderers.SheepR::new);
+        event.registerEntityRenderer(ModEntities.CURSED_CHICKEN.get(), CursedMobRenderers.ChickenR::new);
+        event.registerEntityRenderer(ModEntities.CURSED_ZOMBIE.get(), CursedMobRenderers.ZombieR::new);
+        event.registerEntityRenderer(ModEntities.CURSED_SKELETON.get(), CursedMobRenderers.SkeletonR::new);
         event.registerEntityRenderer(ModEntities.CELESTIA_SPIKE.get(),
                 context -> new GodSpikeRenderer(context, GodSpikeRenderer.CELESTIA_TEXTURE));
         event.registerEntityRenderer(ModEntities.CURSED_SPIKE.get(),

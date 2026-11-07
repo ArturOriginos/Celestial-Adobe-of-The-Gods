@@ -32,13 +32,35 @@ public class CelestiaGodRenderer extends HumanoidMobRenderer<CelestiaGod, Celest
         });
     }
 
+    /** Не заваливаться на бок при смерти: вместо этого работает собственная анимация (см. CelestiaGod#tickDeath). */
+    @Override
+    protected float getFlipDegrees(CelestiaGod entity) {
+        return 0.0F;
+    }
+
+    /** Нарастающая белая вспышка тела во время смерти. */
+    @Override
+    protected float getWhiteOverlayProgress(CelestiaGod entity, float partialTick) {
+        if (entity.deathTime <= 0) return 0.0F;
+        float t = Mth.clamp((entity.deathTime + partialTick) / CelestiaGod.DEATH_TICKS, 0.0F, 1.0F);
+        return t * t;
+    }
+
     @Override
     protected void scale(CelestiaGod entity, PoseStack poseStack, float partialTick) {
         float bob = Mth.sin((entity.tickCount + partialTick) * 0.08F) * 0.12F;
         // scale() вызывается уже после poseStack.scale(-1, -1, 1), поэтому ось Y здесь перевёрнута:
         // чтобы поднять модель вверх, сдвиг нужен со знаком минус (иначе босс «проваливается» в землю).
         poseStack.translate(0.0F, -(LIFT + bob + entity.getLift(partialTick)), 0.0F);
-        poseStack.scale(SCALE, SCALE, SCALE);
+        float k = 1.0F;
+        if (entity.deathTime > 0) {
+            float age = entity.deathTime + partialTick;
+            float t = Mth.clamp(age / CelestiaGod.DEATH_TICKS, 0.0F, 1.0F);
+            float shake = 0.06F * t;
+            poseStack.translate(Mth.sin(age * 2.7F) * shake, 0.0F, Mth.cos(age * 3.1F) * shake);
+            k = 1.0F + 0.18F * t * t + 0.04F * Mth.sin(age * 0.9F) * t;   // набухает светом перед взрывом
+        }
+        poseStack.scale(SCALE * k, SCALE * k, SCALE * k);
     }
 
     @Override

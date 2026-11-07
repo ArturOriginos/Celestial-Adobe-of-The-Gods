@@ -8,7 +8,7 @@ version = mod_version
 group = mod_group_id
 
 base {
-    archivesName = mod_id
+    archivesName = "Celestial-chapter-2"
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -35,4 +35,17 @@ neoForge {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+}
+
+repositories {
+    maven {
+        name = 'Blamejared (JEI)'
+        url = 'https://maven.blamejared.com/'
+    }
+}
+
+dependencies {
+    // JEI: только API на этапе компиляции (мод работает и без JEI), полная версия - для запуска в dev-клиенте
+    compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+    localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 }
