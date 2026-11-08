@@ -335,7 +335,7 @@ public final class ModBlocks {
 
     // --- проклятый камень и глубинный сланец (ступеньки, плиты, кирпичи) ---
     public static final DeferredBlock<Block> CURSED_STONE_BRICKS = BLOCKS.registerBlock(
-            "cursed_stone_bricks", Block::new, nether(1.5F, 6.0F, SoundType.STONE_BRICKS).requiresCorrectToolForDrops());
+            "cursed_stone_bricks", Block::new, nether(1.5F, 6.0F, SoundType.STONE).requiresCorrectToolForDrops());
     public static final DeferredItem<BlockItem> CURSED_STONE_BRICKS_ITEM = ITEMS.registerSimpleBlockItem(CURSED_STONE_BRICKS);
     public static final DeferredBlock<Block> CURSED_DEEPSLATE = BLOCKS.registerBlock(
             "cursed_deepslate", Block::new, nether(3.0F, 6.0F, SoundType.DEEPSLATE).requiresCorrectToolForDrops());
@@ -352,7 +352,7 @@ public final class ModBlocks {
     public static final DeferredItem<BlockItem> CURSED_STONE_SLAB_ITEM = ITEMS.registerSimpleBlockItem(CURSED_STONE_SLAB);
     public static final DeferredBlock<StairBlock> CURSED_STONE_BRICK_STAIRS = BLOCKS.registerBlock(
             "cursed_stone_brick_stairs", props -> new StairBlock(CURSED_STONE_BRICKS.get().defaultBlockState(), props),
-            nether(1.5F, 6.0F, SoundType.STONE_BRICKS).requiresCorrectToolForDrops());
+            nether(1.5F, 6.0F, SoundType.STONE).requiresCorrectToolForDrops());
     public static final DeferredItem<BlockItem> CURSED_STONE_BRICK_STAIRS_ITEM = ITEMS.registerSimpleBlockItem(CURSED_STONE_BRICK_STAIRS);
     public static final DeferredBlock<StairBlock> CURSED_DEEPSLATE_STAIRS = BLOCKS.registerBlock(
             "cursed_deepslate_stairs", props -> new StairBlock(CURSED_DEEPSLATE.get().defaultBlockState(), props),

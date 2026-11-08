@@ -1,7 +1,9 @@
 package com.example.celestial;
 
 import com.example.celestial.menu.AdvancedEnchantingMenu;
+import com.example.celestial.network.ClientPayloads;
 import com.example.celestial.network.EnchantRequestPayload;
+import com.example.celestial.network.MiniSoulSyncPayload;
 import com.example.celestial.registry.ModBlocks;
 import com.example.celestial.entity.CelestiaGod;
 import com.example.celestial.entity.CursedBoss;
@@ -67,6 +69,10 @@ public class CelestialMod {
                         menu.tryEnchant(sp, payload.enchants());
                     }
                 }));
+        registrar.playToClient(
+                MiniSoulSyncPayload.TYPE,
+                MiniSoulSyncPayload.STREAM_CODEC,
+                ClientPayloads::handleMiniSoul);
     }
 
     /** Дерево Селестии горит как обычное. */

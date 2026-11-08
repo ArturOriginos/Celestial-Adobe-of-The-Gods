@@ -1,6 +1,7 @@
 package com.example.celestial.entity;
 
 import com.example.celestial.event.SoulDialogue;
+import com.example.celestial.network.MiniSoulSync;
 import com.example.celestial.registry.ModAttachments;
 import java.util.UUID;
 import net.minecraft.core.particles.ParticleTypes;
@@ -86,7 +87,7 @@ public class FlyingSoul extends Entity {
 
     private void arrive(ServerPlayer target) {
         ServerLevel level = target.serverLevel();
-        target.setData(ModAttachments.MINI_SOUL.get(), true);
+        MiniSoulSync.set(target, true);
         level.playSound(null, target.getX(), target.getY() + 1.4D, target.getZ(),
                 SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.2F, 1.5F);
         level.sendParticles(ParticleTypes.END_ROD, target.getX(), target.getY() + 1.6D, target.getZ(), 14, 0.25D, 0.25D, 0.25D, 0.03D);

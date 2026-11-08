@@ -1,7 +1,7 @@
 package com.example.celestial.event;
 
 import com.example.celestial.CelestialMod;
-import com.example.celestial.registry.ModAttachments;
+import com.example.celestial.network.MiniSoulSync;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import java.util.Collection;
@@ -55,7 +55,7 @@ public final class MiniSoulCommand {
 
     private static int set(CommandSourceStack source, Collection<ServerPlayer> players, boolean value) {
         for (ServerPlayer player : players) {
-            player.setData(ModAttachments.MINI_SOUL.get(), value);
+            MiniSoulSync.set(player, value);
         }
         Component msg = Component.translatable(value ? "commands.celestial.minisoul.on" : "commands.celestial.minisoul.off",
                 players.size());

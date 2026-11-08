@@ -4,7 +4,6 @@ import static com.example.celestial.CelestialMod.MODID;
 
 import com.mojang.serialization.Codec;
 import java.util.function.Supplier;
-import net.minecraft.network.codec.ByteBufCodecs;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
@@ -17,7 +16,6 @@ public final class ModAttachments {
     public static final Supplier<AttachmentType<Boolean>> MINI_SOUL = ATTACHMENTS.register("mini_soul",
             () -> AttachmentType.builder(() -> Boolean.FALSE)
                     .serialize(Codec.BOOL)
-                    .sync(ByteBufCodecs.BOOL)
                     .copyOnDeath()
                     .build());
 
