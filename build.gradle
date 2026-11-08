@@ -8,7 +8,7 @@ version = mod_version
 group = mod_group_id
 
 base {
-    archivesName = "Celestial-chapter-2"
+    archivesName = "Celestial-chapter-2-${mod_display_version}"
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)

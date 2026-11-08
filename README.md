@@ -1,4 +1,4 @@
-# Celestial chapter 2 (beta 2.0)
+# Celestial chapter 2 (beta 2.0x)
 
 **English** | [Русский](README.ru.md)
 
