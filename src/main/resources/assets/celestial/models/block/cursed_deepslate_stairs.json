@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "celestial:block/cursed_deepslate",
+    "top": "celestial:block/cursed_deepslate",
+    "side": "celestial:block/cursed_deepslate"
+  }
+}

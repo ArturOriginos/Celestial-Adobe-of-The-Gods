@@ -6,6 +6,7 @@ import com.example.celestial.entity.CelestiaEffect;
 import com.example.celestial.entity.CelestiaGod;
 import com.example.celestial.entity.CelestiaSpike;
 import com.example.celestial.entity.CursedBoss;
+import com.example.celestial.entity.FlyingSoul;
 import com.example.celestial.entity.CursedChicken;
 import com.example.celestial.entity.CursedCow;
 import com.example.celestial.entity.CursedPig;
@@ -83,6 +84,16 @@ public final class ModEntities {
                     .clientTrackingRange(10)
                     .updateInterval(1)
                     .build("celestia_effect"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<FlyingSoul>> FLYING_SOUL =
+            ENTITIES.register("flying_soul", () -> EntityType.Builder
+                    .of(FlyingSoul::new, MobCategory.MISC)
+                    .sized(0.3F, 0.3F)
+                    .noSave()
+                    .fireImmune()
+                    .clientTrackingRange(10)
+                    .updateInterval(1)
+                    .build("flying_soul"));
 
     // ----------------------------------------------------------- Проклятые мобы (без естественного спавна)
     public static final DeferredHolder<EntityType<?>, EntityType<CursedPig>> CURSED_PIG =

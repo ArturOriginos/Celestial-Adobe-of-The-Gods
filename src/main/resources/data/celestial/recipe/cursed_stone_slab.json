@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "celestial:cursed_stone"
+    }
+  },
+  "result": {
+    "id": "celestial:cursed_stone_slab",
+    "count": 6
+  }
+}

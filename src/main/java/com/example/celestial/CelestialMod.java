@@ -45,6 +45,7 @@ public class CelestialMod {
         ModStructures.PIECE_TYPES.register(modBus);
         ModCreativeTabs.TABS.register(modBus);
         ModMenus.MENUS.register(modBus);
+        com.example.celestial.registry.ModAttachments.ATTACHMENTS.register(modBus);
 
         modBus.addListener(this::registerPayloads);
         modBus.addListener(this::addCreativeTab);
@@ -145,6 +146,15 @@ public class CelestialMod {
             event.accept(ModBlocks.CURSED_SAPLING_ITEM);
             event.accept(ModBlocks.CURSED_HANGING_LEAVES_ITEM);
             event.accept(ModBlocks.CURSED_STONE_ITEM);
+            event.accept(ModBlocks.CURSED_STONE_STAIRS_ITEM);
+            event.accept(ModBlocks.CURSED_STONE_SLAB_ITEM);
+            event.accept(ModBlocks.CURSED_STONE_BRICKS_ITEM);
+            event.accept(ModBlocks.CURSED_STONE_BRICK_STAIRS_ITEM);
+            event.accept(ModBlocks.CURSED_DEEPSLATE_ITEM);
+            event.accept(ModBlocks.CURSED_DEEPSLATE_STAIRS_ITEM);
+            event.accept(ModBlocks.CURSED_DEEPSLATE_SLAB_ITEM);
+            event.accept(ModBlocks.CURSED_DEEPSLATE_BRICKS_ITEM);
+            event.accept(ModBlocks.CURSED_DEEPSLATE_BRICK_STAIRS_ITEM);
             event.accept(ModBlocks.CURSED_BASALT_ITEM);
             event.accept(ModBlocks.CURSED_ICE_ITEM);
             event.accept(ModBlocks.CURSED_FOLIAGE_ITEM);
@@ -200,6 +210,8 @@ public class CelestialMod {
             event.accept(ModItems.CURSED_SKELETON_EGG);
             event.accept(ModItems.CELESTIA_CHESTPLATE);
             event.accept(ModItems.CELESTIA_BOOTS);
+            event.accept(ModItems.DIVINE_BOOTS);
+            event.accept(ModItems.DIVINE_CHESTPLATE);
             event.accept(ModItems.FLIGHT_RING);
             event.accept(ModItems.CHEAT_PERMIT);
         }

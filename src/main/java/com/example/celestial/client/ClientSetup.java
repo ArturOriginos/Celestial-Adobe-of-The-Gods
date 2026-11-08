@@ -38,6 +38,7 @@ public final class ClientSetup {
         event.registerEntityRenderer(ModEntities.CURSED_BOSS.get(), CursedBossRenderer::new);
         event.registerEntityRenderer(ModEntities.CELESTIA_GOD.get(), CelestiaGodRenderer::new);
         event.registerEntityRenderer(ModEntities.CELESTIA_EFFECT.get(), CelestiaEffectRenderer::new);
+        event.registerEntityRenderer(ModEntities.FLYING_SOUL.get(), FlyingSoulRenderer::new);
         event.registerEntityRenderer(ModEntities.CURSED_PIG.get(), CursedMobRenderers.PigR::new);
         event.registerEntityRenderer(ModEntities.CURSED_COW.get(), CursedMobRenderers.CowR::new);
         event.registerEntityRenderer(ModEntities.CURSED_SHEEP.get(), CursedMobRenderers.SheepR::new);
@@ -55,6 +56,27 @@ public final class ClientSetup {
     public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
         event.registerItem(shieldExtension(CursedShieldRenderer.CURSED_TEXTURE), ModItems.CURSED_SHIELD.get());
         event.registerItem(shieldExtension(CursedShieldRenderer.CELESTIA_TEXTURE), ModItems.CELESTIA_SHIELD.get());
+        event.registerItem(armorExtension(DivineModels.CHEST_LAYER), ModItems.DIVINE_CHESTPLATE.get());
+        event.registerItem(armorExtension(DivineModels.BOOTS_LAYER), ModItems.DIVINE_BOOTS.get());
+    }
+
+    /** Своя 3D-модель брони (крылья, рога, перья), вместо стандартной одежды. */
+    private static IClientItemExtensions armorExtension(net.minecraft.client.model.geom.ModelLayerLocation layer) {
+        return new IClientItemExtensions() {
+            private net.minecraft.client.model.HumanoidModel<net.minecraft.world.entity.LivingEntity> model;
+
+            @SuppressWarnings({"unchecked", "rawtypes"})
+            @Override
+            public net.minecraft.client.model.HumanoidModel<?> getHumanoidArmorModel(
+                    net.minecraft.world.entity.LivingEntity entity, net.minecraft.world.item.ItemStack stack,
+                    net.minecraft.world.entity.EquipmentSlot slot, net.minecraft.client.model.HumanoidModel<?> original) {
+                if (model == null) {
+                    model = new net.minecraft.client.model.HumanoidModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(layer));
+                }
+                ((net.minecraft.client.model.HumanoidModel) original).copyPropertiesTo(model);
+                return model;
+            }
+        };
     }
 
     private static IClientItemExtensions shieldExtension(ResourceLocation texture) {
@@ -79,6 +101,8 @@ public final class ClientSetup {
             var renderer = event.getSkin(skin);
             if (renderer instanceof PlayerRenderer playerRenderer) {
                 playerRenderer.addLayer(new CelestiaHaloLayer(playerRenderer, event.getEntityModels()));
+                playerRenderer.addLayer(new MiniSoulLayer(playerRenderer));
+                playerRenderer.addLayer(new DivineAuraLayer(playerRenderer, event.getEntityModels()));
             }
         }
     }
@@ -88,6 +112,9 @@ public final class ClientSetup {
         event.registerLayerDefinition(CursedBossModel.LAYER, CursedBossModel::createBodyLayer);
         event.registerLayerDefinition(CelestiaGodModel.LAYER, CelestiaGodModel::createBodyLayer);
         event.registerLayerDefinition(CelestiaHaloLayer.LAYER, CelestiaHaloLayer::createLayer);
+        event.registerLayerDefinition(DivineModels.CHEST_LAYER, DivineModels::createChestLayer);
+        event.registerLayerDefinition(DivineModels.BOOTS_LAYER, DivineModels::createBootsLayer);
+        event.registerLayerDefinition(DivineModels.AURA_LAYER, DivineModels::createAuraLayer);
     }
 
     /** Свойство модели "enchanted": книга с зачарованиями получает второй (переливающийся) спрайт. */

@@ -155,6 +155,18 @@ public final class ModItems {
             () -> new ArmorItem(ModArmorMaterials.CELESTIA, ArmorItem.Type.BOOTS,
                     new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
 
+    /** Ботинки Бога: Селестийские ботинки + Кольцо полёта (Солнечная наковальня). 50 защиты, полёт, +1 строка здоровья. */
+    public static final DeferredItem<ArmorItem> DIVINE_BOOTS = ITEMS.register("divine_boots",
+            () -> new ArmorItem(ModArmorMaterials.DIVINE, ArmorItem.Type.BOOTS,
+                    new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()
+                            .component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)));
+
+    /** Нагрудник Бога: Селестийский нагрудник + Душа Бога Селестии (Солнечная наковальня). 100 защиты, +2 строки здоровья, Сопротивление V, аура. */
+    public static final DeferredItem<ArmorItem> DIVINE_CHESTPLATE = ITEMS.register("divine_chestplate",
+            () -> new ArmorItem(ModArmorMaterials.DIVINE, ArmorItem.Type.CHESTPLATE,
+                    new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()
+                            .component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)));
+
     /** Кольцо полёта богов: падает с Бога Селестии, даёт полёт, пока лежит в инвентаре. */
     public static final DeferredItem<Item> FLIGHT_RING = ITEMS.register("ring_of_gods_flight",
             () -> new FlightRingItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()

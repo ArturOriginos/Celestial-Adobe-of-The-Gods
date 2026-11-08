@@ -32,6 +32,10 @@ public class SolarAnvilMenu extends AbstractContainerMenu {
     public static final int ARMOR_UPGRADE_COST = 30;
     /** Цена (в уровнях опыта) создания Совершенного Пакселя. */
     public static final int PERFECT_PAXEL_COST = 50;
+    /** Цена Ботинок Бога (Селестийские ботинки + Кольцо полёта). */
+    public static final int DIVINE_BOOTS_COST = 50;
+    /** Цена Нагрудника Бога (Селестийский нагрудник + Душа Бога Селестии). */
+    public static final int DIVINE_CHESTPLATE_COST = 60;
 
     private final Container inputs = new SimpleContainer(2) {
         @Override
@@ -64,7 +68,7 @@ public class SolarAnvilMenu extends AbstractContainerMenu {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return !EnchantLogic.isBook(stack) && !EnchantLogic.isCursedSoul(stack) && !EnchantLogic.isGuardianSoul(stack)
-                        && !EnchantLogic.isCelestiaGodSoul(stack);
+                        && !EnchantLogic.isCelestiaGodSoul(stack) && !EnchantLogic.isFlightRing(stack);
             }
         });
         this.addSlot(new Slot(inputs, BOOK_SLOT, 74, 53) {
@@ -76,7 +80,7 @@ public class SolarAnvilMenu extends AbstractContainerMenu {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return EnchantLogic.isAdvancedBook(stack) || EnchantLogic.isCursedSoul(stack) || EnchantLogic.isGuardianSoul(stack)
-                        || EnchantLogic.isCelestiaGodSoul(stack);
+                        || EnchantLogic.isCelestiaGodSoul(stack) || EnchantLogic.isFlightRing(stack);
             }
         });
         this.addSlot(new Slot(result, 0, 135, 53) {
@@ -138,6 +142,22 @@ public class SolarAnvilMenu extends AbstractContainerMenu {
             if (!perfect.isEmpty()) {
                 result.setItem(0, perfect);
                 cost.set(PERFECT_PAXEL_COST);
+                return;
+            }
+            // Селестийский нагрудник + Душа Бога Селестии => Нагрудник Бога
+            ItemStack chest = EnchantLogic.divineChestplateUpgrade(tool);
+            if (!chest.isEmpty()) {
+                result.setItem(0, chest);
+                cost.set(DIVINE_CHESTPLATE_COST);
+            }
+            return;
+        }
+        // Селестийские ботинки + Кольцо полёта => Ботинки Бога
+        if (EnchantLogic.isFlightRing(book)) {
+            ItemStack boots = EnchantLogic.divineBootsUpgrade(tool);
+            if (!boots.isEmpty()) {
+                result.setItem(0, boots);
+                cost.set(DIVINE_BOOTS_COST);
             }
             return;
         }
@@ -213,7 +233,7 @@ public class SolarAnvilMenu extends AbstractContainerMenu {
             } else if (index < RESULT_SLOT) {
                 if (!this.moveItemStackTo(stack, 3, 39, false)) return ItemStack.EMPTY;
             } else if (EnchantLogic.isAdvancedBook(stack) || EnchantLogic.isCursedSoul(stack) || EnchantLogic.isGuardianSoul(stack)
-                    || EnchantLogic.isCelestiaGodSoul(stack)) {
+                    || EnchantLogic.isCelestiaGodSoul(stack) || EnchantLogic.isFlightRing(stack)) {
                 if (!this.moveItemStackTo(stack, BOOK_SLOT, BOOK_SLOT + 1, false)) return ItemStack.EMPTY;
             } else if (!EnchantLogic.isBook(stack)) {
                 if (!this.moveItemStackTo(stack, TOOL_SLOT, TOOL_SLOT + 1, false)) return ItemStack.EMPTY;

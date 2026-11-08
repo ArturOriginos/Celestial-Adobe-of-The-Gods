@@ -27,6 +27,17 @@ public final class ClientEvents {
         else if (stack.is(ModItems.CURSED_AXE.get())) cursedKey = "item.celestial.cursed_axe.lore";
         else if (stack.is(ModItems.CURSED_PICKAXE.get())) cursedKey = "item.celestial.cursed_pickaxe.lore";
         else if (stack.is(ModItems.CURSED_SHIELD.get())) cursedKey = "item.celestial.cursed_shield.lore";
+        if (stack.is(ModItems.DIVINE_BOOTS.get()) || stack.is(ModItems.DIVINE_CHESTPLATE.get())) {
+            String base = stack.is(ModItems.DIVINE_BOOTS.get()) ? "item.celestial.divine_boots" : "item.celestial.divine_chestplate";
+            event.getToolTip().add(Component.empty());
+            for (int i = 1; i <= 3; i++) {
+                String line = base + ".lore" + i;
+                if (net.minecraft.client.resources.language.I18n.exists(line)) {
+                    event.getToolTip().add(Component.translatable(line).withStyle(s -> s.withColor(0xFFD76A)));
+                }
+            }
+            return;
+        }
         if (stack.is(ModItems.PERFECT_PAXEL.get())) {
             event.getToolTip().add(Component.empty());
             event.getToolTip().add(GradientText.ofPerfectPaxel(Component.translatable("item.celestial.perfect_paxel.lore").getString()));

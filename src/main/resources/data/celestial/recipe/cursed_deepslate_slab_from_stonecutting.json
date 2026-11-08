@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "celestial:cursed_deepslate"
+  },
+  "result": {
+    "id": "celestial:cursed_deepslate_slab",
+    "count": 2
+  }
+}

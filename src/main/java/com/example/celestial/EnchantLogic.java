@@ -74,6 +74,28 @@ public final class EnchantLogic {
         return out;
     }
 
+    public static boolean isFlightRing(ItemStack stack) {
+        return stack.is(ModItems.FLIGHT_RING.get());
+    }
+
+    /** Солнечная наковальня: Селестийские ботинки + Кольцо полёта => Ботинки Бога (зачарования переходят). */
+    public static ItemStack divineBootsUpgrade(ItemStack tool) {
+        if (!tool.is(ModItems.CELESTIA_BOOTS.get())) return ItemStack.EMPTY;
+        ItemStack out = new ItemStack(ModItems.DIVINE_BOOTS.get());
+        ItemEnchantments enchants = tool.get(DataComponents.ENCHANTMENTS);
+        if (enchants != null && !enchants.isEmpty()) out.set(DataComponents.ENCHANTMENTS, enchants);
+        return out;
+    }
+
+    /** Солнечная наковальня: Селестийский нагрудник + Душа Бога Селестии => Нагрудник Бога (зачарования переходят). */
+    public static ItemStack divineChestplateUpgrade(ItemStack tool) {
+        if (!tool.is(ModItems.CELESTIA_CHESTPLATE.get())) return ItemStack.EMPTY;
+        ItemStack out = new ItemStack(ModItems.DIVINE_CHESTPLATE.get());
+        ItemEnchantments enchants = tool.get(DataComponents.ENCHANTMENTS);
+        if (enchants != null && !enchants.isEmpty()) out.set(DataComponents.ENCHANTMENTS, enchants);
+        return out;
+    }
+
     /**
      * Солнечная наковальня: предмет Селестии + душа проклятого => такой же предмет проклятых.
      * Зачарования переходят на новый предмет. Если предмет не подходит - пустой стек.

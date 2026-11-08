@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "celestial:celestia_boots"
+    "celestial:celestia_boots",
+    "celestial:divine_boots"
   ]
 }

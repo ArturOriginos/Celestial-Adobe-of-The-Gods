@@ -4,6 +4,10 @@
     "celestial:celestial_stairs",
     "celestial:cursed_stairs",
     "celestial:cursed_nether_brick_stairs",
-    "celestial:celestial_brick_stairs"
+    "celestial:celestial_brick_stairs",
+    "celestial:cursed_stone_stairs",
+    "celestial:cursed_stone_brick_stairs",
+    "celestial:cursed_deepslate_stairs",
+    "celestial:cursed_deepslate_brick_stairs"
   ]
 }

@@ -62,6 +62,10 @@ public class CelestialJeiPlugin implements IModPlugin {
         // Совершенный Паксель: Паксель Богов и Проклятых + Душа Бога Селестии
         add(list, ModItems.PAXEL.get(), godSoul, ModItems.PERFECT_PAXEL.get(), SolarAnvilMenu.PERFECT_PAXEL_COST);
 
+        // Броня Бога
+        add(list, ModItems.CELESTIA_BOOTS.get(), new ItemStack(ModItems.FLIGHT_RING.get()), ModItems.DIVINE_BOOTS.get(), SolarAnvilMenu.DIVINE_BOOTS_COST);
+        add(list, ModItems.CELESTIA_CHESTPLATE.get(), godSoul, ModItems.DIVINE_CHESTPLATE.get(), SolarAnvilMenu.DIVINE_CHESTPLATE_COST);
+
         // Ножницы Селестии: обычные ножницы + улучшенная книга с Гневом Природы
         add(list, Items.SHEARS, new ItemStack(ModItems.ADVANCED_BOOK.get()), ModItems.CELESTIA_SHEARS.get(), 10);
         return list;

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "celestial:celestia_chestplate"
+    "celestial:celestia_chestplate",
+    "celestial:divine_chestplate"
   ]
 }

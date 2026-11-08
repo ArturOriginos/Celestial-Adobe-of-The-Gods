@@ -47,5 +47,5 @@ repositories {
 dependencies {
     // JEI: только API на этапе компиляции (мод работает и без JEI), полная версия - для запуска в dev-клиенте
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
-    localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+    runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 }

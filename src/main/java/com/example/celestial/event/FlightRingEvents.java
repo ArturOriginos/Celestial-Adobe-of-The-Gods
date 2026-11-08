@@ -12,7 +12,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
-/** Кольцо полёта богов: креативный полёт, пока кольцо лежит где угодно в инвентаре. Забрал кольцо - полёт пропадает. */
+/** Кольцо полёта богов: креативный полёт, пока кольцо лежит где угодно в инвентаре (или надеты Ботинки Бога). Забрал кольцо - полёт пропадает. */
 @EventBusSubscriber(modid = CelestialMod.MODID)
 public class FlightRingEvents {
     private static final String KEY = "celestial_ring_flight";
@@ -28,7 +28,7 @@ public class FlightRingEvents {
             return;
         }
         Abilities abilities = player.getAbilities();
-        if (hasRing(player)) {
+        if (hasRing(player) || DivineArmorEvents.wearsBoots(player)) {
             if (!abilities.mayfly) {
                 abilities.mayfly = true;
                 player.onUpdateAbilities();

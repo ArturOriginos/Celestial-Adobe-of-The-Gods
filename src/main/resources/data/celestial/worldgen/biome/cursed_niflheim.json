@@ -38,9 +38,46 @@
         "weight": 30,
         "minCount": 1,
         "maxCount": 1
+      },
+      {
+        "type": "celestial:cursed_zombie",
+        "weight": 30,
+        "minCount": 2,
+        "maxCount": 4
+      },
+      {
+        "type": "celestial:cursed_skeleton",
+        "weight": 30,
+        "minCount": 2,
+        "maxCount": 4
       }
     ],
-    "creature": [],
+    "creature": [
+      {
+        "type": "celestial:cursed_pig",
+        "weight": 10,
+        "minCount": 2,
+        "maxCount": 4
+      },
+      {
+        "type": "celestial:cursed_sheep",
+        "weight": 10,
+        "minCount": 2,
+        "maxCount": 4
+      },
+      {
+        "type": "celestial:cursed_cow",
+        "weight": 8,
+        "minCount": 2,
+        "maxCount": 4
+      },
+      {
+        "type": "celestial:cursed_chicken",
+        "weight": 10,
+        "minCount": 3,
+        "maxCount": 4
+      }
+    ],
     "ambient": [],
     "axolotls": [],
     "underground_water_creature": [],
@@ -80,5 +117,6 @@
       "celestial:cursed_vegetation"
     ],
     []
-  ]
+  ],
+  "creature_spawn_probability": 0.25
 }

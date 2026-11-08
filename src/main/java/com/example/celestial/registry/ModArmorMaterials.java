@@ -36,5 +36,25 @@ public final class ModArmorMaterials {
                     4.0F,
                     0.1F));
 
+    /** Материал брони Бога: ботинки 50 защиты, нагрудник 100 (остальные слоты не используются). Текстура: textures/models/armor/divine_layer_1.png. */
+    public static final int DIVINE_BOOTS_DEFENSE = 50;
+    public static final int DIVINE_CHESTPLATE_DEFENSE = 100;
+
+    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> DIVINE = MATERIALS.register("divine",
+            () -> new ArmorMaterial(
+                    Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
+                        map.put(ArmorItem.Type.BOOTS, DIVINE_BOOTS_DEFENSE);
+                        map.put(ArmorItem.Type.LEGGINGS, DIVINE_BOOTS_DEFENSE);
+                        map.put(ArmorItem.Type.CHESTPLATE, DIVINE_CHESTPLATE_DEFENSE);
+                        map.put(ArmorItem.Type.HELMET, DIVINE_BOOTS_DEFENSE);
+                        map.put(ArmorItem.Type.BODY, DIVINE_CHESTPLATE_DEFENSE);
+                    }),
+                    30,
+                    SoundEvents.ARMOR_EQUIP_NETHERITE,
+                    () -> Ingredient.of(ModItems.CELESTIA_GOD_SOUL.get()),
+                    List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(MODID, "divine"))),
+                    8.0F,
+                    0.2F));
+
     private ModArmorMaterials() {}
 }

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "celestial:cursed_deepslate"
+    }
+  },
+  "result": {
+    "id": "celestial:cursed_deepslate_slab",
+    "count": 6
+  }
+}

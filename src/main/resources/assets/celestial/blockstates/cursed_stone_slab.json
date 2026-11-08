@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "celestial:block/cursed_stone_slab"
+    },
+    "type=top": {
+      "model": "celestial:block/cursed_stone_slab_top"
+    },
+    "type=double": {
+      "model": "celestial:block/cursed_stone"
+    }
+  }
+}
