@@ -204,6 +204,11 @@ public final class ModBlocks {
     public static final DeferredBlock<Block> CURSED_RUNE_STONE = BLOCKS.registerBlock(
             "cursed_rune_stone", Block::new,
             nether(2.5F, 8.0F, SoundType.NETHER_BRICKS).requiresCorrectToolForDrops().lightLevel(state -> 8));
+    /** Проклятая земля и дёрн (beta 2.1): Проклятый Нифельхельм распространяет их вместо обычной земли и травы. */
+    public static final DeferredBlock<Block> CURSED_EARTH = BLOCKS.registerBlock(
+            "cursed_earth", Block::new, nether(0.5F, 0.5F, SoundType.GRAVEL));
+    public static final DeferredBlock<Block> CURSED_TURF = BLOCKS.registerBlock(
+            "cursed_turf", Block::new, nether(0.6F, 0.6F, SoundType.GRASS));
     public static final DeferredBlock<Block> CURSED_ICE = BLOCKS.registerBlock(
             "cursed_ice", Block::new, nether(0.8F, 1.0F, SoundType.GLASS).friction(0.98F));
     public static final DeferredBlock<Block> CURSED_GLOWSTONE = BLOCKS.registerBlock(
@@ -268,6 +273,8 @@ public final class ModBlocks {
                     .sound(SoundType.NETHER_SPROUTS).pushReaction(PushReaction.DESTROY));
 
     public static final DeferredItem<BlockItem> CURSED_STONE_ITEM = ITEMS.registerSimpleBlockItem(CURSED_STONE);
+    public static final DeferredItem<BlockItem> CURSED_EARTH_ITEM = ITEMS.registerSimpleBlockItem(CURSED_EARTH);
+    public static final DeferredItem<BlockItem> CURSED_TURF_ITEM = ITEMS.registerSimpleBlockItem(CURSED_TURF);
     public static final DeferredItem<BlockItem> CURSED_BASALT_ITEM = ITEMS.registerSimpleBlockItem(CURSED_BASALT);
     public static final DeferredItem<BlockItem> CURSED_BRICKS_ITEM = ITEMS.registerSimpleBlockItem(CURSED_BRICKS);
     public static final DeferredItem<BlockItem> CURSED_RUNE_STONE_ITEM = ITEMS.registerSimpleBlockItem(CURSED_RUNE_STONE);

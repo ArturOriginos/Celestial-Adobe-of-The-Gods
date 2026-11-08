@@ -1,0 +1,81 @@
+{
+  "textures": {
+    "particle": "celestial:block/celestia_portal_side",
+    "up": "celestial:block/celestia_portal_up",
+    "down": "celestial:block/celestia_portal_down",
+    "side": "celestial:block/celestia_portal_side",
+    "side2": "celestial:block/celestia_portal_side2",
+    "key": "celestial:block/celestia_portal_key"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        13,
+        16
+      ],
+      "faces": {
+        "down": {
+          "texture": "#down",
+          "cullface": "down"
+        },
+        "up": {
+          "texture": "#up"
+        },
+        "north": {
+          "texture": "#side",
+          "cullface": "north"
+        },
+        "south": {
+          "texture": "#side2",
+          "cullface": "south"
+        },
+        "west": {
+          "texture": "#side2",
+          "cullface": "west"
+        },
+        "east": {
+          "texture": "#side",
+          "cullface": "east"
+        }
+      }
+    },
+    {
+      "from": [
+        4,
+        13,
+        4
+      ],
+      "to": [
+        12,
+        16,
+        12
+      ],
+      "faces": {
+        "down": {
+          "texture": "#key"
+        },
+        "up": {
+          "texture": "#key"
+        },
+        "north": {
+          "texture": "#key"
+        },
+        "south": {
+          "texture": "#key"
+        },
+        "west": {
+          "texture": "#key"
+        },
+        "east": {
+          "texture": "#key"
+        }
+      }
+    }
+  ]
+}

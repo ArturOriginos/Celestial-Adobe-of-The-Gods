@@ -24,9 +24,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Portal;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
@@ -34,11 +31,9 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-/** Светящееся поле внутри рамки портала Селестии. Телепортирует в Селестию и обратно. */
+/** Горизонтальное светящееся поле 3x3 внутри кольца портала Селестии (как в Энд). Телепортирует в Селестию и обратно. */
 public class CelestiaPortalFieldBlock extends Block implements Portal {
-    public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
-    private static final VoxelShape SHAPE_X = Block.box(0.0, 0.0, 6.0, 16.0, 16.0, 10.0);
-    private static final VoxelShape SHAPE_Z = Block.box(6.0, 0.0, 0.0, 10.0, 16.0, 16.0);
+    private static final VoxelShape SHAPE = Block.box(0.0, 6.0, 0.0, 16.0, 12.0, 16.0);
 
     /** Куда вернуться из Селестии (хранится в данных сущности). */
     private static final String RET_DIM = "celestial_return_dim";
@@ -46,17 +41,11 @@ public class CelestiaPortalFieldBlock extends Block implements Portal {
 
     public CelestiaPortalFieldBlock(BlockBehaviour.Properties properties) {
         super(properties);
-        registerDefaultState(stateDefinition.any().setValue(AXIS, Direction.Axis.X));
-    }
-
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(AXIS);
     }
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
-        return state.getValue(AXIS) == Direction.Axis.X ? SHAPE_X : SHAPE_Z;
+        return SHAPE;
     }
 
     @Override
@@ -68,9 +57,8 @@ public class CelestiaPortalFieldBlock extends Block implements Portal {
     @Override
     protected BlockState updateShape(BlockState state, Direction direction, BlockState neighborState,
                                      LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
-        Direction.Axis axis = state.getValue(AXIS);
-        boolean inPlane = direction.getAxis() == Direction.Axis.Y || direction.getAxis() == axis;
-        if (inPlane && !neighborState.is(this) && !neighborState.is(ModBlocks.CELESTIA_PORTAL.get())) {
+        if (direction.getAxis().isHorizontal() && !neighborState.is(this)
+                && !neighborState.is(ModBlocks.CELESTIA_PORTAL.get())) {
             return Blocks.AIR.defaultBlockState();
         }
         return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
@@ -85,8 +73,7 @@ public class CelestiaPortalFieldBlock extends Block implements Portal {
 
     @Override
     public int getPortalTransitionTime(ServerLevel level, Entity entity) {
-        if (entity instanceof Player player) return player.getAbilities().invulnerable ? 1 : 60;
-        return 0;
+        return 0; // мгновенно, как портал в Энд
     }
 
     @Nullable

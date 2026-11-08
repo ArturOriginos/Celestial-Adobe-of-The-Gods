@@ -12,7 +12,7 @@ import net.minecraft.util.Mth;
 /** Мини-душа на правом плече игрока (модель и текстура: MiniSoulModel). */
 public class MiniSoulLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
     /** Размер души относительно исходной модели (высота ~0,3 блока). */
-    public static final float SCALE = 0.4F;
+    public static final float SCALE = 0.55F;
 
     public MiniSoulLayer(RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> parent) {
         super(parent);
@@ -28,9 +28,9 @@ public class MiniSoulLayer extends RenderLayer<AbstractClientPlayer, PlayerModel
         // пространство слоя: y вниз, начало на уровне верха туловища; правое плечо x < 0
         float bob = Mth.sin(ageInTicks * 0.12F) * 0.025F;
         float shoulderY = (player.isCrouching() ? 0.2F : 0.0F) - 0.02F - bob;
-        poseStack.translate(-0.34F, shoulderY, 0.0F);
-        // модель: y вверх, лицом к -Z; пространство слоя: y вниз, лицом к +Z
-        poseStack.scale(SCALE, -SCALE, -SCALE);
+        poseStack.translate(-0.36F, shoulderY, 0.0F);
+        // модель: y вверх, лицом к -Z; пространство слоя: y вниз, перед тоже -Z (вперёд). Поворот на 180° вокруг Z.
+        poseStack.scale(-SCALE, -SCALE, SCALE);
         MiniSoulModel.render(poseStack, buffer, packedLight);
         poseStack.popPose();
     }

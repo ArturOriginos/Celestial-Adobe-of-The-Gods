@@ -179,7 +179,7 @@
   "item.celestial.cursed_pickaxe.lore": "Рушится всё, кроме бедрока и древ.",
   "item.celestial.cursed_shield.lore": "Каждый удар вернётся тому, кто его нанёс.",
   "block.celestial.celestia_portal_field": "Поле портала Селестии",
-  "message.celestial.portal_invalid": "Нужна рамка из блоков портала: внутри от 2x3 до 21x21, без углов.",
+  "message.celestial.portal_invalid": "Поставьте 12 блоков портала кольцом 5x5 (без углов) и вставьте в каждый ключ Селестии.",
   "advancement.celestial.enter_celestia.title": "Над облаками",
   "advancement.celestial.enter_celestia.desc": "Войдите в измерение Селестия.",
   "item.celestial.united_soul": "Объединённая душа богов и проклятых",
@@ -272,5 +272,7 @@
   "item.celestial.divine_boots.lore2": "+1 строка дополнительных жизней.",
   "item.celestial.divine_chestplate.lore1": "+2 строки дополнительных жизней.",
   "item.celestial.divine_chestplate.lore2": "Постоянное сопротивление урону V.",
-  "item.celestial.divine_chestplate.lore3": "Вокруг владельца парит божественная аура."
+  "item.celestial.divine_chestplate.lore3": "Вокруг владельца парит божественная аура.",
+  "block.celestial.cursed_earth": "Проклятая земля",
+  "block.celestial.cursed_turf": "Проклятый дёрн"
 }

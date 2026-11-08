@@ -4,6 +4,8 @@
     "celestial:celestial_cloud",
     "celestial:celestial_cloud_fluffy",
     "celestial:celestial_earth",
-    "celestial:celestial_sand"
+    "celestial:celestial_sand",
+    "celestial:cursed_earth",
+    "celestial:cursed_turf"
   ]
 }

@@ -131,7 +131,7 @@ public class NiflheimSpread extends SavedData {
 
     /**
      * Меняет биом всего чанка и портит его: весь обычный камень и глубинный сланец заменяются проклятыми
-     * вариантами, поверхность (земля, песок, гравий) становится проклятым камнем, растения и листва гибнут.
+     * вариантами, трава становится проклятым дёрном, земля - проклятой землёй, песок и гравий - проклятым камнем, растения и листва гибнут.
      * @param sync true - чанк уже у игроков (после изменений он отправляется им заново); false - чанк только что загружен.
      */
     public static void corrupt(ServerLevel level, LevelChunk chunk, boolean sync) {
@@ -142,6 +142,8 @@ public class NiflheimSpread extends SavedData {
         BlockState cursedStone = ModBlocks.CURSED_STONE.get().defaultBlockState();
         BlockState cursedDeepslate = ModBlocks.CURSED_DEEPSLATE.get().defaultBlockState();
         BlockState basalt = ModBlocks.CURSED_BASALT.get().defaultBlockState();
+        BlockState earth = ModBlocks.CURSED_EARTH.get().defaultBlockState();
+        BlockState turf = ModBlocks.CURSED_TURF.get().defaultBlockState();
         BlockState air = Blocks.AIR.defaultBlockState();
 
         // 1) весь камень и глубинный сланец -> проклятые варианты (напрямую в секциях: быстро, свет не меняется)
@@ -162,7 +164,7 @@ public class NiflheimSpread extends SavedData {
             }
         }
 
-        // 2) поверхность: земля/песок/гравий -> проклятый камень, растения и листва гибнут
+        // 2) поверхность: трава -> проклятый дёрн, земля -> проклятая земля, песок/гравий -> проклятый камень, растения и листва гибнут
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
         int minX = chunk.getPos().getMinBlockX(), minZ = chunk.getPos().getMinBlockZ();
         for (int x = 0; x < 16; x++) {
@@ -177,11 +179,20 @@ public class NiflheimSpread extends SavedData {
                     if (state.getFluidState().isEmpty() && (state.is(BlockTags.LEAVES) || state.is(BlockTags.FLOWERS)
                             || state.is(BlockTags.REPLACEABLE) || state.is(BlockTags.CROPS))) {
                         chunk.setBlockState(pos, air, false); // растения и листва гибнут
-                    } else if (state.is(BlockTags.DIRT) || state.is(BlockTags.SAND) || state.is(Blocks.GRAVEL)
-                            || state.is(Blocks.SNOW_BLOCK)) {
+                    } else if (state.is(Blocks.GRASS_BLOCK) || state.is(Blocks.PODZOL) || state.is(Blocks.MYCELIUM)) {
+                        // трава -> проклятый дёрн (под самой поверхностью - проклятая земля)
+                        chunk.setBlockState(pos, solid == 0 ? turf : earth, false);
+                        solid++;
+                    } else if (state.is(BlockTags.DIRT)) {
+                        // земля -> проклятая земля
+                        chunk.setBlockState(pos, earth, false);
+                        solid++;
+                    } else if (state.is(BlockTags.SAND) || state.is(Blocks.GRAVEL) || state.is(Blocks.SNOW_BLOCK)) {
                         boolean exposedBasalt = solid == 0 && level.random.nextInt(100) < 8;
                         chunk.setBlockState(pos, exposedBasalt ? basalt : cursedStone, false);
                         solid++;
+                    } else if (state.is(earth.getBlock()) || state.is(turf.getBlock())) {
+                        solid++; // уже проклято
                     } else if (state.is(cursedStone.getBlock()) || state.is(cursedDeepslate.getBlock())) {
                         if (solid == 0 && level.random.nextInt(100) < 8) chunk.setBlockState(pos, basalt, false);
                         solid++;

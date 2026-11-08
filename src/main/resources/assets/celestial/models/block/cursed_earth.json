@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "celestial:block/cursed_earth_top",
+    "side": "celestial:block/cursed_earth_side",
+    "bottom": "celestial:block/cursed_earth_top",
+    "particle": "celestial:block/cursed_earth_side"
+  }
+}

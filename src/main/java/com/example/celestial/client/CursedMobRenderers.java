@@ -132,15 +132,16 @@ public final class CursedMobRenderers {
     }
 
     // ------------------------------------------------------------------ скелет (с луком в руках)
+    // Текстура 64x64 в раскладке зомби (руки/ноги 4px), поэтому берём слой ZOMBIE, а не SKELETON (64x32).
     public static class SkeletonR extends HumanoidMobRenderer<CursedSkeleton, SkeletonModel<CursedSkeleton>> {
         private static final ResourceLocation TEXTURE = tex("cursed_skeleton");
         private static final ResourceLocation GLOW = tex("cursed_skeleton_e");
 
         public SkeletonR(EntityRendererProvider.Context context) {
-            super(context, new SkeletonModel<>(context.bakeLayer(ModelLayers.SKELETON)), 0.5F);
+            super(context, new SkeletonModel<>(context.bakeLayer(ModelLayers.ZOMBIE)), 0.5F);
             this.addLayer(new HumanoidArmorLayer<>(this,
-                    new SkeletonModel<>(context.bakeLayer(ModelLayers.SKELETON_INNER_ARMOR)),
-                    new SkeletonModel<>(context.bakeLayer(ModelLayers.SKELETON_OUTER_ARMOR)),
+                    new SkeletonModel<>(context.bakeLayer(ModelLayers.ZOMBIE_INNER_ARMOR)),
+                    new SkeletonModel<>(context.bakeLayer(ModelLayers.ZOMBIE_OUTER_ARMOR)),
                     context.getModelManager()));
             this.addLayer(new EyesLayer<CursedSkeleton, SkeletonModel<CursedSkeleton>>(this) {
                 @Override

@@ -1,6 +1,6 @@
 package com.example.celestial.world;
 
-import com.example.celestial.block.CelestiaPortalFieldBlock;
+import com.example.celestial.block.CelestiaPortalBlock;
 import com.example.celestial.registry.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -13,40 +13,36 @@ import net.minecraft.world.phys.Vec3;
 public final class CelestiaPortalPlacer {
     private static final int Y = CelestiaDimension.SPAWN_TOP_Y;
 
-    /** Куда попадает игрок: перед порталом (портал в плоскости X на z=0, игрок стоит на z=3 и смотрит на него). */
-    public static final Vec3 ARRIVAL = new Vec3(1.0, Y + 1, 3.0);
+    /** Куда попадает игрок: рядом с кольцом портала (центр кольца 0,0), игрок стоит на z=4 и смотрит на него. */
+    public static final Vec3 ARRIVAL = new Vec3(0.5, Y + 1, 4.5);
 
     private CelestiaPortalPlacer() {}
 
-    /** Строит на стартовом острове рамку 4x5 (внутри 2x3) с полем, если её там ещё нет. */
+    /** Строит на стартовом острове портал как в Энд: кольцо из 12 рамок с ключами и поле 3x3 (центр 0,Y+1,0). */
     public static void ensureArrivalPortal(ServerLevel level) {
-        BlockState frame = ModBlocks.CELESTIA_PORTAL.get().defaultBlockState();
-        BlockState field = ModBlocks.CELESTIA_PORTAL_FIELD.get().defaultBlockState()
-                .setValue(CelestiaPortalFieldBlock.AXIS, Direction.Axis.X);
+        BlockState frame = ModBlocks.CELESTIA_PORTAL.get().defaultBlockState()
+                .setValue(CelestiaPortalBlock.KEY, true);
+        BlockState field = ModBlocks.CELESTIA_PORTAL_FIELD.get().defaultBlockState();
         if (level.getBlockState(new BlockPos(0, Y + 1, 0)).is(field.getBlock())) return;
 
         // расчистить площадку и поставить платформу из земли под ногами
         BlockState earth = ModBlocks.CELESTIAL_EARTH.get().defaultBlockState();
-        for (int x = -3; x <= 4; x++) {
-            for (int z = -2; z <= 6; z++) {
+        for (int x = -4; x <= 4; x++) {
+            for (int z = -4; z <= 7; z++) {
                 level.setBlock(new BlockPos(x, Y, z), earth, 3);
                 for (int y = Y + 1; y <= Y + 6; y++) {
                     level.setBlock(new BlockPos(x, y, z), Blocks.AIR.defaultBlockState(), 2);
                 }
             }
         }
-        // рамка: x от -1 до 2, y от Y до Y+4, внутри x 0..1, y Y+1..Y+3
-        for (int x = -1; x <= 2; x++) {
-            for (int y = Y; y <= Y + 4; y++) {
-                boolean border = x == -1 || x == 2 || y == Y || y == Y + 4;
-                if (!border) continue;
-                if ((x == -1 || x == 2) && (y == Y || y == Y + 4)) continue; // углы не нужны
-                level.setBlock(new BlockPos(x, y, 0), frame, 2);
-            }
-        }
-        for (int x = 0; x <= 1; x++) {
-            for (int y = Y + 1; y <= Y + 3; y++) {
-                level.setBlock(new BlockPos(x, y, 0), field, 18);
+        for (int x = -2; x <= 2; x++) {
+            for (int z = -2; z <= 2; z++) {
+                boolean ring = Math.max(Math.abs(x), Math.abs(z)) == 2 && !(Math.abs(x) == 2 && Math.abs(z) == 2);
+                if (ring) {
+                    level.setBlock(new BlockPos(x, Y + 1, z), frame, 2);
+                } else if (Math.abs(x) <= 1 && Math.abs(z) <= 1) {
+                    level.setBlock(new BlockPos(x, Y + 1, z), field, 18);
+                }
             }
         }
     }

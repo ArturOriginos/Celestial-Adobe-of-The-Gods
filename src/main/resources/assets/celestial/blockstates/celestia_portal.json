@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
+    "key=false": {
       "model": "celestial:block/celestia_portal"
+    },
+    "key=true": {
+      "model": "celestial:block/celestia_portal_key"
     }
   }
 }

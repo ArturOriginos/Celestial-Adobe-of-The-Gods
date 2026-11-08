@@ -179,7 +179,7 @@
   "item.celestial.cursed_pickaxe.lore": "Everything crumbles but bedrock and trees.",
   "item.celestial.cursed_shield.lore": "Every blow returns to the one who struck it.",
   "block.celestial.celestia_portal_field": "Celestia Portal Field",
-  "message.celestial.portal_invalid": "You need a frame of portal blocks: 2x3 to 21x21 inside, corners not required.",
+  "message.celestial.portal_invalid": "Place 12 portal blocks in a 5x5 ring (no corners) and put a Celestia Key in each one.",
   "advancement.celestial.enter_celestia.title": "Above the Clouds",
   "advancement.celestial.enter_celestia.desc": "Enter the Celestia dimension.",
   "item.celestial.united_soul": "United Soul of Gods and the Cursed",
@@ -272,5 +272,7 @@
   "item.celestial.divine_boots.lore2": "+1 row of extra health.",
   "item.celestial.divine_chestplate.lore1": "+2 rows of extra health.",
   "item.celestial.divine_chestplate.lore2": "Permanent Resistance V.",
-  "item.celestial.divine_chestplate.lore3": "A divine aura hovers around the wearer."
+  "item.celestial.divine_chestplate.lore3": "A divine aura hovers around the wearer.",
+  "block.celestial.cursed_earth": "Cursed Earth",
+  "block.celestial.cursed_turf": "Cursed Turf"
 }

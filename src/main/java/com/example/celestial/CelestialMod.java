@@ -162,6 +162,8 @@ public class CelestialMod {
             event.accept(ModBlocks.CURSED_DEEPSLATE_BRICKS_ITEM);
             event.accept(ModBlocks.CURSED_DEEPSLATE_BRICK_STAIRS_ITEM);
             event.accept(ModBlocks.CURSED_BASALT_ITEM);
+            event.accept(ModBlocks.CURSED_EARTH_ITEM);
+            event.accept(ModBlocks.CURSED_TURF_ITEM);
             event.accept(ModBlocks.CURSED_ICE_ITEM);
             event.accept(ModBlocks.CURSED_FOLIAGE_ITEM);
             event.accept(ModBlocks.CURSED_GRASS_ITEM);

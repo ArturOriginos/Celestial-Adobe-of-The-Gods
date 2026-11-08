@@ -1,12 +1,48 @@
 {
-  "parent": "minecraft:block/cube",
   "textures": {
     "particle": "celestial:block/celestia_portal_side",
     "up": "celestial:block/celestia_portal_up",
     "down": "celestial:block/celestia_portal_down",
-    "north": "celestial:block/celestia_portal_side",
-    "south": "celestial:block/celestia_portal_side2",
-    "east": "celestial:block/celestia_portal_side",
-    "west": "celestial:block/celestia_portal_side2"
-  }
+    "side": "celestial:block/celestia_portal_side",
+    "side2": "celestial:block/celestia_portal_side2"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        13,
+        16
+      ],
+      "faces": {
+        "down": {
+          "texture": "#down",
+          "cullface": "down"
+        },
+        "up": {
+          "texture": "#up"
+        },
+        "north": {
+          "texture": "#side",
+          "cullface": "north"
+        },
+        "south": {
+          "texture": "#side2",
+          "cullface": "south"
+        },
+        "west": {
+          "texture": "#side2",
+          "cullface": "west"
+        },
+        "east": {
+          "texture": "#side",
+          "cullface": "east"
+        }
+      }
+    }
+  ]
 }
