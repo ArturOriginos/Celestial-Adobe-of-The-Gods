@@ -1,6 +1,7 @@
 package com.example.celestial.client;
 
 import com.example.celestial.CelestialMod;
+import com.example.celestial.entity.AllKnowingAngel;
 import com.example.celestial.entity.CelestiaGod;
 import com.example.celestial.entity.CursedBoss;
 import com.example.celestial.entity.GuardianOfGods;
@@ -55,7 +56,46 @@ public final class BossBarHud {
     // канал внутри рамки (в пикселях рамки): между верхними и нижними орнаментами и между боковыми
     private static final int GD_CH_X0 = 230, GD_CH_X1 = 1940, GD_CH_Y0 = 291, GD_CH_Y1 = 421;
 
+    // --- полоска Всезнающего Ангела: рамка 2025x470 (канал 1565x61 прозрачный) и отдельная фиолетовая полоса ---
+    private static final ResourceLocation ANGEL_FRAME = tex("all_knowing_frame");
+    private static final ResourceLocation ANGEL_FILL = tex("all_knowing_fill");
+    private static final int AK_W = 2025, AK_H = 470, AK_FILL_W = 1565, AK_FILL_H = 61;
+    private static final int AK_CH_X = 230, AK_CH_Y = 290;
+
     private BossBarHud() {}
+
+    private static void drawAngel(CustomizeGuiOverlayEvent.BossEventProgress event, LerpingBossEvent boss) {
+        event.setCanceled(true);
+        GuiGraphics g = event.getGuiGraphics();
+        Font font = Minecraft.getInstance().font;
+        int w = 380;
+        float sc = w / (float) AK_W;
+        int h = Math.round(AK_H * sc);
+        int x = (g.guiWidth() - w) / 2;
+        int y = event.getY() + 4;
+        int cx = x + w / 2;
+        float progress = Math.max(0.0F, Math.min(1.0F, boss.getProgress()));
+
+        int c0 = x + Math.round(AK_CH_X * sc);
+        int cy0 = y + Math.round(AK_CH_Y * sc);
+        int cw = Math.round(AK_FILL_W * sc);
+        int ch = Math.max(1, Math.round(AK_FILL_H * sc));
+        g.fill(c0, cy0, c0 + cw, cy0 + ch, 0xFF0C0612);                       // пустой канал
+        int fw = Math.round(cw * progress);
+        if (fw > 0) {
+            g.blit(ANGEL_FILL, c0, cy0, fw, ch, 0, 0,
+                    Math.max(1, Math.round(AK_FILL_W * progress)), AK_FILL_H, AK_FILL_W, AK_FILL_H);
+        }
+        g.blit(ANGEL_FRAME, x, y, w, h, 0, 0, AK_W, AK_H, AK_W, AK_H);        // рамка поверх
+
+        Component name = boss.getName();
+        g.drawString(font, name, cx - font.width(name) / 2, y + h - 3, 0xFFE9A8FF, true);
+        int hp = (int) Math.ceil(progress * AllKnowingAngel.MAX_HEALTH);
+        String text = hp + " / " + (int) AllKnowingAngel.MAX_HEALTH;
+        g.drawString(font, text, cx - font.width(text) / 2, y + h + 8, 0xFFD9B4FF, true);
+
+        event.setIncrement(h + 22);
+    }
 
     private static void drawGod(CustomizeGuiOverlayEvent.BossEventProgress event, LerpingBossEvent boss, boolean immortal) {
         event.setCanceled(true);
@@ -140,6 +180,10 @@ public final class BossBarHud {
         }
         if (tc.getKey().equals("entity.celestial.celestia_god.immortal")) {
             drawGod(event, boss, true);
+            return;
+        }
+        if (tc.getKey().equals("entity.celestial.all_knowing_angel")) {
+            drawAngel(event, boss);
             return;
         }
         if (tc.getKey().equals("entity.celestial.cursed_boss")) {

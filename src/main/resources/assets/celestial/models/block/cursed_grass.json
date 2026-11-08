@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/block",
   "textures": {
-    "particle": "celestial:block/cursed_grass",
-    "t": "celestial:block/cursed_grass"
+    "grass": "celestial:block/cursed_grass",
+    "particle": "celestial:block/cursed_grass"
   },
   "elements": [
     {
@@ -19,158 +19,142 @@
       "shade": false,
       "faces": {
         "north": {
-          "texture": "#t",
           "uv": [
             0,
             0,
             16,
             16
-          ]
+          ],
+          "texture": "#grass"
         },
         "south": {
-          "texture": "#t",
           "uv": [
             0,
             0,
             16,
             16
-          ]
+          ],
+          "texture": "#grass"
         }
       },
       "rotation": {
+        "angle": 45,
+        "axis": "y",
         "origin": [
           8,
           8,
           8
         ],
-        "axis": "y",
-        "angle": 45
+        "rescale": true
       }
     },
     {
       "from": [
-        0.8,
+        8,
         0,
-        8
+        0.8
       ],
       "to": [
-        15.2,
+        8,
         16,
-        8
+        15.2
       ],
       "shade": false,
       "faces": {
-        "north": {
-          "texture": "#t",
+        "east": {
           "uv": [
-            0,
-            0,
             16,
+            0,
+            0,
             16
-          ]
+          ],
+          "texture": "#grass"
         },
-        "south": {
-          "texture": "#t",
+        "west": {
           "uv": [
-            0,
-            0,
             16,
+            0,
+            0,
             16
-          ]
+          ],
+          "texture": "#grass"
         }
       },
       "rotation": {
+        "angle": 45,
+        "axis": "y",
         "origin": [
           8,
           8,
           8
         ],
-        "axis": "y",
-        "angle": -45
+        "rescale": true
       }
     },
     {
       "from": [
-        -1,
+        1.5,
         0,
-        10
+        8
       ],
       "to": [
-        9,
-        11,
-        10
+        14.5,
+        12,
+        8
       ],
       "shade": false,
       "faces": {
         "north": {
-          "texture": "#t",
           "uv": [
-            0,
-            0,
             16,
+            0,
+            0,
             16
-          ]
+          ],
+          "texture": "#grass"
         },
         "south": {
-          "texture": "#t",
           "uv": [
-            0,
-            0,
             16,
+            0,
+            0,
             16
-          ]
+          ],
+          "texture": "#grass"
         }
-      },
-      "rotation": {
-        "origin": [
-          4,
-          0,
-          10
-        ],
-        "axis": "y",
-        "angle": 22.5
       }
     },
     {
       "from": [
-        7,
+        8,
         0,
-        5
+        1.5
       ],
       "to": [
-        17,
-        9,
-        5
+        8,
+        12,
+        14.5
       ],
       "shade": false,
       "faces": {
-        "north": {
-          "texture": "#t",
+        "east": {
           "uv": [
             0,
             0,
             16,
             16
-          ]
+          ],
+          "texture": "#grass"
         },
-        "south": {
-          "texture": "#t",
+        "west": {
           "uv": [
             0,
             0,
             16,
             16
-          ]
+          ],
+          "texture": "#grass"
         }
-      },
-      "rotation": {
-        "origin": [
-          12,
-          0,
-          5
-        ],
-        "axis": "y",
-        "angle": -22.5
       }
     }
   ],

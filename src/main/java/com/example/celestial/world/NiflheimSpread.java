@@ -7,9 +7,11 @@ import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.SectionPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundLevelChunkWithLightPacket;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
@@ -164,6 +166,31 @@ public class NiflheimSpread extends SavedData {
             }
         }
 
+        // 1б) ВСЯ трава и ВСЯ земля чанка (не только у поверхности): трава под открытым небом -> дёрн, остальное -> земля
+        LevelChunkSection[] sections = chunk.getSections();
+        BlockPos.MutableBlockPos dirtPos = new BlockPos.MutableBlockPos();
+        for (int i = 0; i < sections.length; i++) {
+            LevelChunkSection section = sections[i];
+            if (section.hasOnlyAir() || !section.maybeHas(NiflheimSpread::isDirtLike)) continue;
+            int baseY = SectionPos.sectionToBlockCoord(chunk.getSectionYFromSectionIndex(i));
+            int bx = chunk.getPos().getMinBlockX(), bz = chunk.getPos().getMinBlockZ();
+            for (int y = 0; y < 16; y++) {
+                for (int z = 0; z < 16; z++) {
+                    for (int x = 0; x < 16; x++) {
+                        BlockState state = section.getBlockState(x, y, z);
+                        if (!isDirtLike(state)) continue;
+                        BlockState replacement = earth;
+                        if (isGrassLike(state)) {
+                            dirtPos.set(bx + x, baseY + y + 1, bz + z);
+                            BlockState above = chunk.getBlockState(dirtPos);
+                            if (above.isAir() || !above.canOcclude()) replacement = turf;
+                        }
+                        section.setBlockState(x, y, z, replacement, false);
+                    }
+                }
+            }
+        }
+
         // 2) поверхность: трава -> проклятый дёрн, земля -> проклятая земля, песок/гравий -> проклятый камень, растения и листва гибнут
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
         int minX = chunk.getPos().getMinBlockX(), minZ = chunk.getPos().getMinBlockZ();
@@ -210,6 +237,31 @@ public class NiflheimSpread extends SavedData {
                 player.connection.send(packet);
             }
         }
+    }
+
+    /** Трава и подобные верхние слои: становятся проклятым дёрном, если над ними открытое место. */
+    private static boolean isGrassLike(BlockState state) {
+        return state.is(Blocks.GRASS_BLOCK) || state.is(Blocks.PODZOL) || state.is(Blocks.MYCELIUM)
+                || state.is(Blocks.DIRT_PATH) || state.is(Blocks.FARMLAND) || state.is(Blocks.MOSS_BLOCK);
+    }
+
+    /** Любая земля: трава, земля, коренная земля, грязь и так далее. */
+    private static boolean isDirtLike(BlockState state) {
+        return isGrassLike(state) || state.is(BlockTags.DIRT) || state.is(Blocks.MUD)
+                || state.is(Blocks.ROOTED_DIRT) || state.is(Blocks.COARSE_DIRT);
+    }
+
+    /** Запуск распространения возле точки появления в мире (например, после победы над Богом Селестии). */
+    public static void startAtWorldSpawn(MinecraftServer server) {
+        ServerLevel overworld = server.overworld();
+        NiflheimSpread data = get(overworld);
+        ChunkPos c = new ChunkPos(overworld.getSharedSpawnPos());
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dz = -1; dz <= 1; dz++) {
+                data.infect(overworld, ChunkPos.asLong(c.x + dx, c.z + dz));
+            }
+        }
+        data.setActive(true);
     }
 
     private static boolean isReplaceableRock(BlockState state) {

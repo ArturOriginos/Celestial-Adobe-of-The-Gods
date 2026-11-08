@@ -153,10 +153,15 @@ public final class CursedTreeGenerator {
         for (BlockPos p : placedLeaves) {
             if (random.nextInt(6) != 0 || !level.getBlockState(p.below()).isAir()) continue;
             int length = 1 + random.nextInt(4);
+            BlockPos last = null;
             for (int i = 1; i <= length; i++) {
                 BlockPos hp = p.below(i);
                 if (!level.getBlockState(hp).isAir()) break;
                 level.setBlock(hp, hanging, 2);
+                last = hp;
+            }
+            if (last != null) { // нижний кончик лозы рисуется отдельной моделью
+                level.setBlock(last, hanging.setValue(com.example.celestial.block.CursedHangingLeavesBlock.END, true), 2);
             }
         }
         return true;

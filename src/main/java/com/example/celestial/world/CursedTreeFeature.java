@@ -7,7 +7,7 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
-/** Проклятое дерево в мире: растёт ТОЛЬКО на незерском камне. */
+/** Проклятое дерево в мире: растёт на незерском камне, проклятой земле и проклятом дёрне. */
 public class CursedTreeFeature extends Feature<CursedTreeConfig> {
     public CursedTreeFeature(Codec<CursedTreeConfig> codec) {
         super(codec);
@@ -17,7 +17,9 @@ public class CursedTreeFeature extends Feature<CursedTreeConfig> {
     public boolean place(FeaturePlaceContext<CursedTreeConfig> context) {
         WorldGenLevel level = context.level();
         BlockPos origin = context.origin();
-        if (!level.getBlockState(origin.below()).is(ModBlocks.CURSED_STONE.get())) return false;
+        var ground = level.getBlockState(origin.below());
+        if (!ground.is(ModBlocks.CURSED_STONE.get()) && !ground.is(ModBlocks.CURSED_EARTH.get())
+                && !ground.is(ModBlocks.CURSED_TURF.get())) return false;
         return CursedTreeGenerator.grow(level, origin, context.random(), context.config().size());
     }
 }

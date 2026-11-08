@@ -2,6 +2,8 @@ package com.example.celestial.registry;
 
 import static com.example.celestial.CelestialMod.MODID;
 
+import com.example.celestial.entity.AllKnowingAngel;
+import com.example.celestial.entity.DarkOrb;
 import com.example.celestial.entity.CelestiaEffect;
 import com.example.celestial.entity.CelestiaGod;
 import com.example.celestial.entity.CelestiaSpike;
@@ -137,6 +139,25 @@ public final class ModEntities {
                     .sized(0.6F, 1.99F)
                     .clientTrackingRange(8)
                     .build("cursed_skeleton"));
+
+    // ----------------------------------------------------------- Всезнающий Ангел (без логики появления)
+    public static final DeferredHolder<EntityType<?>, EntityType<AllKnowingAngel>> ALL_KNOWING_ANGEL =
+            ENTITIES.register("all_knowing_angel", () -> EntityType.Builder
+                    .of(AllKnowingAngel::new, MobCategory.MONSTER)
+                    .sized(3.0F, 5.1F)
+                    .fireImmune()
+                    .clientTrackingRange(12)
+                    .build("all_knowing_angel"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<DarkOrb>> DARK_ORB =
+            ENTITIES.register("dark_orb", () -> EntityType.Builder
+                    .of(DarkOrb::new, MobCategory.MISC)
+                    .sized(1.0F, 1.0F)
+                    .noSave()
+                    .fireImmune()
+                    .clientTrackingRange(10)
+                    .updateInterval(1)
+                    .build("dark_orb"));
 
     private ModEntities() {}
 }

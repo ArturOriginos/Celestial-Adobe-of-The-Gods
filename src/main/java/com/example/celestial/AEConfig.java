@@ -19,8 +19,8 @@ public final class AEConfig {
             .defineInRange("absoluteMaxLevel", 10, 1, 255);
 
     public static final ModConfigSpec.IntValue SPREAD_INTERVAL = BUILDER
-            .comment("Проклятый Нифельхельм в верхнем мире: как часто (в тиках) происходит шаг распространения (20 тиков = 1 секунда).")
-            .defineInRange("niflheimSpreadIntervalTicks", 1200, 1, 72000);
+            .comment("Проклятый Нифельхельм в верхнем мире: как часто (в тиках) происходит шаг распространения (20 тиков = 1 секунда). По умолчанию 500 тиков = 25 секунд на чанк.")
+            .defineInRange("spreadIntervalTicks", 500, 1, 72000);
 
     public static final ModConfigSpec.IntValue SPREAD_CHUNKS_PER_STEP = BUILDER
             .comment("Сколько чанков заражается за один шаг распространения.")

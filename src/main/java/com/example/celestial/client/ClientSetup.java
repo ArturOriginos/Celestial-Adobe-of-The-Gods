@@ -36,6 +36,8 @@ public final class ClientSetup {
         event.registerEntityRenderer(ModEntities.GUARDIAN.get(), GuardianRenderer::new);
         event.registerEntityRenderer(ModEntities.GOD_SPIKE.get(), GodSpikeRenderer::new);
         event.registerEntityRenderer(ModEntities.CURSED_BOSS.get(), CursedBossRenderer::new);
+        event.registerEntityRenderer(ModEntities.ALL_KNOWING_ANGEL.get(), AllKnowingAngelRenderer::new);
+        event.registerEntityRenderer(ModEntities.DARK_ORB.get(), DarkOrbRenderer::new);
         event.registerEntityRenderer(ModEntities.CELESTIA_GOD.get(), CelestiaGodRenderer::new);
         event.registerEntityRenderer(ModEntities.CELESTIA_EFFECT.get(), CelestiaEffectRenderer::new);
         event.registerEntityRenderer(ModEntities.FLYING_SOUL.get(), FlyingSoulRenderer::new);

@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "celestial:block/celestial_flower"
-  }
+  "parent": "celestial:block/celestial_flower"
 }

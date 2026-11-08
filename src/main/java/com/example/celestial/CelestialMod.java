@@ -73,6 +73,10 @@ public class CelestialMod {
                 MiniSoulSyncPayload.TYPE,
                 MiniSoulSyncPayload.STREAM_CODEC,
                 ClientPayloads::handleMiniSoul);
+        registrar.playToClient(
+                com.example.celestial.network.OpenTomePayload.TYPE,
+                com.example.celestial.network.OpenTomePayload.STREAM_CODEC,
+                ClientPayloads::handleOpenTome);
     }
 
     /** Дерево Селестии горит как обычное. */
@@ -92,6 +96,7 @@ public class CelestialMod {
     private void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(ModEntities.GUARDIAN.get(), GuardianOfGods.createAttributes().build());
         event.put(ModEntities.CURSED_BOSS.get(), CursedBoss.createAttributes().build());
+        event.put(ModEntities.ALL_KNOWING_ANGEL.get(), com.example.celestial.entity.AllKnowingAngel.createAttributes().build());
         event.put(ModEntities.CELESTIA_GOD.get(), CelestiaGod.createAttributes().build());
         event.put(ModEntities.CURSED_PIG.get(), net.minecraft.world.entity.animal.Pig.createAttributes().build());
         event.put(ModEntities.CURSED_COW.get(), net.minecraft.world.entity.animal.Cow.createAttributes().build());
@@ -112,6 +117,9 @@ public class CelestialMod {
             event.accept(ModItems.CURSED_SOUL);
             event.accept(ModItems.UNITED_SOUL);
             event.accept(ModItems.CELESTIA_GOD_SOUL);
+            event.accept(ModItems.ALL_KNOWING_TOME);
+            event.accept(ModItems.FENRIR_CLOCK);
+            event.accept(ModItems.CERBERUS_HEART);
             event.accept(ModItems.CELESTIA_RUNE);
             event.accept(ModItems.CELESTIA_KEY);
         }
@@ -209,6 +217,7 @@ public class CelestialMod {
         if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
             event.accept(ModItems.GUARDIAN_EGG);
             event.accept(ModItems.CURSED_BOSS_EGG);
+            event.accept(ModItems.ALL_KNOWING_ANGEL_EGG);
             event.accept(ModItems.CELESTIA_GOD_EGG);
             event.accept(ModItems.CURSED_PIG_EGG);
             event.accept(ModItems.CURSED_COW_EGG);

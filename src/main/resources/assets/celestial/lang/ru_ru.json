@@ -274,5 +274,17 @@
   "item.celestial.divine_chestplate.lore2": "Постоянное сопротивление урону V.",
   "item.celestial.divine_chestplate.lore3": "Вокруг владельца парит божественная аура.",
   "block.celestial.cursed_earth": "Проклятая земля",
-  "block.celestial.cursed_turf": "Проклятый дёрн"
+  "block.celestial.cursed_turf": "Проклятый дёрн",
+  "entity.celestial.all_knowing_angel": "Всезнающий Ангел",
+  "entity.celestial.dark_orb": "Тёмная сфера",
+  "item.celestial.all_knowing_angel_spawn_egg": "Яйцо призыва: Всезнающий Ангел",
+  "message.celestial.phase2.warning": "Внимание! Если вы нажмёте да, то вы перейдёте в 2 фазу мода, если вы не успели что-то сделать перед убийством бога, сделайте сейчас. Вы готовы?",
+  "message.celestial.phase2.yes": "[ Да ]",
+  "message.celestial.phase2.no": "[ Нет ]",
+  "message.celestial.phase2.started": "Проклятый Нифельхельм начинает распространяться...",
+  "message.celestial.phase2.none": "Сейчас вопрос не задан.",
+  "item.celestial.all_knowing_tome": "Всезнающая книга",
+  "item.celestial.fenrir_clock": "Часы Фенрира",
+  "item.celestial.cerberus_heart": "Сердце Цербера",
+  "book.celestial.all_knowing_tome.story": "Здесь будет сюжет мода. Текст автоматически делится на страницы."
 }

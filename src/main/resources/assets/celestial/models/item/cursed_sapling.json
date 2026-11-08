@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "celestial:block/cursed_sapling"
-  }
+  "parent": "celestial:block/cursed_sapling"
 }

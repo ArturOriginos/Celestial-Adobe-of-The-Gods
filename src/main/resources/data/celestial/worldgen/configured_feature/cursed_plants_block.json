@@ -45,6 +45,12 @@
           "data": {
             "Name": "celestial:crystal_sprouts"
           }
+        },
+        {
+          "weight": 3,
+          "data": {
+            "Name": "celestial:cursed_sapling"
+          }
         }
       ]
     }

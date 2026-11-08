@@ -1,7 +1,15 @@
 {
   "variants": {
-    "": {
-      "model": "celestial:block/cursed_hanging_leaves"
+    "end=false": [
+      {
+        "model": "celestial:block/cursed_vine"
+      },
+      {
+        "model": "celestial:block/cursed_vine_dark"
+      }
+    ],
+    "end=true": {
+      "model": "celestial:block/cursed_vine_end"
     }
   }
 }

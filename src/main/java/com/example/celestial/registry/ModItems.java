@@ -51,6 +51,19 @@ public final class ModItems {
             ITEMS.registerSimpleItem("united_soul", new Item.Properties().rarity(Rarity.EPIC).fireResistant()
                     .component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true));
 
+    /** Всезнающая книга: выпадает из Всезнающего Ангела, ПКМ открывает сюжет. */
+    public static final DeferredItem<Item> ALL_KNOWING_TOME = ITEMS.register("all_knowing_tome",
+            () -> new com.example.celestial.item.AllKnowingTomeItem(
+                    new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+
+    /** Часы Фенрира (способность - позже). */
+    public static final DeferredItem<Item> FENRIR_CLOCK =
+            ITEMS.registerSimpleItem("fenrir_clock", new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant());
+
+    /** Сердце Цербера: пока лежит в хотбаре или второй руке - Восстановление IV, Сила III и голод не расходуется. */
+    public static final DeferredItem<Item> CERBERUS_HEART =
+            ITEMS.registerSimpleItem("cerberus_heart", new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant());
+
     /** Душа Бога Селестии: падает с одноимённого босса, нужна для Совершенного Пакселя. */
     public static final DeferredItem<Item> CELESTIA_GOD_SOUL =
             ITEMS.registerSimpleItem("celestia_god_soul", new Item.Properties().rarity(Rarity.EPIC).fireResistant()
@@ -120,6 +133,9 @@ public final class ModItems {
 
     public static final DeferredItem<DeferredSpawnEggItem> GUARDIAN_EGG = ITEMS.register("guardian_of_gods_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.GUARDIAN, 0xE0A800, 0xFFF3C4, new Item.Properties()));
+
+    public static final DeferredItem<DeferredSpawnEggItem> ALL_KNOWING_ANGEL_EGG = ITEMS.register("all_knowing_angel_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.ALL_KNOWING_ANGEL, 0x2A0A3C, 0xFF3A6A, new Item.Properties()));
 
     public static final DeferredItem<DeferredSpawnEggItem> CURSED_BOSS_EGG = ITEMS.register("cursed_boss_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.CURSED_BOSS, 0x1A0A12, 0xD01824, new Item.Properties()));

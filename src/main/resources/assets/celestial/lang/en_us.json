@@ -274,5 +274,17 @@
   "item.celestial.divine_chestplate.lore2": "Permanent Resistance V.",
   "item.celestial.divine_chestplate.lore3": "A divine aura hovers around the wearer.",
   "block.celestial.cursed_earth": "Cursed Earth",
-  "block.celestial.cursed_turf": "Cursed Turf"
+  "block.celestial.cursed_turf": "Cursed Turf",
+  "entity.celestial.all_knowing_angel": "The All-Knowing Angel",
+  "entity.celestial.dark_orb": "Dark Orb",
+  "item.celestial.all_knowing_angel_spawn_egg": "The All-Knowing Angel Spawn Egg",
+  "message.celestial.phase2.warning": "Attention! If you click yes, you will move on to phase 2 of the mod. If there is anything you did not finish before killing the god, do it now. Are you ready?",
+  "message.celestial.phase2.yes": "[ Yes ]",
+  "message.celestial.phase2.no": "[ No ]",
+  "message.celestial.phase2.started": "The Cursed Niflheim begins to spread...",
+  "message.celestial.phase2.none": "There is no question pending.",
+  "item.celestial.all_knowing_tome": "The All-Knowing Tome",
+  "item.celestial.fenrir_clock": "Fenrir's Clock",
+  "item.celestial.cerberus_heart": "Heart of Cerberus",
+  "book.celestial.all_knowing_tome.story": "The story of the mod will be here. The text is split into pages automatically."
 }

@@ -1,7 +1,14 @@
 package com.example.celestial.network;
 
 import com.example.celestial.registry.ModAttachments;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.inventory.BookViewScreen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.Style;
+import net.minecraft.locale.Language;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
@@ -22,6 +29,29 @@ public final class ClientPayloads {
             if (entity instanceof Player player) {
                 player.setData(ModAttachments.MINI_SOUL.get(), payload.value());
             }
+        });
+    }
+
+    private static final int BOOK_LINES_PER_PAGE = 13;
+    private static final int BOOK_PAGE_WIDTH = 114;
+
+    /** Открывает Всезнающую книгу: текст из языкового файла (book.celestial.all_knowing_tome.story) режется на страницы. */
+    public static void handleOpenTome(OpenTomePayload payload, IPayloadContext ctx) {
+        ctx.enqueueWork(() -> {
+            Minecraft mc = Minecraft.getInstance();
+            String text = Language.getInstance().getOrDefault("book.celestial.all_knowing_tome.story");
+            List<FormattedText> lines = mc.font.getSplitter().splitLines(FormattedText.of(text), BOOK_PAGE_WIDTH, Style.EMPTY);
+            List<Component> pages = new ArrayList<>();
+            for (int i = 0; i < lines.size(); i += BOOK_LINES_PER_PAGE) {
+                StringBuilder page = new StringBuilder();
+                for (int j = i; j < Math.min(lines.size(), i + BOOK_LINES_PER_PAGE); j++) {
+                    if (j > i) page.append('\n');
+                    page.append(lines.get(j).getString());
+                }
+                pages.add(Component.literal(page.toString()));
+            }
+            if (pages.isEmpty()) pages.add(Component.empty());
+            mc.setScreen(new BookViewScreen(new BookViewScreen.BookAccess(pages)));
         });
     }
 }

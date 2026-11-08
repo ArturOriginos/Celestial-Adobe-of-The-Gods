@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-/** Росток проклятого дерева: сажается ТОЛЬКО на незерский камень, растёт от костной муки (35%). */
+/** Росток проклятого дерева: сажается на незерский камень, проклятую землю и проклятый дёрн, растёт от костной муки (35%). */
 public class CursedSaplingBlock extends BushBlock implements BonemealableBlock {
     public static final MapCodec<CursedSaplingBlock> CODEC = simpleCodec(CursedSaplingBlock::new);
     public static final float BONEMEAL_CHANCE = 0.35F;
@@ -39,7 +39,8 @@ public class CursedSaplingBlock extends BushBlock implements BonemealableBlock {
 
     @Override
     protected boolean mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos) {
-        return state.is(ModBlocks.CURSED_STONE.get());
+        return state.is(ModBlocks.CURSED_STONE.get()) || state.is(ModBlocks.CURSED_EARTH.get())
+                || state.is(ModBlocks.CURSED_TURF.get());
     }
 
     @Override

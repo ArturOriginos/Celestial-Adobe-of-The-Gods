@@ -982,19 +982,15 @@ public class CelestiaGod extends Monster {
             server.sendParticles(ParticleTypes.TOTEM_OF_UNDYING, cx, cy, cz, 90, 1.0D, 1.2D, 1.0D, 0.4D);
             server.playSound(null, cx, cy, cz, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.HOSTILE, 5.0F, 0.7F);
             server.playSound(null, cx, cy, cz, SoundEvents.ENDER_DRAGON_DEATH, SoundSource.HOSTILE, 5.0F, 1.2F);
-            // из погибшего бога вылетает маленькая душа и летит к убийце (или к ближайшему игроку)
+            // получатель: убийца (или ближайший игрок)
             net.minecraft.server.level.ServerPlayer receiver = this.killerId == null ? null
                     : server.getServer().getPlayerList().getPlayer(this.killerId);
             if (receiver == null && server.getNearestPlayer(this, 64.0D) instanceof net.minecraft.server.level.ServerPlayer near) {
                 receiver = near;
             }
+            // вместо немедленного вылета души убийце задаётся вопрос в чате (Да / Нет); душа и 2 фаза начинаются после "Да"
             if (receiver != null) {
-                com.example.celestial.entity.FlyingSoul soul = com.example.celestial.registry.ModEntities.FLYING_SOUL.get().create(server);
-                if (soul != null) {
-                    soul.setPos(cx, cy, cz);
-                    soul.setTarget(receiver.getUUID());
-                    server.addFreshEntity(soul);
-                }
+                com.example.celestial.event.Phase2Events.askAfterGodDeath(receiver, server, cx, cy, cz);
             }
             this.bossEvent.removeAllPlayers();
             this.remove(Entity.RemovalReason.KILLED);
