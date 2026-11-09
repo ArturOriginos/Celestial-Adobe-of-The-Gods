@@ -86,27 +86,31 @@ public class AllKnowingAngelRenderer extends EntityRenderer<AllKnowingAngel> {
         float s = (1.0F - death) / 16.0F;
         ps.scale(s, s, s);
 
-        VertexConsumer base = buffer.getBuffer(RenderType.entityCutoutNoCull(TEXTURE));
-        VertexConsumer glow = buffer.getBuffer(RenderType.eyes(GLOW));
-        for (int g = 0; g <= G_HALO; g++) {
-            ps.pushPose();
-            ps.translate(0.0F, 2.0F * wave, 0.0F);
-            if (g == G_WING_R) {
-                ps.translate(13.0F, 41.0F, 0.0F);
-                ps.mulPose(Axis.ZP.rotationDegrees(9.0F * wave));
-                ps.translate(-13.0F, -41.0F, 0.0F);
-            } else if (g == G_WING_L) {
-                ps.translate(-13.0F, 41.0F, 0.0F);
-                ps.mulPose(Axis.ZP.rotationDegrees(-9.0F * wave));
-                ps.translate(13.0F, -41.0F, 0.0F);
-            } else if (g == G_HALO) {
-                ps.translate(0.0F, 74.0F, 0.0F);
-                ps.mulPose(Axis.YP.rotationDegrees(360.0F * (seconds / 4.0F)));
-                ps.translate(0.0F, -74.0F, 0.0F);
+        // Два прохода: буфер каждого типа берётся прямо перед рисованием (иначе предыдущий буфер закрывается: "Not building!")
+        for (int pass = 0; pass < 2; pass++) {
+            VertexConsumer vc = pass == 0
+                    ? buffer.getBuffer(RenderType.entityCutoutNoCull(TEXTURE))
+                    : buffer.getBuffer(RenderType.eyes(GLOW));
+            int lt = pass == 0 ? light : LightTexture.FULL_BRIGHT;
+            for (int g = 0; g <= G_HALO; g++) {
+                ps.pushPose();
+                ps.translate(0.0F, 2.0F * wave, 0.0F);
+                if (g == G_WING_R) {
+                    ps.translate(13.0F, 41.0F, 0.0F);
+                    ps.mulPose(Axis.ZP.rotationDegrees(9.0F * wave));
+                    ps.translate(-13.0F, -41.0F, 0.0F);
+                } else if (g == G_WING_L) {
+                    ps.translate(-13.0F, 41.0F, 0.0F);
+                    ps.mulPose(Axis.ZP.rotationDegrees(-9.0F * wave));
+                    ps.translate(13.0F, -41.0F, 0.0F);
+                } else if (g == G_HALO) {
+                    ps.translate(0.0F, 74.0F, 0.0F);
+                    ps.mulPose(Axis.YP.rotationDegrees(360.0F * (seconds / 4.0F)));
+                    ps.translate(0.0F, -74.0F, 0.0F);
+                }
+                bossModel.renderGroup(vc, ps.last(), lt, g, BBModel.NO_CLIP);
+                ps.popPose();
             }
-            bossModel.renderGroup(base, ps.last(), light, g, BBModel.NO_CLIP);
-            bossModel.renderGroup(glow, ps.last(), LightTexture.FULL_BRIGHT, g, BBModel.NO_CLIP);
-            ps.popPose();
         }
         ps.popPose();
     }
@@ -129,18 +133,18 @@ public class AllKnowingAngelRenderer extends EntityRenderer<AllKnowingAngel> {
         float thick = state == 1
                 ? Mth.lerp(entity.getLaserProgress(), 0.05F, 0.2F)
                 : 0.9F + 0.1F * Mth.sin(age * 1.7F);
-        VertexConsumer glow = buffer.getBuffer(RenderType.eyes(LASER_GLOW));
-        VertexConsumer base = buffer.getBuffer(RenderType.eyes(LASER));
         int tiles = (int) Math.ceil(lenPx / 64.0F);
         ps.pushPose();
         ps.scale(thick, thick, 1.0F);
-        for (int k = 0; k < tiles; k++) {
-            ps.pushPose();
-            ps.translate(0.0F, 0.0F, -64.0F * k);
-            float minZ = -(lenPx - 64.0F * k);
-            if (state == 2) laserModel.renderGroup(base, ps.last(), LightTexture.FULL_BRIGHT, 0, minZ);
-            laserModel.renderGroup(glow, ps.last(), LightTexture.FULL_BRIGHT, 0, minZ);
-            ps.popPose();
+        for (int pass = 0; pass < 2; pass++) {
+            if (pass == 0 && state != 2) continue; // сердцевина луча только при выстреле
+            VertexConsumer vc = buffer.getBuffer(RenderType.eyes(pass == 0 ? LASER : LASER_GLOW));
+            for (int k = 0; k < tiles; k++) {
+                ps.pushPose();
+                ps.translate(0.0F, 0.0F, -64.0F * k);
+                laserModel.renderGroup(vc, ps.last(), LightTexture.FULL_BRIGHT, 0, -(lenPx - 64.0F * k));
+                ps.popPose();
+            }
         }
         ps.popPose();
 
@@ -149,11 +153,11 @@ public class AllKnowingAngelRenderer extends EntityRenderer<AllKnowingAngel> {
             ps.mulPose(Axis.ZP.rotationDegrees(age * 18.0F));
             float k = 0.55F + 0.08F * Mth.sin(age * 2.3F);
             ps.scale(k, k, k);
-            VertexConsumer ib = buffer.getBuffer(RenderType.eyes(IMPACT));
-            VertexConsumer ig = buffer.getBuffer(RenderType.eyes(IMPACT_GLOW));
-            for (int g = 0; g <= 1; g++) {
-                impactModel.renderGroup(ib, ps.last(), LightTexture.FULL_BRIGHT, g, BBModel.NO_CLIP);
-                impactModel.renderGroup(ig, ps.last(), LightTexture.FULL_BRIGHT, g, BBModel.NO_CLIP);
+            for (int pass = 0; pass < 2; pass++) {
+                VertexConsumer vc = buffer.getBuffer(RenderType.eyes(pass == 0 ? IMPACT : IMPACT_GLOW));
+                for (int g = 0; g <= 1; g++) {
+                    impactModel.renderGroup(vc, ps.last(), LightTexture.FULL_BRIGHT, g, BBModel.NO_CLIP);
+                }
             }
         }
         ps.popPose();

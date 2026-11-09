@@ -38,22 +38,58 @@ public final class CursedTreeGenerator {
     private static final int[][] DIRS = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}, {1, 1}, {-1, 1}, {-1, -1}, {1, -1}};
     private static final int MAX_LEAF_DISTANCE = 6;
 
+    /** Минимальный доступ к миру для генератора: позволяет растить дерево и прямо в загружаемом чанке. */
+    public interface TreeWorld {
+        boolean hasChunk(BlockPos pos);
+
+        BlockState get(BlockPos pos);
+
+        void set(BlockPos pos, BlockState state);
+    }
+
+    private static TreeWorld wrap(LevelAccessor level) {
+        return new TreeWorld() {
+            @Override
+            public boolean hasChunk(BlockPos pos) {
+                return level.hasChunkAt(pos);
+            }
+
+            @Override
+            public BlockState get(BlockPos pos) {
+                return level.getBlockState(pos);
+            }
+
+            @Override
+            public void set(BlockPos pos, BlockState state) {
+                level.setBlock(pos, state, 2);
+            }
+        };
+    }
+
     private CursedTreeGenerator() {}
 
     /** Из ростка: случайный размер (25% большое, 35% среднее, 40% маленькое). */
     public static boolean growRandom(LevelAccessor level, BlockPos origin, RandomSource random) {
+        return growRandom(wrap(level), origin, random);
+    }
+
+    public static boolean growRandom(TreeWorld level, BlockPos origin, RandomSource random) {
         int roll = random.nextInt(100);
         return grow(level, origin, random, roll < 25 ? LARGE : roll < 60 ? MEDIUM : SMALL);
     }
 
     /** Пытается вырастить дерево нужного размера, не поместилось - пробует поменьше. */
     public static boolean grow(LevelAccessor level, BlockPos origin, RandomSource random, int size) {
+        return grow(wrap(level), origin, random, size);
+    }
+
+    public static boolean grow(TreeWorld level, BlockPos origin, RandomSource random, int size) {
         if (size >= LARGE && tryGrow(level, origin, random, LARGE_SHAPE)) return true;
         if (size >= MEDIUM && tryGrow(level, origin, random, MEDIUM_SHAPE)) return true;
         return tryGrow(level, origin, random, SMALL_SHAPE);
     }
 
-    private static boolean tryGrow(LevelAccessor level, BlockPos origin, RandomSource random, Shape s) {
+    private static boolean tryGrow(TreeWorld level, BlockPos origin, RandomSource random, Shape s) {
         int height = s.minHeight() + random.nextInt(s.heightRange());
 
         for (int y = 0; y < height; y++) {
@@ -137,31 +173,31 @@ public final class CursedTreeGenerator {
         }
 
         for (Map.Entry<BlockPos, BlockState> e : logs.entrySet()) {
-            level.setBlock(e.getKey(), e.getValue(), 2);
+            level.set(e.getKey(), e.getValue());
         }
         BlockState leaves = ModBlocks.CURSED_LEAVES.get().defaultBlockState();
         List<BlockPos> placedLeaves = new ArrayList<>();
         for (BlockPos p : candidates) {
             Integer d = dist.get(p);
             if (d == null || d > MAX_LEAF_DISTANCE) continue;
-            level.setBlock(p, leaves.setValue(LeavesBlock.DISTANCE, d), 2);
+            level.set(p, leaves.setValue(LeavesBlock.DISTANCE, d));
             placedLeaves.add(p);
         }
 
         // свисающие листья под кроной
         BlockState hanging = ModBlocks.CURSED_HANGING_LEAVES.get().defaultBlockState();
         for (BlockPos p : placedLeaves) {
-            if (random.nextInt(6) != 0 || !level.getBlockState(p.below()).isAir()) continue;
+            if (random.nextInt(6) != 0 || !level.get(p.below()).isAir()) continue;
             int length = 1 + random.nextInt(4);
             BlockPos last = null;
             for (int i = 1; i <= length; i++) {
                 BlockPos hp = p.below(i);
-                if (!level.getBlockState(hp).isAir()) break;
-                level.setBlock(hp, hanging, 2);
+                if (!level.get(hp).isAir()) break;
+                level.set(hp, hanging);
                 last = hp;
             }
             if (last != null) { // нижний кончик лозы рисуется отдельной моделью
-                level.setBlock(last, hanging.setValue(com.example.celestial.block.CursedHangingLeavesBlock.END, true), 2);
+                level.set(last, hanging.setValue(com.example.celestial.block.CursedHangingLeavesBlock.END, true));
             }
         }
         return true;
@@ -180,9 +216,9 @@ public final class CursedTreeGenerator {
         }
     }
 
-    private static boolean canReplace(LevelAccessor level, BlockPos pos) {
-        if (!level.hasChunkAt(pos)) return false;
-        BlockState state = level.getBlockState(pos);
+    private static boolean canReplace(TreeWorld level, BlockPos pos) {
+        if (!level.hasChunk(pos)) return false;
+        BlockState state = level.get(pos);
         return state.isAir() || state.canBeReplaced() || state.is(BlockTags.LEAVES)
                 || state.is(BlockTags.SAPLINGS) || state.getBlock() instanceof CursedSaplingBlock;
     }

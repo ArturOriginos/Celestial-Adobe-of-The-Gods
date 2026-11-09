@@ -40,15 +40,18 @@ public final class ClientPayloads {
         ctx.enqueueWork(() -> {
             Minecraft mc = Minecraft.getInstance();
             String text = Language.getInstance().getOrDefault("book.celestial.all_knowing_tome.story");
-            List<FormattedText> lines = mc.font.getSplitter().splitLines(FormattedText.of(text), BOOK_PAGE_WIDTH, Style.EMPTY);
             List<Component> pages = new ArrayList<>();
-            for (int i = 0; i < lines.size(); i += BOOK_LINES_PER_PAGE) {
-                StringBuilder page = new StringBuilder();
-                for (int j = i; j < Math.min(lines.size(), i + BOOK_LINES_PER_PAGE); j++) {
-                    if (j > i) page.append('\n');
-                    page.append(lines.get(j).getString());
+            // части сюжета разделены символом \f: каждая часть начинается с новой страницы
+            for (String section : text.split("\f")) {
+                List<FormattedText> lines = mc.font.getSplitter().splitLines(FormattedText.of(section), BOOK_PAGE_WIDTH, Style.EMPTY);
+                for (int i = 0; i < lines.size(); i += BOOK_LINES_PER_PAGE) {
+                    StringBuilder page = new StringBuilder();
+                    for (int j = i; j < Math.min(lines.size(), i + BOOK_LINES_PER_PAGE); j++) {
+                        if (j > i) page.append('\n');
+                        page.append(lines.get(j).getString());
+                    }
+                    pages.add(Component.literal(page.toString()));
                 }
-                pages.add(Component.literal(page.toString()));
             }
             if (pages.isEmpty()) pages.add(Component.empty());
             mc.setScreen(new BookViewScreen(new BookViewScreen.BookAccess(pages)));

@@ -56,9 +56,10 @@ public final class ModItems {
             () -> new com.example.celestial.item.AllKnowingTomeItem(
                     new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
 
-    /** Часы Фенрира (способность - позже). */
-    public static final DeferredItem<Item> FENRIR_CLOCK =
-            ITEMS.registerSimpleItem("fenrir_clock", new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant());
+    /** Часы Фенрира: ПКМ останавливает / возобновляет течение дня и ночи. */
+    public static final DeferredItem<Item> FENRIR_CLOCK = ITEMS.register("fenrir_clock",
+            () -> new com.example.celestial.item.FenrirClockItem(
+                    new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
 
     /** Сердце Цербера: пока лежит в хотбаре или второй руке - Восстановление IV, Сила III и голод не расходуется. */
     public static final DeferredItem<Item> CERBERUS_HEART =

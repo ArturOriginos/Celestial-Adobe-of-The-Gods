@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.SectionPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundLevelChunkWithLightPacket;
@@ -228,6 +229,9 @@ public class NiflheimSpread extends SavedData {
             }
         }
 
+        // 3) проклятая флора: случайно по чанку; росток сразу появляется выросшим деревом
+        spawnFlora(level, chunk, earth, turf, cursedStone);
+
         chunk.setUnsaved(true);
         if (sync) {
             // заново отправляем чанк игрокам, которые его видят (блоки + биом сразу)
@@ -235,6 +239,63 @@ public class NiflheimSpread extends SavedData {
                     new ClientboundLevelChunkWithLightPacket(chunk, level.getLightEngine(), null, null);
             for (ServerPlayer player : level.getChunkSource().chunkMap.getPlayers(chunk.getPos(), false)) {
                 player.connection.send(packet);
+            }
+        }
+    }
+
+    /** Доля столбцов чанка, где появляется флора (около 11 растений на чанк). */
+    private static final float FLORA_CHANCE = 0.045F;
+
+    /** Проклятая флора для заражённых чанков: те же растения, что и в Нифельхельме Незера; росток сразу становится деревом. */
+    private static void spawnFlora(ServerLevel level, LevelChunk chunk, BlockState earth, BlockState turf, BlockState cursedStone) {
+        RandomSource rnd = level.random;
+        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+        int minX = chunk.getPos().getMinBlockX(), minZ = chunk.getPos().getMinBlockZ();
+        CursedTreeGenerator.TreeWorld treeWorld = new CursedTreeGenerator.TreeWorld() {
+            @Override
+            public boolean hasChunk(BlockPos p) {
+                return (p.getX() >> 4) == chunk.getPos().x && (p.getZ() >> 4) == chunk.getPos().z
+                        && p.getY() >= level.getMinBuildHeight() && p.getY() < level.getMaxBuildHeight();
+            }
+
+            @Override
+            public BlockState get(BlockPos p) {
+                return chunk.getBlockState(p);
+            }
+
+            @Override
+            public void set(BlockPos p, BlockState state) {
+                chunk.setBlockState(p, state, false);
+            }
+        };
+        for (int x = 0; x < 16; x++) {
+            for (int z = 0; z < 16; z++) {
+                if (rnd.nextFloat() >= FLORA_CHANCE) continue;
+                int top = chunk.getHeight(Heightmap.Types.WORLD_SURFACE, x, z);
+                if (top <= level.getMinBuildHeight() + 1) continue;
+                pos.set(minX + x, top, minZ + z);
+                if (!chunk.getBlockState(pos).isAir()) continue;
+                BlockState ground = chunk.getBlockState(pos.below());
+                if (!ground.is(turf.getBlock()) && !ground.is(earth.getBlock()) && !ground.is(cursedStone.getBlock())) continue;
+
+                int roll = rnd.nextInt(34); // веса как у флоры в Нифельхельме Незера
+                if (roll >= 31) {
+                    // росток: сразу выросшее дерево (в чанке: маленькое подальше от края, среднее - ближе к центру)
+                    boolean inner = x >= 4 && x <= 11 && z >= 4 && z <= 11;
+                    if (!inner) continue;
+                    boolean center = x >= 6 && x <= 9 && z >= 6 && z <= 9;
+                    int size = center && rnd.nextInt(3) == 0 ? CursedTreeGenerator.MEDIUM : CursedTreeGenerator.SMALL;
+                    CursedTreeGenerator.grow(treeWorld, pos.immutable(), rnd, size);
+                    continue;
+                }
+                var block = roll < 14 ? ModBlocks.CURSED_GRASS.get()
+                        : roll < 17 ? ModBlocks.CURSED_FLOWER.get()
+                        : roll < 20 ? ModBlocks.CURSED_MUSHROOM.get()
+                        : roll < 24 ? ModBlocks.HELL_BUSH.get()
+                        : roll < 26 ? ModBlocks.BLAZING_FLOWER.get()
+                        : roll < 28 ? ModBlocks.CURSED_CRYSTAL.get()
+                        : ModBlocks.CRYSTAL_SPROUTS.get();
+                chunk.setBlockState(pos, block.defaultBlockState(), false);
             }
         }
     }

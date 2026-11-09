@@ -37,27 +37,30 @@ public class DarkOrbRenderer extends EntityRenderer<DarkOrb> {
                        int packedLight) {
         if (model == null) model = BBModel.load("dark_orb");
         float age = entity.tickCount + partialTick;
-        VertexConsumer base = buffer.getBuffer(RenderType.entityCutoutNoCull(TEXTURE));
-        VertexConsumer glow = buffer.getBuffer(RenderType.eyes(GLOW));
 
         ps.pushPose();
         ps.translate(0.0F, entity.getBbHeight() / 2.0F, 0.0F);
         float pulse = 0.7F + 0.04F * Mth.sin(age * 0.5F);
-        float s = pulse / 16.0F;
-        ps.scale(s, s, s);
+        float sc = pulse / 16.0F;
+        ps.scale(sc, sc, sc);
 
-        ps.pushPose();
-        ps.mulPose(Axis.YP.rotationDegrees(age * 3.0F));
-        model.renderGroup(base, ps.last(), LightTexture.FULL_BRIGHT, 0, BBModel.NO_CLIP);
-        model.renderGroup(glow, ps.last(), LightTexture.FULL_BRIGHT, 0, BBModel.NO_CLIP);
-        ps.popPose();
+        // Два прохода: буфер каждого типа берётся прямо перед рисованием
+        for (int pass = 0; pass < 2; pass++) {
+            VertexConsumer vc = pass == 0
+                    ? buffer.getBuffer(RenderType.entityCutoutNoCull(TEXTURE))
+                    : buffer.getBuffer(RenderType.eyes(GLOW));
 
-        ps.pushPose();
-        ps.mulPose(Axis.YP.rotationDegrees(age * 14.0F));
-        ps.mulPose(Axis.XP.rotationDegrees(Mth.sin(age * 0.1F) * 25.0F));
-        model.renderGroup(base, ps.last(), LightTexture.FULL_BRIGHT, 1, BBModel.NO_CLIP);
-        model.renderGroup(glow, ps.last(), LightTexture.FULL_BRIGHT, 1, BBModel.NO_CLIP);
-        ps.popPose();
+            ps.pushPose();
+            ps.mulPose(Axis.YP.rotationDegrees(age * 3.0F));
+            model.renderGroup(vc, ps.last(), LightTexture.FULL_BRIGHT, 0, BBModel.NO_CLIP);
+            ps.popPose();
+
+            ps.pushPose();
+            ps.mulPose(Axis.YP.rotationDegrees(age * 14.0F));
+            ps.mulPose(Axis.XP.rotationDegrees(Mth.sin(age * 0.1F) * 25.0F));
+            model.renderGroup(vc, ps.last(), LightTexture.FULL_BRIGHT, 1, BBModel.NO_CLIP);
+            ps.popPose();
+        }
 
         ps.popPose();
         super.render(entity, entityYaw, partialTick, ps, buffer, packedLight);

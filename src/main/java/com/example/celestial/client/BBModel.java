@@ -28,12 +28,15 @@ public final class BBModel {
     private final int count;
     private final int[] group;
     private final float[] v;
+    /** Поворот элемента: ox, oy, oz, ось (0=x,1=y,2=z), угол в градусах (на элемент 5 чисел; угол 0 - нет поворота). */
+    private final float[] rot;
 
-    private BBModel(float texW, float texH, int[] group, float[] v) {
+    private BBModel(float texW, float texH, int[] group, float[] v, float[] rot) {
         this.texW = texW;
         this.texH = texH;
         this.group = group;
         this.v = v;
+        this.rot = rot;
         this.count = group.length;
     }
 
@@ -56,12 +59,14 @@ public final class BBModel {
             }
             int[] g = new int[rows.size()];
             float[] data = new float[rows.size() * STRIDE];
+            float[] rots = new float[rows.size() * 5];
             for (int i = 0; i < rows.size(); i++) {
                 float[] row = rows.get(i);
                 g[i] = (int) row[0];
                 System.arraycopy(row, 1, data, i * STRIDE, STRIDE);
+                if (row.length >= 1 + STRIDE + 5) System.arraycopy(row, 1 + STRIDE, rots, i * 5, 5);
             }
-            return new BBModel(w, h, g, data);
+            return new BBModel(w, h, g, data, rots);
         } catch (IOException | RuntimeException e) {
             throw new IllegalStateException("Не удалось загрузить модель " + id, e);
         }
@@ -69,12 +74,37 @@ public final class BBModel {
 
     /** Рисует все кубы группы g. Кубы, у которых z0 меньше minZ, пропускаются (обрезка луча). */
     public void renderGroup(VertexConsumer vc, PoseStack.Pose pose, int light, int g, float minZ) {
+        renderGroup(vc, pose, light, OverlayTexture.NO_OVERLAY, g, minZ);
+    }
+
+    /** То же, но с оверлеем (красная вспышка при уроне). */
+    public void renderGroup(VertexConsumer vc, PoseStack.Pose pose, int light, int overlay, int g, float minZ) {
         for (int i = 0; i < count; i++) {
             if (group[i] != g) continue;
             int o = i * STRIDE;
             if (v[o + 2] < minZ) continue;
+            curOverlay = overlay;
+            setRotation(i);
             cuboid(vc, pose, light, o);
         }
+    }
+
+    private int curOverlay = OverlayTexture.NO_OVERLAY;
+    private boolean hasRot;
+    private float rox, roy, roz, rcos, rsin;
+    private int raxis;
+
+    private void setRotation(int i) {
+        float angle = rot[i * 5 + 4];
+        hasRot = angle != 0.0F;
+        if (!hasRot) return;
+        rox = rot[i * 5];
+        roy = rot[i * 5 + 1];
+        roz = rot[i * 5 + 2];
+        raxis = (int) rot[i * 5 + 3];
+        double rad = Math.toRadians(angle);
+        rcos = (float) Math.cos(rad);
+        rsin = (float) Math.sin(rad);
     }
 
     private void cuboid(VertexConsumer vc, PoseStack.Pose pose, int light, int o) {
@@ -104,12 +134,36 @@ public final class BBModel {
         vertex(vc, pose, light, bx, by, bz, u1, v0, nx, ny, nz);
     }
 
-    private static void vertex(VertexConsumer vc, PoseStack.Pose pose, int light, float x, float y, float z,
-                               float u, float vv, float nx, float ny, float nz) {
+    private void vertex(VertexConsumer vc, PoseStack.Pose pose, int light, float x, float y, float z,
+                        float u, float vv, float nx, float ny, float nz) {
+        if (hasRot) {
+            float dx = x - rox, dy = y - roy, dz = z - roz;
+            float px, py, pz, qx, qy, qz;
+            switch (raxis) {
+                case 0 -> { // вокруг X
+                    px = dx; py = dy * rcos - dz * rsin; pz = dy * rsin + dz * rcos;
+                    qx = nx; qy = ny * rcos - nz * rsin; qz = ny * rsin + nz * rcos;
+                }
+                case 1 -> { // вокруг Y
+                    px = dx * rcos + dz * rsin; py = dy; pz = -dx * rsin + dz * rcos;
+                    qx = nx * rcos + nz * rsin; qy = ny; qz = -nx * rsin + nz * rcos;
+                }
+                default -> { // вокруг Z
+                    px = dx * rcos - dy * rsin; py = dx * rsin + dy * rcos; pz = dz;
+                    qx = nx * rcos - ny * rsin; qy = nx * rsin + ny * rcos; qz = nz;
+                }
+            }
+            x = rox + px;
+            y = roy + py;
+            z = roz + pz;
+            nx = qx;
+            ny = qy;
+            nz = qz;
+        }
         vc.addVertex(pose, x, y, z)
                 .setColor(255, 255, 255, 255)
                 .setUv(u, vv)
-                .setOverlay(OverlayTexture.NO_OVERLAY)
+                .setOverlay(curOverlay)
                 .setLight(light)
                 .setNormal(pose, nx, ny, nz);
     }
