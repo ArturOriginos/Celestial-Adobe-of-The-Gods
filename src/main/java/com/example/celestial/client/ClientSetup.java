@@ -48,9 +48,9 @@ public final class ClientSetup {
         event.registerEntityRenderer(ModEntities.CURSED_ZOMBIE.get(), CursedMobRenderers.ZombieR::new);
         event.registerEntityRenderer(ModEntities.CURSED_SKELETON.get(), CursedMobRenderers.SkeletonR::new);
         event.registerEntityRenderer(ModEntities.CELESTIA_SPIKE.get(),
-                context -> new GodSpikeRenderer(context, GodSpikeRenderer.CELESTIA_TEXTURE));
+                context -> new PowerSpikeRenderer(context, PowerSpikeRenderer.CELESTIA));
         event.registerEntityRenderer(ModEntities.CURSED_SPIKE.get(),
-                context -> new GodSpikeRenderer(context, GodSpikeRenderer.CURSED_TEXTURE));
+                context -> new PowerSpikeRenderer(context, PowerSpikeRenderer.CURSED));
     }
 
     /** Щит проклятых и Защитная Руна Селестии рисуются как ванильный щит (встроенная модель + свой рендерер) (встроенная модель + свой рендерер). */
@@ -58,6 +58,10 @@ public final class ClientSetup {
     public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
         event.registerItem(shieldExtension(CursedShieldRenderer.CURSED_TEXTURE), ModItems.CURSED_SHIELD.get());
         event.registerItem(shieldExtension(CursedShieldRenderer.CELESTIA_TEXTURE), ModItems.CELESTIA_SHIELD.get());
+        event.registerItem(soulExtension(SoulItemRenderer.RED), ModItems.CURSED_SOUL.get());
+        event.registerItem(soulExtension(SoulItemRenderer.YELLOW), ModItems.GUARDIAN_SOUL.get());
+        event.registerItem(soulExtension(SoulItemRenderer.UNITED), ModItems.UNITED_SOUL.get());
+        event.registerItem(soulExtension(SoulItemRenderer.CELESTIA), ModItems.CELESTIA_GOD_SOUL.get());
         event.registerItem(armorExtension(DivineModels.CHEST_LAYER), ModItems.DIVINE_CHESTPLATE.get());
         event.registerItem(armorExtension(DivineModels.BOOTS_LAYER), ModItems.DIVINE_BOOTS.get());
     }
@@ -77,6 +81,22 @@ public final class ClientSetup {
                 }
                 ((net.minecraft.client.model.HumanoidModel) original).copyPropertiesTo(model);
                 return model;
+            }
+        };
+    }
+
+    /** Души (проклятая, Хранителя Богов, объединённая, Бога Селестии) рисуются своими 3D-моделями. */
+    private static IClientItemExtensions soulExtension(SoulItemRenderer.Spec spec) {
+        return new IClientItemExtensions() {
+            private SoulItemRenderer renderer;
+
+            @Override
+            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                if (renderer == null) {
+                    Minecraft mc = Minecraft.getInstance();
+                    renderer = new SoulItemRenderer(mc.getBlockEntityRenderDispatcher(), mc.getEntityModels(), spec);
+                }
+                return renderer;
             }
         };
     }
@@ -111,8 +131,6 @@ public final class ClientSetup {
 
     @SubscribeEvent
     public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(CursedBossModel.LAYER, CursedBossModel::createBodyLayer);
-        event.registerLayerDefinition(CelestiaGodModel.LAYER, CelestiaGodModel::createBodyLayer);
         event.registerLayerDefinition(CelestiaHaloLayer.LAYER, CelestiaHaloLayer::createLayer);
         event.registerLayerDefinition(DivineModels.CHEST_LAYER, DivineModels::createChestLayer);
         event.registerLayerDefinition(DivineModels.BOOTS_LAYER, DivineModels::createBootsLayer);

@@ -197,7 +197,8 @@ public class NiflheimSpread extends SavedData {
         int minX = chunk.getPos().getMinBlockX(), minZ = chunk.getPos().getMinBlockZ();
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
-                int top = chunk.getHeight(Heightmap.Types.WORLD_SURFACE, x, z);
+                // ChunkAccess.getHeight возвращает Y самого верхнего блока, а не первого свободного над ним
+                int top = chunk.getHeight(Heightmap.Types.WORLD_SURFACE, x, z) + 1;
                 int solid = 0;
                 int bottom = Math.max(level.getMinBuildHeight(), top - 70);
                 for (int y = top - 1; y >= bottom && solid < 3; y--) {

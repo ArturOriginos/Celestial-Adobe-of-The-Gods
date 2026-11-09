@@ -35,7 +35,7 @@ import net.minecraft.world.phys.Vec3;
 /**
  * Всезнающий Ангел: босс с 7500 здоровья. Не двигается, стоит и смотрит на игрока.
  * Атаки: 5 тёмных сфер, которые летят за игроком, пока их не уничтожат (по 15 урона), и лазер из глаза
- * (40 урона в секунду) с задержкой: сначала тонкий луч-предупреждение следует за игроком, затем замирает,
+ * (120 урона в секунду) с задержкой: сначала тонкий луч-предупреждение следует за игроком, затем замирает,
  * и только после этого лазер выстреливает, так что от него можно убежать. Логики появления нет:
  * босса вызывают командой /summon celestial:all_knowing_angel или яйцом призыва.
  */
@@ -46,10 +46,10 @@ public class AllKnowingAngel extends Monster {
     private static final int ORBS_PER_CAST = 5;
     private static final int MAX_ORBS_ALIVE = 10;
     /** Лазер: заряд (тики), после какого тика прицел замирает, длительность, урон за удар каждые 5 тиков = 40 в секунду. */
-    private static final int CHARGE_TICKS = 50;
-    private static final int AIM_FREEZE_TICKS = 15;
+    private static final int CHARGE_TICKS = 36;
+    private static final int AIM_FREEZE_TICKS = 12;
     private static final int FIRE_TICKS = 40;
-    private static final float LASER_DAMAGE_PER_HIT = 10.0F;
+    private static final float LASER_DAMAGE_PER_HIT = 30.0F; // 120 урона в секунду (было 40, x3)
     private static final double LASER_RANGE = 64.0D;
     private static final int ORB_WINDUP_TICKS = 30;
 
@@ -150,6 +150,29 @@ public class AllKnowingAngel extends Monster {
     @Override
     public boolean canBeLeashed() {
         return false;
+    }
+
+    /** Каждый удар чужой сущности (игрок, моб, стрела) наносит ровно 100 урона, броня и эффекты его не меняют. */
+    public static final float FIXED_HIT_DAMAGE = 100.0F;
+
+    private static boolean isFixedHit(DamageSource source) {
+        return source.getEntity() != null && !source.is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY);
+    }
+
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        if (amount > 0.0F && isFixedHit(source)) amount = FIXED_HIT_DAMAGE;
+        return super.hurt(source, amount);
+    }
+
+    @Override
+    protected float getDamageAfterArmorAbsorb(DamageSource source, float amount) {
+        return isFixedHit(source) ? amount : super.getDamageAfterArmorAbsorb(source, amount);
+    }
+
+    @Override
+    protected float getDamageAfterMagicAbsorb(DamageSource source, float amount) {
+        return isFixedHit(source) ? amount : super.getDamageAfterMagicAbsorb(source, amount);
     }
 
     @Override
@@ -258,13 +281,9 @@ public class AllKnowingAngel extends Monster {
         this.entityData.set(LASER_PITCH, pitch);
     }
 
+    /** Лазер проходит сквозь блоки: всегда на полную дальность, препятствия его не останавливают. */
     private double computeLength() {
-        Vec3 eye = this.getEyeOrigin();
-        Vec3 dir = Vec3.directionFromRotation(this.getLaserPitch(), this.getLaserYaw());
-        Vec3 end = eye.add(dir.scale(LASER_RANGE));
-        HitResult hit = this.level().clip(new ClipContext(eye, end, ClipContext.Block.COLLIDER,
-                ClipContext.Fluid.NONE, this));
-        return hit.getType() == HitResult.Type.MISS ? LASER_RANGE : hit.getLocation().distanceTo(eye);
+        return LASER_RANGE;
     }
 
     private void tickLaserCharge(LivingEntity target) {
@@ -295,18 +314,12 @@ public class AllKnowingAngel extends Monster {
             Vec3 dir = Vec3.directionFromRotation(this.getLaserPitch(), this.getLaserYaw());
             Vec3 end = eye.add(dir.scale(length));
             server.sendParticles(ParticleTypes.END_ROD, end.x, end.y, end.z, 4, 0.5D, 0.5D, 0.5D, 0.1D);
-            BlockPos hitPos = BlockPos.containing(end.add(dir.scale(0.1D)));
-            BlockState hitState = server.getBlockState(hitPos);
-            if (!hitState.isAir()) {
-                server.sendParticles(new net.minecraft.core.particles.BlockParticleOption(ParticleTypes.BLOCK, hitState),
-                        end.x, end.y, end.z, 6, 0.4D, 0.4D, 0.4D, 0.1D);
-            }
         }
         phaseTick++;
         if (phaseTick >= FIRE_TICKS) endLaser();
     }
 
-    /** 10 урона каждые 5 тиков = 40 в секунду; урон магический, броня его не уменьшает. */
+    /** 30 урона каждые 5 тиков = 120 в секунду; урон магический, броня его не уменьшает. */
     private void damageAlongBeam(double length) {
         Vec3 eye = this.getEyeOrigin();
         Vec3 dir = Vec3.directionFromRotation(this.getLaserPitch(), this.getLaserYaw());

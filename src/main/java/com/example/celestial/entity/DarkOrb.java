@@ -18,11 +18,11 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * Тёмная сфера Всезнающего Ангела: летит за игроком, пока её не уничтожат (любой удар, стрела, снаряд).
- * При касании игрока наносит 15 урона и исчезает. Не сохраняется в мире; исчезает вместе с боссом.
+ * При касании игрока наносит 37.5 урона и исчезает. Не сохраняется в мире; исчезает вместе с боссом.
  */
 public class DarkOrb extends Entity {
-    public static final float DAMAGE = 15.0F;
-    private static final double SPEED = 0.21D;
+    public static final float DAMAGE = 37.5F; // 15 x 2.5
+    private static final double SPEED = 0.90D; // 0.30 x 3
 
     @Nullable
     private UUID ownerId;
@@ -137,7 +137,7 @@ public class DarkOrb extends Entity {
             Vec3 want = goal.subtract(this.position());
             double d = want.length();
             Vec3 desired = d > 1.0E-4D ? want.scale(SPEED / d) : Vec3.ZERO;
-            this.setDeltaMovement(this.getDeltaMovement().scale(0.85D).add(desired.scale(0.15D)));
+            this.setDeltaMovement(this.getDeltaMovement().scale(0.82D).add(desired.scale(0.18D)));
 
             if (this.tickCount > 15 && this.getBoundingBox().inflate(0.1D).intersects(target.getBoundingBox())) {
                 target.invulnerableTime = 0;
