@@ -1,4 +1,4 @@
-# Celestial chapter 2 (beta 2.6x)
+# Celestial chapter 2 (beta 2.7x)
 
 **English** | [Русский](README.ru.md)
 
@@ -53,10 +53,18 @@ All items and blocks are in the creative tab **"Celestial chapter 2"**. Server c
 - Recipe (cross): United Soul in the center, Celestia Pickaxe on top, Celestia Axe on the left, Cursed Sword on the right, Cursed Axe at the bottom (all consumed).
 - Advancement **"The End? Or the Beginning of the End?..."** for obtaining it (hidden until then).
 
+## Cursed Book and the ??? dimension
+
+- **Cursed Book**: craft 4 Books + Soul of the Cursed One (shapeless). Right-click to travel to the empty dimension with the biome "???" (celestial:unknown); right-click the book again inside to return where you came from.
+- The dimension holds one structure (the Eye): you appear on the floor of the great hall, the All-Knowing Angel stands on the pedestal in the centre (a new one appears on entry if none is alive).
+- Nothing can be broken or placed there (creative mode is exempt), explosions do not destroy blocks.
+
 ## Versions
 
 Versioning: small edits bump the third number (1.7.1, 1.7.2), big updates bump the second (1.7, 1.8).
 
+- **beta 2.8xy** - Damage of Fenrir, the All-Knowing Angel and the God of Celestia cut by 1.5x. Full God armor gives Resistance III, full Celestia armor Resistance II. Killing the All-Knowing Angel opens red eyes in the sky and Hades writes meaningless symbols in chat; killing Fenrir brings eternal night. Operators can toggle both with `/celestialworld eternal_night|sky_eyes <true|false>`.
+- **beta 2.8x** - Cursed Book, the ??? dimension with the Eye structure, new Guardian of the Gods health bar, Fenrir bar in English, Wither custom-model crash fixed.
 - **1.3** - New advancements: Cursed items (soul, sword, axe, pickaxe-shovel, shield, full arsenal), killing the Cursed One, killing the God of Celestia, and the full Celestia armor set.
 - **1.2** - God of Celestia: Star Rain, Pillars of Judgement and the Beam now have real visuals (light pillars, falling stars, beams); every hit of the boss is capped at 20 health. Celestia armor can be enchanted at the Grace of the Gods of Celestia table. Full set (chestplate + boots) gives +20 max health (one more row of hearts) and a light-yellow armor bar.
 - **1.1.2** - Fixed the build error in the Celestia armor halo code (wrong `PlayerSkin` import).

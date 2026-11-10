@@ -294,5 +294,18 @@
   "item.celestial.fenrir_spawn_egg": "Яйцо призыва: Фенрир",
   "celestial.fenrir.phase2": "Фенрир взвыл, и его раны начинают затягиваться!",
   "entity.celestial.all_knowing_angel.immortal": "Всезнающий Ангел (бессмертен)",
-  "celestial.all_knowing_angel.phase2": "Всезнающий Ангел становится бессмертным! Уворачивайтесь от шаров!"
+  "celestial.all_knowing_angel.phase2": "Всезнающий Ангел становится бессмертным! Уворачивайтесь от шаров!",
+  "item.celestial.cursed_book": "Проклятая книга",
+  "biome.celestial.unknown": "Неизвестно",
+  "message.celestial.cursed_book.enter": "Нажмите на Проклятую книгу ещё раз, чтобы выйти",
+  "message.celestial.cursed_book.leave": "Вы вернулись",
+  "message.celestial.cursed_book.no_dimension": "Книга молчит: измерение не найдено",
+  "celestial.hades": "Аид",
+  "item.celestial.divine_boots.lore3": "Полный комплект брони Бога: Сопротивление урону III.",
+  "item.celestial.divine_chestplate.lore3": "Полный комплект брони Бога: Сопротивление урону III.",
+  "item.celestial.celestia_armor.lore": "Полный комплект: +20 здоровья и Сопротивление урону II.",
+  "command.celestial.world.eternal_night.on": "Вечная ночь включена",
+  "command.celestial.world.eternal_night.off": "Вечная ночь выключена",
+  "command.celestial.world.sky_eyes.on": "Глаза в небе открыты",
+  "command.celestial.world.sky_eyes.off": "Глаза в небе закрыты"
 }

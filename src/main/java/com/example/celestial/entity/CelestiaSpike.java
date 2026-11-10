@@ -16,6 +16,6 @@ public class CelestiaSpike extends GodSpike {
     protected float damage() {
         LivingEntity owner = getSpikeOwner();
         float mult = owner instanceof CelestiaGod god ? god.damageMultiplier() : 1.0F;
-        return Math.min(CelestiaGod.MAX_HIT_DAMAGE, BASE_DAMAGE * mult);
+        return Math.min(CelestiaGod.MAX_HIT_DAMAGE, BASE_DAMAGE * mult) / CelestiaGod.DAMAGE_DIVISOR;
     }
 }

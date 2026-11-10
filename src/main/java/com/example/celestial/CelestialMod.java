@@ -75,6 +75,10 @@ public class CelestialMod {
                 MiniSoulSyncPayload.STREAM_CODEC,
                 ClientPayloads::handleMiniSoul);
         registrar.playToClient(
+                com.example.celestial.network.SkyEyesPayload.TYPE,
+                com.example.celestial.network.SkyEyesPayload.STREAM_CODEC,
+                ClientPayloads::handleSkyEyes);
+        registrar.playToClient(
                 com.example.celestial.network.OpenTomePayload.TYPE,
                 com.example.celestial.network.OpenTomePayload.STREAM_CODEC,
                 ClientPayloads::handleOpenTome);

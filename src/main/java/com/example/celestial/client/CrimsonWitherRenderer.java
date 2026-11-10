@@ -36,14 +36,27 @@ public class CrimsonWitherRenderer extends EntityRenderer<WitherBoss> {
         this.shadowRadius = 1.0F;
     }
 
-    private static void ensure() {
-        if (model != null) return;
-        model = BBModel.load(NAME);
-        rig = BBRig.load(NAME);
-        head = rig.index("head_center");
-        headL = rig.index("head_left");
-        headR = rig.index("head_right");
-        embers = rig.index("embers");
+    private static boolean failed;
+
+    /** Грузит модель один раз; при ошибке пишет её в лог и больше не пытается, чтобы не ронять игру каждый кадр. */
+    private static boolean ensure() {
+        if (failed) return false;
+        if (model != null) return true;
+        try {
+            BBModel m = BBModel.load(NAME);
+            BBRig r = BBRig.load(NAME);
+            head = r.index("head_center");
+            headL = r.index("head_left");
+            headR = r.index("head_right");
+            embers = r.index("embers");
+            model = m;
+            rig = r;
+            return true;
+        } catch (RuntimeException e) {
+            failed = true;
+            com.mojang.logging.LogUtils.getLogger().error("Celestial: не удалось загрузить модель Визера {}", NAME, e);
+            return false;
+        }
     }
 
     @Override
@@ -53,7 +66,10 @@ public class CrimsonWitherRenderer extends EntityRenderer<WitherBoss> {
 
     @Override
     public void render(WitherBoss w, float entityYaw, float pt, PoseStack ps, MultiBufferSource buffer, int light) {
-        ensure();
+        if (!ensure()) {
+            super.render(w, entityYaw, pt, ps, buffer, light);
+            return;
+        }
         float age = w.tickCount + pt;
         float bodyYaw = Mth.rotLerp(pt, w.yBodyRotO, w.yBodyRot);
         float headYaw = Mth.rotLerp(pt, w.yHeadRotO, w.yHeadRot);
@@ -67,10 +83,11 @@ public class CrimsonWitherRenderer extends EntityRenderer<WitherBoss> {
             float netYaw = Mth.clamp(Mth.wrapDegrees(headYaw - bodyYaw), -70.0F, 70.0F);
             float pitch = Mth.clamp(Mth.lerp(pt, w.xRotO, w.getXRot()), -45.0F, 45.0F);
             pose.addRot(head, -pitch, -netYaw, 0.0F);
-            pose.addRot(headR, -Mth.clamp(w.getHeadXRot(1), -45.0F, 45.0F),
+            // у WitherBoss только две боковые головы: индексы 0 и 1 (индекс 2 вызывал ArrayIndexOutOfBounds и вылет игры)
+            pose.addRot(headR, -Mth.clamp(w.getHeadXRot(0), -45.0F, 45.0F),
+                    -Mth.clamp(Mth.wrapDegrees(w.getHeadYRot(0) - bodyYaw), -70.0F, 70.0F), 0.0F);
+            pose.addRot(headL, -Mth.clamp(w.getHeadXRot(1), -45.0F, 45.0F),
                     -Mth.clamp(Mth.wrapDegrees(w.getHeadYRot(1) - bodyYaw), -70.0F, 70.0F), 0.0F);
-            pose.addRot(headL, -Mth.clamp(w.getHeadXRot(2), -45.0F, 45.0F),
-                    -Mth.clamp(Mth.wrapDegrees(w.getHeadYRot(2) - bodyYaw), -70.0F, 70.0F), 0.0F);
         }
 
         // при появлении Визер растёт и мигает (как ванильный)

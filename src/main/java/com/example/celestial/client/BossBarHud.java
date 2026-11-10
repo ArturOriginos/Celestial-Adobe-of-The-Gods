@@ -33,15 +33,20 @@ public final class BossBarHud {
                          boolean plate, int yOffset, int increment, boolean bakedName, int numRight) {}
 
     private static final Map<String, Style> STYLES = Map.of(
-            "entity.celestial.guardian_of_gods",
-            new Style(tex("boss_frame"), tex("boss_fill"), 660, 204, 330, 102, 492, 20, 42, 62, 246, 10,
-                    0, 77, 0xFFF6D77A, 0xFFFFF1C2, GuardianOfGods.MAX_HEALTH, false, 3, 108, true, 285),
             "entity.minecraft.ender_dragon",
             new Style(tex("boss_dragon_frame"), tex("boss_dragon_fill"), 560, 161, 280, 80, 426, 16, 33, 39, 213, 8,
                     51, 62, 0xFFC84BFF, 0xFFD9A0FF, 200.0, false, -4, 84, false, 0),
             "entity.minecraft.wither",
             new Style(tex("boss_wither_frame"), tex("boss_wither_fill"), 560, 199, 280, 100, 419, 17, 35, 60, 210, 9,
                     72, 83, 0xFFFF4545, 0xFFFF8A8A, 300.0, false, -4, 104, false, 0));
+
+    // --- полоска Хранителя Богов: золотая рамка с крыльями 2098x450 (канал пустой) и фиолетовая полоса 1541x93 ---
+    private static final ResourceLocation GUARD_FRAME = tex("guardian_frame");
+    private static final ResourceLocation GUARD_FILL = tex("guardian_fill");
+    private static final int GG_W = 2098, GG_H = 450;
+    private static final int GG_FILL_W = 1541, GG_FILL_H = 93;
+    // канал внутри рамки (в пикселях рамки), между верхней и нижней золотыми шинами
+    private static final int GG_CH_X0 = 278, GG_CH_X1 = 1819, GG_CH_Y0 = 166, GG_CH_Y1 = 259;
 
     // --- полоска Проклятого: рамка 542x174, дорожка из двух половин по 172x18 ---
     private static final ResourceLocation CURSED_FRAME = tex("cursed_boss_frame");
@@ -64,7 +69,8 @@ public final class BossBarHud {
     private static final int AK_CH_X = 230, AK_CH_Y = 290;
 
     // --- полоска Фенрира: рамка 2157x520 с нарисованным именем (окно под заливку вырезано), заливка 2134x79 ---
-    private static final ResourceLocation FENRIR_FRAME = tex("fenrir_frame");
+    private static final ResourceLocation FENRIR_FRAME = tex("fenrir_frame");        // название нарисовано по-русски
+    private static final ResourceLocation FENRIR_FRAME_EN = tex("fenrir_frame_en");  // то же, но с надписью Fenrir
     private static final ResourceLocation FENRIR_FILL = tex("fenrir_fill");
     private static final int FN_W = 2157, FN_H = 520, FN_FILL_W = 2134, FN_FILL_H = 79;
     private static final int FN_CH_X0 = 329, FN_CH_X1 = 1872, FN_CH_Y0 = 208, FN_CH_Y1 = 272;
@@ -105,6 +111,38 @@ public final class BossBarHud {
         g.drawString(font, text, cx - font.width(text) / 2, y + h + 8, 0xFFD9B4FF, true);
 
         event.setIncrement(h + 22);
+    }
+
+    private static void drawGuardian(CustomizeGuiOverlayEvent.BossEventProgress event, LerpingBossEvent boss) {
+        event.setCanceled(true);
+        GuiGraphics g = event.getGuiGraphics();
+        Font font = Minecraft.getInstance().font;
+        int w = 400;
+        float sc = w / (float) GG_W;
+        int h = Math.round(GG_H * sc);
+        int x = (g.guiWidth() - w) / 2;
+        int y = event.getY() + 14;
+        int cx = x + w / 2;
+        float progress = Math.max(0.0F, Math.min(1.0F, boss.getProgress()));
+
+        int c0 = x + Math.round(GG_CH_X0 * sc), c1 = x + Math.round(GG_CH_X1 * sc);
+        int y0 = y + Math.round(GG_CH_Y0 * sc), y1 = y + Math.round(GG_CH_Y1 * sc);
+        int fillW = Math.round((c1 - c0) * progress);
+
+        g.fill(c0, y0, c1, y1, 0xFF0C0618);                       // пустой канал
+        if (fillW > 0) {                                          // фиолетовая полоса: чем меньше здоровья, тем короче
+            g.blit(GUARD_FILL, c0, y0, fillW, y1 - y0, 0, 0,
+                    Math.max(1, Math.round(GG_FILL_W * progress)), GG_FILL_H, GG_FILL_W, GG_FILL_H);
+        }
+        g.blit(GUARD_FRAME, x, y, w, h, 0, 0, GG_W, GG_H, GG_W, GG_H); // золотая рамка поверх
+
+        Component name = boss.getName();
+        g.drawString(font, name, cx - font.width(name) / 2, y - 8, 0xFFF6D77A, true);
+        int hp = (int) Math.ceil(progress * GuardianOfGods.MAX_HEALTH);
+        String text = hp + " / " + (int) GuardianOfGods.MAX_HEALTH;
+        g.drawString(font, text, cx - font.width(text) / 2, y + h + 1, 0xFFFFF1C2, true);
+
+        event.setIncrement(h + 24);
     }
 
     private static void drawGod(CustomizeGuiOverlayEvent.BossEventProgress event, LerpingBossEvent boss, boolean immortal) {
@@ -167,7 +205,9 @@ public final class BossBarHud {
         int mid = (c0 + c1) / 2;                                  // отметка второй стадии (4000 из 8000)
         g.fill(mid, y0, mid + 1, y1, 0xA0FFD27A);
 
-        g.blit(FENRIR_FRAME, x, y, w, h, 0, 0, FN_W, FN_H, FN_W, FN_H); // рамка с именем поверх
+        // название нарисовано в самой рамке, поэтому рамку выбираем по языку клиента: русский -> Фенрир, остальные -> Fenrir
+        boolean ru = Minecraft.getInstance().getLanguageManager().getSelected().startsWith("ru");
+        g.blit(ru ? FENRIR_FRAME : FENRIR_FRAME_EN, x, y, w, h, 0, 0, FN_W, FN_H, FN_W, FN_H); // рамка с именем поверх
 
         int max = (int) Fenrir.MAX_HEALTH;
         int hp = Math.round(progress * max);
@@ -219,6 +259,10 @@ public final class BossBarHud {
     public static void onBossBar(CustomizeGuiOverlayEvent.BossEventProgress event) {
         LerpingBossEvent boss = event.getBossEvent();
         if (!(boss.getName().getContents() instanceof TranslatableContents tc)) return;
+        if (tc.getKey().equals("entity.celestial.guardian_of_gods")) {
+            drawGuardian(event, boss);
+            return;
+        }
         if (tc.getKey().equals("entity.celestial.celestia_god")) {
             drawGod(event, boss, false);
             return;

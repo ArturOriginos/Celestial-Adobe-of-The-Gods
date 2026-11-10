@@ -71,6 +71,8 @@ public class CelestiaGod extends Monster {
     // ---------- урон способностей (до множителя стадии 2) ----------
     /** Ни один удар босса (и ближний, и способности) не бьёт сильнее этого значения: 20 здоровья = 10 сердец. */
     public static final float MAX_HIT_DAMAGE = 20.0F;
+    /** Весь урон бога (и шипов Селестии) делится на это число: срезан в 1,5 раза. */
+    public static final float DAMAGE_DIVISOR = 1.5F;
     public static final float DMG_STRIKE = 20.0F;  // удар столбом света (Власть Селестии)
     public static final float DMG_PILLAR = 20.0F;  // столп кары
     public static final float DMG_STAR = 12.0F;    // падающая звезда
@@ -828,7 +830,7 @@ public class CelestiaGod extends Monster {
     }
 
     private void hit(LivingEntity e, float damage, boolean knockUp) {
-        if (e.hurt(this.damageSources().indirectMagic(this, this), Math.min(damage, MAX_HIT_DAMAGE)) && knockUp) {
+        if (e.hurt(this.damageSources().indirectMagic(this, this), Math.min(damage, MAX_HIT_DAMAGE) / DAMAGE_DIVISOR) && knockUp) {
             e.setDeltaMovement(e.getDeltaMovement().add(0.0D, 0.9D, 0.0D));
             e.hurtMarked = true;
         }

@@ -32,6 +32,10 @@ public final class ClientPayloads {
         });
     }
 
+    public static void handleSkyEyes(SkyEyesPayload payload, IPayloadContext ctx) {
+        ctx.enqueueWork(() -> com.example.celestial.client.SkyEyesRenderer.set(payload.on(), payload.animate()));
+    }
+
     private static final int BOOK_LINES_PER_PAGE = 13;
     private static final int BOOK_PAGE_WIDTH = 114;
 

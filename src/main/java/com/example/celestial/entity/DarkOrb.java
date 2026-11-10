@@ -21,7 +21,7 @@ import net.minecraft.world.phys.Vec3;
  * При касании игрока наносит 37.5 урона и исчезает. Не сохраняется в мире; исчезает вместе с боссом.
  */
 public class DarkOrb extends Entity {
-    public static final float DAMAGE = 37.5F; // 15 x 2.5
+    public static final float DAMAGE = 25.0F; // было 37.5, срезано в 1,5 раза
     private static final double SPEED = 0.90D; // 0.30 x 3
 
     @Nullable

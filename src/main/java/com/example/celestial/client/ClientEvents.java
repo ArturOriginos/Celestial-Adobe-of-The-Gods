@@ -27,6 +27,11 @@ public final class ClientEvents {
         else if (stack.is(ModItems.CURSED_AXE.get())) cursedKey = "item.celestial.cursed_axe.lore";
         else if (stack.is(ModItems.CURSED_PICKAXE.get())) cursedKey = "item.celestial.cursed_pickaxe.lore";
         else if (stack.is(ModItems.CURSED_SHIELD.get())) cursedKey = "item.celestial.cursed_shield.lore";
+        if (stack.is(ModItems.CELESTIA_CHESTPLATE.get()) || stack.is(ModItems.CELESTIA_BOOTS.get())) {
+            event.getToolTip().add(Component.empty());
+            event.getToolTip().add(Component.translatable("item.celestial.celestia_armor.lore").withStyle(s -> s.withColor(0xFFE98A)));
+            return;
+        }
         if (stack.is(ModItems.DIVINE_BOOTS.get()) || stack.is(ModItems.DIVINE_CHESTPLATE.get())) {
             String base = stack.is(ModItems.DIVINE_BOOTS.get()) ? "item.celestial.divine_boots" : "item.celestial.divine_chestplate";
             event.getToolTip().add(Component.empty());

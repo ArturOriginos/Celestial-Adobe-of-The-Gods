@@ -40,10 +40,15 @@ public final class CelestiaBlueprint {
     }
 
     public static CelestiaBlueprint get(String name) {
-        return CACHE.computeIfAbsent(name, CelestiaBlueprint::load);
+        return CACHE.computeIfAbsent(name, n -> load(n, true));
     }
 
-    private static CelestiaBlueprint load(String name) {
+    /** То же, но без списка воздуха (для больших чертежей, которые ставятся в пустое измерение). */
+    public static CelestiaBlueprint getNoAir(String name) {
+        return CACHE.computeIfAbsent(name + "#noair", n -> load(name, false));
+    }
+
+    private static CelestiaBlueprint load(String name, boolean keepAir) {
         String path = "/data/celestial/blueprints/" + name + ".json";
         try (InputStream in = CelestiaBlueprint.class.getResourceAsStream(path)) {
             if (in == null) throw new IllegalStateException("Нет чертежа " + path);
@@ -75,7 +80,7 @@ public final class CelestiaBlueprint {
                         BlockState state = c == '.' ? Blocks.AIR.defaultBlockState()
                                 : palette.getOrDefault(c, Blocks.AIR.defaultBlockState());
                         if (state.isAir()) {
-                            if (y >= 1) bp.air.add(new int[]{x, y, z});
+                            if (y >= 1 && keepAir) bp.air.add(new int[]{x, y, z});
                         } else {
                             bp.blocks.add(new Entry(x, y, z, state));
                         }

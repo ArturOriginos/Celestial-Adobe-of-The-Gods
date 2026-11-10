@@ -61,6 +61,12 @@ public final class ModItems {
             () -> new com.example.celestial.item.FenrirClockItem(
                     new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
 
+    /** Проклятая книга: ПКМ переносит в пустое измерение «???» к Всезнающему Ангелу, повторное ПКМ - обратно. */
+    public static final DeferredItem<Item> CURSED_BOOK = ITEMS.register("cursed_book",
+            () -> new com.example.celestial.item.CursedBookItem(
+                    new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()
+                            .component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)));
+
     /** Сердце Цербера: пока лежит в хотбаре или второй руке - Восстановление IV, Сила III и голод не расходуется. */
     public static final DeferredItem<Item> CERBERUS_HEART =
             ITEMS.registerSimpleItem("cerberus_heart", new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant());

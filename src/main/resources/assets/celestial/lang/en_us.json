@@ -294,5 +294,18 @@
   "item.celestial.fenrir_spawn_egg": "Fenrir Spawn Egg",
   "celestial.fenrir.phase2": "Fenrir howls, and his wounds begin to close!",
   "entity.celestial.all_knowing_angel.immortal": "The All-Knowing Angel (Immortal)",
-  "celestial.all_knowing_angel.phase2": "The All-Knowing Angel becomes immortal! Dodge the orbs!"
+  "celestial.all_knowing_angel.phase2": "The All-Knowing Angel becomes immortal! Dodge the orbs!",
+  "item.celestial.cursed_book": "Cursed Book",
+  "biome.celestial.unknown": "???",
+  "message.celestial.cursed_book.enter": "Use the Cursed Book again to leave",
+  "message.celestial.cursed_book.leave": "You returned",
+  "message.celestial.cursed_book.no_dimension": "The book is silent: the dimension is missing",
+  "celestial.hades": "Hades",
+  "item.celestial.divine_boots.lore3": "Full God armor set: Resistance III.",
+  "item.celestial.divine_chestplate.lore3": "Full God armor set: Resistance III.",
+  "item.celestial.celestia_armor.lore": "Full set: +20 max health and Resistance II.",
+  "command.celestial.world.eternal_night.on": "Eternal night is on",
+  "command.celestial.world.eternal_night.off": "Eternal night is off",
+  "command.celestial.world.sky_eyes.on": "The eyes in the sky are open",
+  "command.celestial.world.sky_eyes.off": "The eyes in the sky are closed"
 }

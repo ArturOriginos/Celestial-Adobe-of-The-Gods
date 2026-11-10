@@ -53,7 +53,7 @@ public class AllKnowingAngel extends Monster {
     private static final int CHARGE_TICKS = 36;
     private static final int AIM_FREEZE_TICKS = 12;
     private static final int FIRE_TICKS = 40;
-    private static final float LASER_DAMAGE_PER_HIT = 30.0F; // 120 урона в секунду (было 40, x3)
+    private static final float LASER_DAMAGE_PER_HIT = 20.0F; // 80 урона в секунду (было 30, срезано в 1,5 раза)
     private static final double LASER_RANGE = 64.0D;
     private static final int ORB_WINDUP_TICKS = 30;
 

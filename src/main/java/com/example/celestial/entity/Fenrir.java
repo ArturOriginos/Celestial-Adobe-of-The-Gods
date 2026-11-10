@@ -67,7 +67,7 @@ public class Fenrir extends Monster {
     /** Больше этого за один удар Фенрир не получает. */
     public static final float MAX_DAMAGE_TAKEN = 100.0F;
     /** Урон всех атак Фенрира. */
-    public static final float ATTACK_DAMAGE = 100.0F;
+    public static final float ATTACK_DAMAGE = 100.0F / 1.5F; // урон срезан в 1,5 раза (было 100)
     /** 1 - здоровье настоящее. Во сколько раз «показываемое» здоровье больше реального (нужно только без снятия потолка). */
     public static final float HEALTH_SCALE = 1.0F;
     public static final double ATTRIBUTE_HEALTH = MAX_HEALTH / HEALTH_SCALE;
