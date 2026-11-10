@@ -35,6 +35,7 @@ public class CelestialMod {
     public static final String MODID = "celestial";
 
     public CelestialMod(IEventBus modBus, ModContainer container) {
+        raiseHealthLimit();
         ModBlocks.BLOCKS.register(modBus);
         ModBlocks.ITEMS.register(modBus);
         ModArmorMaterials.MATERIALS.register(modBus);
@@ -80,6 +81,11 @@ public class CelestialMod {
     }
 
     /** Дерево Селестии горит как обычное. */
+    /** Ванильный максимум здоровья - 1024; боссам моды нужно 7500-8000, поэтому поднимаем потолок до запуска игры. */
+    private static void raiseHealthLimit() {
+        ((net.minecraft.world.entity.ai.attributes.RangedAttribute) net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH.value()).maxValue = 100000.0D;
+    }
+
     private void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             FireBlock fire = (FireBlock) Blocks.FIRE;
@@ -98,6 +104,7 @@ public class CelestialMod {
         event.put(ModEntities.CURSED_BOSS.get(), CursedBoss.createAttributes().build());
         event.put(ModEntities.ALL_KNOWING_ANGEL.get(), com.example.celestial.entity.AllKnowingAngel.createAttributes().build());
         event.put(ModEntities.CELESTIA_GOD.get(), CelestiaGod.createAttributes().build());
+        event.put(ModEntities.FENRIR.get(), com.example.celestial.entity.Fenrir.createAttributes().build());
         event.put(ModEntities.CURSED_PIG.get(), net.minecraft.world.entity.animal.Pig.createAttributes().build());
         event.put(ModEntities.CURSED_COW.get(), net.minecraft.world.entity.animal.Cow.createAttributes().build());
         event.put(ModEntities.CURSED_SHEEP.get(), net.minecraft.world.entity.animal.Sheep.createAttributes().build());
@@ -219,6 +226,7 @@ public class CelestialMod {
             event.accept(ModItems.CURSED_BOSS_EGG);
             event.accept(ModItems.ALL_KNOWING_ANGEL_EGG);
             event.accept(ModItems.CELESTIA_GOD_EGG);
+            event.accept(ModItems.FENRIR_EGG);
             event.accept(ModItems.CURSED_PIG_EGG);
             event.accept(ModItems.CURSED_COW_EGG);
             event.accept(ModItems.CURSED_SHEEP_EGG);

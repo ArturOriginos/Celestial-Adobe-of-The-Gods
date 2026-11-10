@@ -230,7 +230,7 @@ public class NiflheimSpread extends SavedData {
             }
         }
 
-        // 3) проклятая флора: случайно по чанку; росток сразу появляется выросшим деревом
+        // 3) проклятая флора на проклятом дёрне: трава, цветы, грибы, кусты, кристаллы и саженцы проклятого дерева
         spawnFlora(level, chunk, earth, turf, cursedStone);
 
         chunk.setUnsaved(true);
@@ -244,10 +244,15 @@ public class NiflheimSpread extends SavedData {
         }
     }
 
-    /** Доля столбцов чанка, где появляется флора (около 11 растений на чанк). */
-    private static final float FLORA_CHANCE = 0.045F;
+    /** Доля столбцов чанка, где появляется флора (около 15 растений на чанк). */
+    private static final float FLORA_CHANCE = 0.06F;
+    /** true - саженец сразу становится выросшим деревом, false - на земле остаётся сам саженец (растёт от костной муки). */
+    private static final boolean SAPLING_GROWS_INSTANTLY = true;
 
-    /** Проклятая флора для заражённых чанков: те же растения, что и в Нифельхельме Незера; росток сразу становится деревом. */
+    /**
+     * Проклятая флора для заражённых чанков: те же растения, что и в Нифельхельме Незера. Растёт только на проклятом
+     * дёрне, на самой поверхности (раньше растения ставились в верхний блок земли, а не над ним, и не появлялись вовсе).
+     */
     private static void spawnFlora(ServerLevel level, LevelChunk chunk, BlockState earth, BlockState turf, BlockState cursedStone) {
         RandomSource rnd = level.random;
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
@@ -272,16 +277,20 @@ public class NiflheimSpread extends SavedData {
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
                 if (rnd.nextFloat() >= FLORA_CHANCE) continue;
+                // getHeight возвращает Y самого верхнего блока: растение ставится на блок выше, а землёй служит верхний блок
                 int top = chunk.getHeight(Heightmap.Types.WORLD_SURFACE, x, z);
-                if (top <= level.getMinBuildHeight() + 1) continue;
-                pos.set(minX + x, top, minZ + z);
+                if (top <= level.getMinBuildHeight() + 1 || top + 1 >= level.getMaxBuildHeight()) continue;
+                pos.set(minX + x, top + 1, minZ + z);
                 if (!chunk.getBlockState(pos).isAir()) continue;
-                BlockState ground = chunk.getBlockState(pos.below());
-                if (!ground.is(turf.getBlock()) && !ground.is(earth.getBlock()) && !ground.is(cursedStone.getBlock())) continue;
+                if (!chunk.getBlockState(pos.below()).is(turf.getBlock())) continue; // только на проклятом дёрне
 
                 int roll = rnd.nextInt(34); // веса как у флоры в Нифельхельме Незера
-                if (roll >= 31) {
-                    // росток: сразу выросшее дерево (в чанке: маленькое подальше от края, среднее - ближе к центру)
+                if (roll >= 31) { // саженец проклятого дерева
+                    if (!SAPLING_GROWS_INSTANTLY) {
+                        chunk.setBlockState(pos, ModBlocks.CURSED_SAPLING.get().defaultBlockState(), false);
+                        continue;
+                    }
+                    // сразу выросшее дерево (в чанке: маленькое подальше от края, среднее - ближе к центру)
                     boolean inner = x >= 4 && x <= 11 && z >= 4 && z <= 11;
                     if (!inner) continue;
                     boolean center = x >= 6 && x <= 9 && z >= 6 && z <= 9;

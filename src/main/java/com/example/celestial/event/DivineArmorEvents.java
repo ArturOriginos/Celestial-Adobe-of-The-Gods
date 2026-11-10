@@ -4,8 +4,6 @@ import com.example.celestial.CelestialMod;
 import com.example.celestial.registry.ModItems;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -18,7 +16,7 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 /**
  * Броня Бога.
  *  Ботинки: +20 максимального здоровья (1 строка сердец) и полёт (см. FlightRingEvents).
- *  Нагрудник: +40 максимального здоровья (2 строки) и постоянное Сопротивление урону V.
+ *  Нагрудник: +40 максимального здоровья (2 строки) и божественная аура.
  * Бонусы действуют, пока предмет надет, и пропадают после снятия.
  */
 @EventBusSubscriber(modid = CelestialMod.MODID)
@@ -29,8 +27,6 @@ public final class DivineArmorEvents {
             ResourceLocation.fromNamespaceAndPath(CelestialMod.MODID, "divine_chestplate_health");
     public static final double BOOTS_HEALTH_BONUS = 20.0D;
     public static final double CHEST_HEALTH_BONUS = 40.0D;
-    /** Сопротивление урону V = амплитуда 4. */
-    public static final int RESISTANCE_AMPLIFIER = 4;
 
     private DivineArmorEvents() {}
 
@@ -52,14 +48,6 @@ public final class DivineArmorEvents {
             boolean changed = sync(health, BOOTS_HEALTH_ID, BOOTS_HEALTH_BONUS, wearsBoots(player));
             changed |= sync(health, CHEST_HEALTH_ID, CHEST_HEALTH_BONUS, wearsChestplate(player));
             if (changed && player.getHealth() > player.getMaxHealth()) player.setHealth(player.getMaxHealth());
-        }
-
-        if (wearsChestplate(player)) {
-            MobEffectInstance current = player.getEffect(MobEffects.DAMAGE_RESISTANCE);
-            if (current == null || current.getAmplifier() < RESISTANCE_AMPLIFIER || current.getDuration() < 60) {
-                // скрытый эффект (без частиц и значка), обновляется, пока нагрудник надет
-                player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 100, RESISTANCE_AMPLIFIER, true, false, false));
-            }
         }
     }
 

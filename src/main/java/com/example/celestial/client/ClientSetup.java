@@ -40,6 +40,12 @@ public final class ClientSetup {
         event.registerEntityRenderer(ModEntities.DARK_ORB.get(), DarkOrbRenderer::new);
         event.registerEntityRenderer(ModEntities.CELESTIA_GOD.get(), CelestiaGodRenderer::new);
         event.registerEntityRenderer(ModEntities.CELESTIA_EFFECT.get(), CelestiaEffectRenderer::new);
+        event.registerEntityRenderer(ModEntities.FENRIR.get(), FenrirRenderer::new);
+        // ванильные боссы и энд-кристалл получают новые модели
+        event.registerEntityRenderer(net.minecraft.world.entity.EntityType.WITHER, CrimsonWitherRenderer::new);
+        event.registerEntityRenderer(net.minecraft.world.entity.EntityType.ENDER_DRAGON, ObsidianDragonRenderer::new);
+        event.registerEntityRenderer(net.minecraft.world.entity.EntityType.END_CRYSTAL, VoidCrystalRenderer::new);
+        event.registerEntityRenderer(ModEntities.FENRIR_EFFECT.get(), FenrirEffectRenderer::new);
         event.registerEntityRenderer(ModEntities.FLYING_SOUL.get(), FlyingSoulRenderer::new);
         event.registerEntityRenderer(ModEntities.CURSED_PIG.get(), CursedMobRenderers.PigR::new);
         event.registerEntityRenderer(ModEntities.CURSED_COW.get(), CursedMobRenderers.CowR::new);

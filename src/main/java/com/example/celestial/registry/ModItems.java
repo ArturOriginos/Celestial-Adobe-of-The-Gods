@@ -141,6 +141,9 @@ public final class ModItems {
     public static final DeferredItem<DeferredSpawnEggItem> CURSED_BOSS_EGG = ITEMS.register("cursed_boss_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.CURSED_BOSS, 0x1A0A12, 0xD01824, new Item.Properties()));
 
+    public static final DeferredItem<DeferredSpawnEggItem> FENRIR_EGG = ITEMS.register("fenrir_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.FENRIR, 0x2B0A3D, 0xFF3C5A, new Item.Properties()));
+
     public static final DeferredItem<DeferredSpawnEggItem> CELESTIA_GOD_EGG = ITEMS.register("celestia_god_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.CELESTIA_GOD, 0xF6D77A, 0x8F8BD8, new Item.Properties()));
 

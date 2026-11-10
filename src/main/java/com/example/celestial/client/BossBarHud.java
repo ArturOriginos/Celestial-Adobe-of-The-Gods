@@ -4,6 +4,7 @@ import com.example.celestial.CelestialMod;
 import com.example.celestial.entity.AllKnowingAngel;
 import com.example.celestial.entity.CelestiaGod;
 import com.example.celestial.entity.CursedBoss;
+import com.example.celestial.entity.Fenrir;
 import com.example.celestial.entity.GuardianOfGods;
 import java.util.Map;
 import net.minecraft.client.Minecraft;
@@ -62,9 +63,15 @@ public final class BossBarHud {
     private static final int AK_W = 2025, AK_H = 470, AK_FILL_W = 1565, AK_FILL_H = 61;
     private static final int AK_CH_X = 230, AK_CH_Y = 290;
 
+    // --- полоска Фенрира: рамка 2157x520 с нарисованным именем (окно под заливку вырезано), заливка 2134x79 ---
+    private static final ResourceLocation FENRIR_FRAME = tex("fenrir_frame");
+    private static final ResourceLocation FENRIR_FILL = tex("fenrir_fill");
+    private static final int FN_W = 2157, FN_H = 520, FN_FILL_W = 2134, FN_FILL_H = 79;
+    private static final int FN_CH_X0 = 329, FN_CH_X1 = 1872, FN_CH_Y0 = 208, FN_CH_Y1 = 272;
+
     private BossBarHud() {}
 
-    private static void drawAngel(CustomizeGuiOverlayEvent.BossEventProgress event, LerpingBossEvent boss) {
+    private static void drawAngel(CustomizeGuiOverlayEvent.BossEventProgress event, LerpingBossEvent boss, boolean immortal) {
         event.setCanceled(true);
         GuiGraphics g = event.getGuiGraphics();
         Font font = Minecraft.getInstance().font;
@@ -85,7 +92,10 @@ public final class BossBarHud {
         if (fw > 0) {
             g.blit(ANGEL_FILL, c0, cy0, fw, ch, 0, 0,
                     Math.max(1, Math.round(AK_FILL_W * progress)), AK_FILL_H, AK_FILL_W, AK_FILL_H);
+            if (immortal) g.fill(c0, cy0, c0 + fw, cy0 + ch, 0x70C8A0FF); // бессмертие: полоса светится
         }
+        int phaseX = c0 + Math.round(cw * (float) (AllKnowingAngel.PHASE2_HEALTH / AllKnowingAngel.MAX_HEALTH));
+        g.fill(phaseX, cy0, phaseX + 1, cy0 + ch, 0xA0FFD27A);                // отметка второй фазы (5000)
         g.blit(ANGEL_FRAME, x, y, w, h, 0, 0, AK_W, AK_H, AK_W, AK_H);        // рамка поверх
 
         Component name = boss.getName();
@@ -130,6 +140,41 @@ public final class BossBarHud {
         g.drawString(font, text, cx - font.width(text) / 2, y + h + 1, 0xFFFFF1C2, true);
 
         event.setIncrement(h + 24);
+    }
+
+    private static void drawFenrir(CustomizeGuiOverlayEvent.BossEventProgress event, LerpingBossEvent boss, boolean howling) {
+        event.setCanceled(true);
+        GuiGraphics g = event.getGuiGraphics();
+        Font font = Minecraft.getInstance().font;
+        int w = 420;
+        float sc = w / (float) FN_W;
+        int h = Math.round(FN_H * sc);
+        int x = (g.guiWidth() - w) / 2;
+        int y = event.getY() + 4;
+        int cx = x + w / 2;
+        float progress = Math.max(0.0F, Math.min(1.0F, boss.getProgress()));
+
+        int c0 = x + Math.round(FN_CH_X0 * sc), c1 = x + Math.round(FN_CH_X1 * sc);
+        int y0 = y + Math.round(FN_CH_Y0 * sc), y1 = y + Math.round(FN_CH_Y1 * sc);
+        int fillW = Math.round((c1 - c0) * progress);
+
+        g.fill(c0, y0, c1, y1, 0xFF12060C);                       // пустой канал
+        if (fillW > 0) {                                          // красная полоса: чем меньше здоровья, тем короче
+            g.blit(FENRIR_FILL, c0, y0, fillW, y1 - y0, 0, 0,
+                    Math.max(1, Math.round(FN_FILL_W * progress)), FN_FILL_H, FN_FILL_W, FN_FILL_H);
+            if (howling) g.fill(c0, y0, c0 + fillW, y1, 0x70D0A8FF); // вой: неуязвим и лечится, полоса светится
+        }
+        int mid = (c0 + c1) / 2;                                  // отметка второй стадии (4000 из 8000)
+        g.fill(mid, y0, mid + 1, y1, 0xA0FFD27A);
+
+        g.blit(FENRIR_FRAME, x, y, w, h, 0, 0, FN_W, FN_H, FN_W, FN_H); // рамка с именем поверх
+
+        int max = (int) Fenrir.MAX_HEALTH;
+        int hp = Math.round(progress * max);
+        String text = hp + " / " + max;
+        g.drawString(font, text, cx - font.width(text) / 2, y + h + 1, howling ? 0xFFD9C4FF : 0xFFFFB8C8, true);
+
+        event.setIncrement(h + 16);
     }
 
     private static void drawCursed(CustomizeGuiOverlayEvent.BossEventProgress event, LerpingBossEvent boss) {
@@ -183,7 +228,19 @@ public final class BossBarHud {
             return;
         }
         if (tc.getKey().equals("entity.celestial.all_knowing_angel")) {
-            drawAngel(event, boss);
+            drawAngel(event, boss, false);
+            return;
+        }
+        if (tc.getKey().equals("entity.celestial.all_knowing_angel.immortal")) {
+            drawAngel(event, boss, true);
+            return;
+        }
+        if (tc.getKey().equals("entity.celestial.fenrir")) {
+            drawFenrir(event, boss, false);
+            return;
+        }
+        if (tc.getKey().equals("entity.celestial.fenrir.howl")) {
+            drawFenrir(event, boss, true);
             return;
         }
         if (tc.getKey().equals("entity.celestial.cursed_boss")) {

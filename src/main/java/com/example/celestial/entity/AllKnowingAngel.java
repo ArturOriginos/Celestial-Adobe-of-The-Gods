@@ -3,6 +3,7 @@ package com.example.celestial.entity;
 import com.example.celestial.registry.ModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -38,6 +39,9 @@ import net.minecraft.world.phys.Vec3;
  * (120 урона в секунду) с задержкой: сначала тонкий луч-предупреждение следует за игроком, затем замирает,
  * и только после этого лазер выстреливает, так что от него можно убежать. Логики появления нет:
  * босса вызывают командой /summon celestial:all_knowing_angel или яйцом призыва.
+ *
+ * <p>Вторая фаза: когда здоровье падает до 5000, Ангел на 1 минуту становится бессмертным и в это время каждые
+ * 10 секунд выпускает 5 сфер, которые летят за игроком (лазер на это время отключён). Потом бой идёт как раньше.
  */
 public class AllKnowingAngel extends Monster {
     public static final double MAX_HEALTH = 7500.0D;
@@ -52,6 +56,14 @@ public class AllKnowingAngel extends Monster {
     private static final float LASER_DAMAGE_PER_HIT = 30.0F; // 120 урона в секунду (было 40, x3)
     private static final double LASER_RANGE = 64.0D;
     private static final int ORB_WINDUP_TICKS = 30;
+
+    /** Вторая фаза: при каком здоровье начинается, сколько длится бессмертие, как часто сферы и пауза до первой. */
+    public static final double PHASE2_HEALTH = 5000.0D;
+    private static final int IMMORTAL_TICKS = 60 * 20;
+    private static final int IMMORTAL_ORB_INTERVAL = 10 * 20;
+    private static final int IMMORTAL_FIRST_CAST = 20;
+    /** Во время бессмертия новые сферы не выпускаются, если живых уже больше этого числа (защита от лагов). */
+    private static final int IMMORTAL_MAX_ORBS = 25;
 
     private static final EntityDataAccessor<Integer> LASER_STATE =
             SynchedEntityData.defineId(AllKnowingAngel.class, EntityDataSerializers.INT);
@@ -69,6 +81,8 @@ public class AllKnowingAngel extends Monster {
     private int phaseTick;
     private int cooldown = 60;
     private boolean lastWasOrbs;
+    private boolean phase2Started;
+    private int immortalTicks;
 
     private final ServerBossEvent bossEvent = new ServerBossEvent(
             Component.translatable("entity.celestial.all_knowing_angel"),
@@ -177,6 +191,7 @@ public class AllKnowingAngel extends Monster {
 
     @Override
     public boolean isInvulnerableTo(DamageSource source) {
+        if (immortalTicks > 0 && !source.is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) return true;
         return source.is(net.minecraft.tags.DamageTypeTags.IS_DROWNING) || super.isInvulnerableTo(source);
     }
 
@@ -193,6 +208,12 @@ public class AllKnowingAngel extends Monster {
         if (target != null && canTurn) this.faceTarget(target);
         this.yBodyRot = this.getYRot();
         this.yHeadRot = this.getYRot();
+
+        if (!phase2Started && this.getHealth() <= PHASE2_HEALTH) startPhase2();
+        if (immortalTicks > 0) {
+            tickImmortal(target);
+            return;
+        }
 
         switch (phase) {
             case 0 -> tickIdle(target);
@@ -342,6 +363,70 @@ public class AllKnowingAngel extends Monster {
         cooldown = 100;
         this.entityData.set(LASER_STATE, 0);
         this.entityData.set(LASER_PROGRESS, 0.0F);
+    }
+
+    // ---------- вторая фаза: бессмертие и сферы каждые 10 секунд ----------
+    private void startPhase2() {
+        phase2Started = true;
+        immortalTicks = IMMORTAL_TICKS;
+        if (this.getHealth() < PHASE2_HEALTH) this.setHealth((float) PHASE2_HEALTH);
+        phase = 0;
+        phaseTick = 0;
+        cooldown = 60;
+        this.entityData.set(LASER_STATE, 0);
+        this.entityData.set(LASER_PROGRESS, 0.0F);
+        this.bossEvent.setName(Component.translatable("entity.celestial.all_knowing_angel.immortal"));
+        this.playSound(SoundEvents.ELDER_GUARDIAN_CURSE, 5.0F, 0.5F);
+        this.playSound(SoundEvents.WITHER_SPAWN, 3.0F, 0.7F);
+        if (this.level() instanceof ServerLevel server) {
+            Component msg = Component.translatable("celestial.all_knowing_angel.phase2");
+            for (ServerPlayer p : server.players()) {
+                if (p.distanceToSqr(this) < 96.0D * 96.0D) p.sendSystemMessage(msg);
+            }
+        }
+    }
+
+    private void tickImmortal(LivingEntity target) {
+        int elapsed = IMMORTAL_TICKS - immortalTicks;
+        immortalTicks--;
+        int sinceFirst = elapsed - IMMORTAL_FIRST_CAST;
+        if (this.level() instanceof ServerLevel server) {
+            Vec3 eye = this.getEyeOrigin();
+            if (elapsed % 4 == 0) { // аура бессмертия
+                server.sendParticles(ParticleTypes.END_ROD, this.getX(), this.getY() + 2.2D, this.getZ(), 3, 1.6D, 2.0D, 1.6D, 0.02D);
+            }
+            boolean charging = sinceFirst < 0 || (sinceFirst % IMMORTAL_ORB_INTERVAL) >= IMMORTAL_ORB_INTERVAL - ORB_WINDUP_TICKS;
+            if (charging) { // перед выстрелом сферы собираются вокруг глаза
+                server.sendParticles(ParticleTypes.REVERSE_PORTAL, eye.x, eye.y + 0.8D, eye.z, 6, 1.6D, 1.0D, 1.6D, 0.06D);
+            }
+        }
+        if (sinceFirst >= 0 && sinceFirst % IMMORTAL_ORB_INTERVAL == 0 && target != null
+                && countOrbs() <= IMMORTAL_MAX_ORBS - ORBS_PER_CAST) {
+            spawnOrbs(target);
+        }
+        if (immortalTicks <= 0) { // бессмертие закончилось: обычный бой
+            this.bossEvent.setName(Component.translatable("entity.celestial.all_knowing_angel"));
+            this.playSound(SoundEvents.BEACON_DEACTIVATE, 4.0F, 0.6F);
+            phase = 0;
+            phaseTick = 0;
+            cooldown = 80;
+        }
+    }
+
+    // ---------- сохранение ----------
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putBoolean("AngelPhase2", phase2Started);
+        tag.putInt("AngelImmortal", immortalTicks);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        phase2Started = tag.getBoolean("AngelPhase2");
+        immortalTicks = tag.getInt("AngelImmortal");
+        if (immortalTicks > 0) this.bossEvent.setName(Component.translatable("entity.celestial.all_knowing_angel.immortal"));
     }
 
     // ---------- полоска здоровья босса ----------

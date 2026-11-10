@@ -8,6 +8,8 @@ import com.example.celestial.entity.CelestiaEffect;
 import com.example.celestial.entity.CelestiaGod;
 import com.example.celestial.entity.CelestiaSpike;
 import com.example.celestial.entity.CursedBoss;
+import com.example.celestial.entity.Fenrir;
+import com.example.celestial.entity.FenrirEffect;
 import com.example.celestial.entity.FlyingSoul;
 import com.example.celestial.entity.CursedChicken;
 import com.example.celestial.entity.CursedCow;
@@ -96,6 +98,27 @@ public final class ModEntities {
                     .clientTrackingRange(10)
                     .updateInterval(1)
                     .build("flying_soul"));
+
+    // ----------------------------------------------------------- Фенрир
+    public static final DeferredHolder<EntityType<?>, EntityType<Fenrir>> FENRIR =
+            ENTITIES.register("fenrir", () -> EntityType.Builder
+                    .of(Fenrir::new, MobCategory.MONSTER)
+                    .sized(3.2F, 5.0F)
+                    .fireImmune()
+                    .clientTrackingRange(12)
+                    .build("fenrir"));
+
+    /** Визуальные эффекты способностей Фенрира (вой, след прыжка, шипы). Не сохраняются в мире. */
+    public static final DeferredHolder<EntityType<?>, EntityType<FenrirEffect>> FENRIR_EFFECT =
+            ENTITIES.register("fenrir_effect", () -> EntityType.Builder
+                    .of(FenrirEffect::new, MobCategory.MISC)
+                    .sized(0.3F, 0.3F)
+                    .noSave()
+                    .noSummon()
+                    .fireImmune()
+                    .clientTrackingRange(12)
+                    .updateInterval(1)
+                    .build("fenrir_effect"));
 
     // ----------------------------------------------------------- Проклятые мобы (без естественного спавна)
     public static final DeferredHolder<EntityType<?>, EntityType<CursedPig>> CURSED_PIG =
