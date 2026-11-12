@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    { "item": "celestial:united_soul" },
+    { "item": "minecraft:apple" },
+    { "item": "minecraft:apple" }
+  ],
+  "result": {
+    "id": "celestial:forbidden_fruit",
+    "count": 1
+  }
+}

@@ -75,6 +75,10 @@ public class CelestialMod {
                 MiniSoulSyncPayload.STREAM_CODEC,
                 ClientPayloads::handleMiniSoul);
         registrar.playToClient(
+                com.example.celestial.network.HadesCutscenePayload.TYPE,
+                com.example.celestial.network.HadesCutscenePayload.STREAM_CODEC,
+                ClientPayloads::handleHadesCutscene);
+        registrar.playToClient(
                 com.example.celestial.network.SkyEyesPayload.TYPE,
                 com.example.celestial.network.SkyEyesPayload.STREAM_CODEC,
                 ClientPayloads::handleSkyEyes);
@@ -109,6 +113,8 @@ public class CelestialMod {
         event.put(ModEntities.ALL_KNOWING_ANGEL.get(), com.example.celestial.entity.AllKnowingAngel.createAttributes().build());
         event.put(ModEntities.CELESTIA_GOD.get(), CelestiaGod.createAttributes().build());
         event.put(ModEntities.FENRIR.get(), com.example.celestial.entity.Fenrir.createAttributes().build());
+        event.put(ModEntities.CERBERUS.get(), com.example.celestial.entity.Cerberus.createAttributes().build());
+        event.put(ModEntities.HADES.get(), com.example.celestial.entity.Hades.createAttributes().build());
         event.put(ModEntities.CURSED_PIG.get(), net.minecraft.world.entity.animal.Pig.createAttributes().build());
         event.put(ModEntities.CURSED_COW.get(), net.minecraft.world.entity.animal.Cow.createAttributes().build());
         event.put(ModEntities.CURSED_SHEEP.get(), net.minecraft.world.entity.animal.Sheep.createAttributes().build());
@@ -131,6 +137,7 @@ public class CelestialMod {
             event.accept(ModItems.ALL_KNOWING_TOME);
             event.accept(ModItems.FENRIR_CLOCK);
             event.accept(ModItems.CERBERUS_HEART);
+            event.accept(ModItems.FORBIDDEN_FRUIT);
             event.accept(ModItems.CELESTIA_RUNE);
             event.accept(ModItems.CELESTIA_KEY);
         }
@@ -231,6 +238,8 @@ public class CelestialMod {
             event.accept(ModItems.ALL_KNOWING_ANGEL_EGG);
             event.accept(ModItems.CELESTIA_GOD_EGG);
             event.accept(ModItems.FENRIR_EGG);
+            event.accept(ModItems.CERBERUS_EGG);
+            event.accept(ModItems.HADES_EGG);
             event.accept(ModItems.CURSED_PIG_EGG);
             event.accept(ModItems.CURSED_COW_EGG);
             event.accept(ModItems.CURSED_SHEEP_EGG);

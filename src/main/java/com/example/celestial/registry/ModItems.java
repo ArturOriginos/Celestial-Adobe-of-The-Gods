@@ -147,6 +147,18 @@ public final class ModItems {
     public static final DeferredItem<DeferredSpawnEggItem> CURSED_BOSS_EGG = ITEMS.register("cursed_boss_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.CURSED_BOSS, 0x1A0A12, 0xD01824, new Item.Properties()));
 
+    /** Запретный плод: ПКМ спрашивает в чате, готов ли игрок к бою, и по ответу «Да» призывает Цербера. */
+    public static final DeferredItem<Item> FORBIDDEN_FRUIT = ITEMS.register("forbidden_fruit",
+            () -> new com.example.celestial.item.ForbiddenFruitItem(
+                    new Item.Properties().stacksTo(16).rarity(Rarity.EPIC).fireResistant()
+                            .component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)));
+
+    public static final DeferredItem<DeferredSpawnEggItem> HADES_EGG = ITEMS.register("hades_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.HADES, 0x1A0620, 0xC03CFF, new Item.Properties()));
+
+    public static final DeferredItem<DeferredSpawnEggItem> CERBERUS_EGG = ITEMS.register("cerberus_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.CERBERUS, 0x1A0A12, 0xFF5A1E, new Item.Properties()));
+
     public static final DeferredItem<DeferredSpawnEggItem> FENRIR_EGG = ITEMS.register("fenrir_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.FENRIR, 0x2B0A3D, 0xFF3C5A, new Item.Properties()));
 

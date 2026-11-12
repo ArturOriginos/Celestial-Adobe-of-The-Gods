@@ -32,6 +32,10 @@ public final class ClientPayloads {
         });
     }
 
+    public static void handleHadesCutscene(HadesCutscenePayload payload, IPayloadContext ctx) {
+        ctx.enqueueWork(() -> com.example.celestial.client.HadesCutscene.handle(payload));
+    }
+
     public static void handleSkyEyes(SkyEyesPayload payload, IPayloadContext ctx) {
         ctx.enqueueWork(() -> com.example.celestial.client.SkyEyesRenderer.set(payload.on(), payload.animate()));
     }

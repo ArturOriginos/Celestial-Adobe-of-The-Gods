@@ -41,6 +41,9 @@ public final class ClientSetup {
         event.registerEntityRenderer(ModEntities.CELESTIA_GOD.get(), CelestiaGodRenderer::new);
         event.registerEntityRenderer(ModEntities.CELESTIA_EFFECT.get(), CelestiaEffectRenderer::new);
         event.registerEntityRenderer(ModEntities.FENRIR.get(), FenrirRenderer::new);
+        event.registerEntityRenderer(ModEntities.CERBERUS.get(), CerberusRenderer::new);
+        event.registerEntityRenderer(ModEntities.HADES.get(), HadesRenderer::new);
+        event.registerEntityRenderer(ModEntities.HADES_EFFECT.get(), HadesEffectRenderer::new);
         // ванильные боссы и энд-кристалл получают новые модели
         event.registerEntityRenderer(net.minecraft.world.entity.EntityType.WITHER, CrimsonWitherRenderer::new);
         event.registerEntityRenderer(net.minecraft.world.entity.EntityType.ENDER_DRAGON, ObsidianDragonRenderer::new);

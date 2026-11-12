@@ -108,6 +108,36 @@ public final class ModEntities {
                     .clientTrackingRange(12)
                     .build("fenrir"));
 
+    // ----------------------------------------------------------- Аид
+    public static final DeferredHolder<EntityType<?>, EntityType<com.example.celestial.entity.Hades>> HADES =
+            ENTITIES.register("hades", () -> EntityType.Builder
+                    .of(com.example.celestial.entity.Hades::new, MobCategory.MONSTER)
+                    .sized(1.9F, 5.2F)
+                    .fireImmune()
+                    .clientTrackingRange(16)
+                    .build("hades"));
+
+    /** Атаки Аида (зоны, снаряды, ритуальный круг). Не сохраняются в мире. */
+    public static final DeferredHolder<EntityType<?>, EntityType<com.example.celestial.entity.HadesEffect>> HADES_EFFECT =
+            ENTITIES.register("hades_effect", () -> EntityType.Builder
+                    .of(com.example.celestial.entity.HadesEffect::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .noSave()
+                    .noSummon()
+                    .fireImmune()
+                    .clientTrackingRange(12)
+                    .updateInterval(1)
+                    .build("hades_effect"));
+
+    // ----------------------------------------------------------- Цербер
+    public static final DeferredHolder<EntityType<?>, EntityType<com.example.celestial.entity.Cerberus>> CERBERUS =
+            ENTITIES.register("cerberus", () -> EntityType.Builder
+                    .of(com.example.celestial.entity.Cerberus::new, MobCategory.MONSTER)
+                    .sized(3.4F, 5.0F)
+                    .fireImmune()
+                    .clientTrackingRange(12)
+                    .build("cerberus"));
+
     /** Визуальные эффекты способностей Фенрира (вой, след прыжка, шипы). Не сохраняются в мире. */
     public static final DeferredHolder<EntityType<?>, EntityType<FenrirEffect>> FENRIR_EFFECT =
             ENTITIES.register("fenrir_effect", () -> EntityType.Builder

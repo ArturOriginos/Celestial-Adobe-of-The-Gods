@@ -63,6 +63,10 @@ All items and blocks are in the creative tab **"Celestial chapter 2"**. Server c
 
 Versioning: small edits bump the third number (1.7.1, 1.7.2), big updates bump the second (1.7, 1.8).
 
+- **beta 3.0xy** - English health bar for Hades (God of Death / Hades), chosen by the game language.
+- **beta 3.0x** - Final boss: **Hades, God of Death** (20000 health, 80-90 damage). Spawn cutscene with the camera on him: three lines of dialogue, then the Soul of Celestia answers (only for players who have it). Three phases with immortality at 60% (6 s) and 30% (10 s, heals 3000); attacks: flame spears, homing skulls, dark pillars, eruption, crystal spikes, comets, chains, and in the last phase a ritual circle explosion. Own health bar. For now he is spawned with the Hades Spawn Egg or `/summon celestial:hades`.
+- **beta 2.9xy** - The Forbidden Fruit is craftable: United Soul + 2 Apples (shapeless).
+- **beta 2.9x** - New boss: **Cerberus** (10000 health, about 80 damage; bite, dash, fire breath and shockwave; breaks blocks; at 5000 health he roars, is immortal for 10 seconds and restores all his health once). Summoned by the **Forbidden Fruit** (right-click, then answer Yes or No in chat; "No" keeps the fruit). When he falls, Hades curses you in chat and Cursed Niflheim spreads twice as fast. Drops the Heart of Cerberus. Own health bar with a three-headed frame. `tools/bbmodel_to_bbdata.py` converts Blockbench models.
 - **beta 2.8xy** - Damage of Fenrir, the All-Knowing Angel and the God of Celestia cut by 1.5x. Full God armor gives Resistance III, full Celestia armor Resistance II. Killing the All-Knowing Angel opens red eyes in the sky and Hades writes meaningless symbols in chat; killing Fenrir brings eternal night. Operators can toggle both with `/celestialworld eternal_night|sky_eyes <true|false>`.
 - **beta 2.8x** - Cursed Book, the ??? dimension with the Eye structure, new Guardian of the Gods health bar, Fenrir bar in English, Wither custom-model crash fixed.
 - **1.3** - New advancements: Cursed items (soul, sword, axe, pickaxe-shovel, shield, full arsenal), killing the Cursed One, killing the God of Celestia, and the full Celestia armor set.

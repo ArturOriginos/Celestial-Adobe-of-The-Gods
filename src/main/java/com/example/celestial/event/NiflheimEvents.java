@@ -73,7 +73,11 @@ public final class NiflheimEvents {
     @SubscribeEvent
     public static void onLevelTick(LevelTickEvent.Post event) {
         if (!(event.getLevel() instanceof ServerLevel level) || level.dimension() != Level.OVERWORLD) return;
-        if (level.getGameTime() % AEConfig.SPREAD_INTERVAL.get() != 0) return;
+        int interval = AEConfig.SPREAD_INTERVAL.get();
+        if (com.example.celestial.world.WorldState.get(level.getServer()).cerberusSlain()) {
+            interval = Math.max(1, interval / 2); // после гибели Цербера Нифельхельм распространяется вдвое быстрее
+        }
+        if (level.getGameTime() % interval != 0) return;
         NiflheimSpread.get(level).step(level);
     }
 

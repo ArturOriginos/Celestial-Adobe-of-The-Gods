@@ -36,7 +36,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
  *  6     случайно, пока игрок в аду (Незер)
  *  7, 8, 11, 12 в бою ("Сзади!" - если удар пришёл со спины)
  *  9     когда у игрока остаётся одно сердце
- *  10    пока не используется (на будущее: встреча с Аидом)
+ *  10    встреча с Аидом: звучит в конце катсцены его появления (Hades.tickCutscene)
  * Говорит только пока душа сидит на плече игрока.
  */
 @EventBusSubscriber(modid = CelestialMod.MODID)
@@ -79,6 +79,13 @@ public final class SoulDialogue {
         for (int i = 0; i < INTRO_LINES; i++) {
             list.add(new Pending(i + 1, now + i * INTRO_GAP_TICKS));
         }
+    }
+
+    /** Сказать фразу, только если у игрока есть Душа (она сидит на плече). Возвращает true, если фраза прозвучала. */
+    public static boolean sayIfHasSoul(ServerPlayer player, int line) {
+        if (!hasSoul(player)) return false;
+        say(player, line);
+        return true;
     }
 
     private static boolean hasSoul(ServerPlayer player) {

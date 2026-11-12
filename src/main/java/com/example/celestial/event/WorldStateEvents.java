@@ -2,6 +2,7 @@ package com.example.celestial.event;
 
 import com.example.celestial.CelestialMod;
 import com.example.celestial.entity.AllKnowingAngel;
+import com.example.celestial.entity.Cerberus;
 import com.example.celestial.entity.Fenrir;
 import com.example.celestial.network.SkyEyesPayload;
 import com.example.celestial.world.WorldState;
@@ -61,6 +62,12 @@ public final class WorldStateEvents {
             hadesDelay = 60;
         } else if (entity instanceof Fenrir) {
             WorldState.get(server).setEternalNight(true);
+        } else if (entity instanceof Cerberus) {
+            WorldState.get(server).setCerberusSlain(true); // Нифельхельм теперь расползается вдвое быстрее
+            MutableComponent name = Component.translatable("celestial.hades").withStyle(ChatFormatting.DARK_RED);
+            server.getPlayerList().broadcastSystemMessage(Component.literal("<").append(name).append("> ")
+                    .append(Component.translatable("message.celestial.cerberus.death").withStyle(ChatFormatting.RED, ChatFormatting.BOLD)),
+                    false);
         }
     }
 
@@ -118,6 +125,15 @@ public final class WorldStateEvents {
                             ctx.getSource().sendSuccess(() -> Component.translatable(on
                                     ? "command.celestial.world.eternal_night.on"
                                     : "command.celestial.world.eternal_night.off"), true);
+                            return 1;
+                        })))
+                .then(Commands.literal("cerberus_slain")
+                        .then(Commands.argument("enabled", BoolArgumentType.bool()).executes(ctx -> {
+                            boolean on = BoolArgumentType.getBool(ctx, "enabled");
+                            WorldState.get(ctx.getSource().getServer()).setCerberusSlain(on);
+                            ctx.getSource().sendSuccess(() -> Component.translatable(on
+                                    ? "command.celestial.world.cerberus_slain.on"
+                                    : "command.celestial.world.cerberus_slain.off"), true);
                             return 1;
                         })))
                 .then(Commands.literal("sky_eyes")

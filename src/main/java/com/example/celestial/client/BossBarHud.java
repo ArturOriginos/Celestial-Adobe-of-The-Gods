@@ -5,7 +5,9 @@ import com.example.celestial.entity.AllKnowingAngel;
 import com.example.celestial.entity.CelestiaGod;
 import com.example.celestial.entity.CursedBoss;
 import com.example.celestial.entity.Fenrir;
+import com.example.celestial.entity.Cerberus;
 import com.example.celestial.entity.GuardianOfGods;
+import com.example.celestial.entity.Hades;
 import java.util.Map;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -47,6 +49,21 @@ public final class BossBarHud {
     private static final int GG_FILL_W = 1541, GG_FILL_H = 93;
     // канал внутри рамки (в пикселях рамки), между верхней и нижней золотыми шинами
     private static final int GG_CH_X0 = 278, GG_CH_X1 = 1819, GG_CH_Y0 = 166, GG_CH_Y1 = 259;
+
+    // --- полоска Аида: рамка 2172x724 (название на пластинах нарисовано, канал прозрачный) и пламенная заливка 1762x424 ---
+    private static final ResourceLocation HADES_FRAME = tex("hades_frame");
+    private static final ResourceLocation HADES_FRAME_EN = tex("hades_frame_en"); // та же рамка с надписями God of Death / Hades
+    private static final ResourceLocation HADES_FILL = tex("hades_fill");
+    private static final int HD_W = 2172, HD_H = 724;
+    private static final int HD_CH_X0 = 205, HD_CH_X1 = 1967, HD_CH_Y0 = 358, HD_CH_Y1 = 416;
+    private static final int HD_FILL_X = 205, HD_FILL_Y = 124, HD_FILL_W = 1762, HD_FILL_H = 424;
+
+    // --- полоска Цербера: рамка с тремя головами 2139x440 (канал пустой) и красная полоса 1856x78 ---
+    private static final ResourceLocation CERB_FRAME = tex("cerberus_frame");
+    private static final ResourceLocation CERB_FILL = tex("cerberus_fill");
+    private static final int CB_W = 2139, CB_H = 440;
+    private static final int CB_FILL_W = 1856, CB_FILL_H = 78;
+    private static final int CB_CH_X0 = 141, CB_CH_X1 = 1997, CB_CH_Y0 = 196, CB_CH_Y1 = 274;
 
     // --- полоска Проклятого: рамка 542x174, дорожка из двух половин по 172x18 ---
     private static final ResourceLocation CURSED_FRAME = tex("cursed_boss_frame");
@@ -111,6 +128,73 @@ public final class BossBarHud {
         g.drawString(font, text, cx - font.width(text) / 2, y + h + 8, 0xFFD9B4FF, true);
 
         event.setIncrement(h + 22);
+    }
+
+    private static void drawHades(CustomizeGuiOverlayEvent.BossEventProgress event, LerpingBossEvent boss) {
+        event.setCanceled(true);
+        GuiGraphics g = event.getGuiGraphics();
+        if (HadesCutscene.isActive()) { // во время катсцены вместо полосы - чёрные полосы и реплики
+            HadesCutscene.drawOverlay(g);
+            return;
+        }
+        Font font = Minecraft.getInstance().font;
+        int w = 440;
+        float sc = w / (float) HD_W;
+        int h = Math.round(HD_H * sc);
+        int x = (g.guiWidth() - w) / 2;
+        int y = event.getY() + 6;
+        int cx = x + w / 2;
+        float progress = Math.max(0.0F, Math.min(1.0F, boss.getProgress()));
+
+        g.fill(x + Math.round(HD_CH_X0 * sc), y + Math.round(HD_CH_Y0 * sc),
+                x + Math.round(HD_CH_X1 * sc), y + Math.round(HD_CH_Y1 * sc), 0xFF14040A); // пустой канал
+        int fx = x + Math.round(HD_FILL_X * sc), fy = y + Math.round(HD_FILL_Y * sc);
+        int fw = Math.round(HD_FILL_W * sc), fh = Math.round(HD_FILL_H * sc);
+        int shown = Math.round(fw * progress);
+        if (shown > 0) { // пламенная заливка под рамкой: чем меньше здоровья, тем короче
+            g.blit(HADES_FILL, fx, fy, shown, fh, 0, 0,
+                    Math.max(1, Math.round(HD_FILL_W * progress)), HD_FILL_H, HD_FILL_W, HD_FILL_H);
+        }
+        // название нарисовано в самой рамке, поэтому рамку выбираем по языку клиента: русский -> Бог Смерти / Аид, остальные -> English
+        boolean ru = Minecraft.getInstance().getLanguageManager().getSelected().startsWith("ru");
+        g.blit(ru ? HADES_FRAME : HADES_FRAME_EN, x, y, w, h, 0, 0, HD_W, HD_H, HD_W, HD_H); // рамка поверх
+
+        int hp = (int) Math.ceil(progress * Hades.MAX_HEALTH);
+        String text = hp + " / " + (int) Hades.MAX_HEALTH;
+        g.drawString(font, text, cx - font.width(text) / 2, y + h - 4, 0xFFE0C2FF, true);
+        event.setIncrement(h + 6);
+    }
+
+    private static void drawCerberus(CustomizeGuiOverlayEvent.BossEventProgress event, LerpingBossEvent boss) {
+        event.setCanceled(true);
+        GuiGraphics g = event.getGuiGraphics();
+        Font font = Minecraft.getInstance().font;
+        int w = 420;
+        float sc = w / (float) CB_W;
+        int h = Math.round(CB_H * sc);
+        int x = (g.guiWidth() - w) / 2;
+        int y = event.getY() + 14;
+        int cx = x + w / 2;
+        float progress = Math.max(0.0F, Math.min(1.0F, boss.getProgress()));
+
+        int c0 = x + Math.round(CB_CH_X0 * sc), c1 = x + Math.round(CB_CH_X1 * sc);
+        int y0 = y + Math.round(CB_CH_Y0 * sc), y1 = y + Math.round(CB_CH_Y1 * sc);
+        int fillW = Math.round((c1 - c0) * progress);
+
+        g.fill(c0, y0, c1, y1, 0xFF120408);                       // пустой канал
+        if (fillW > 0) {                                          // красная полоса: чем меньше здоровья, тем короче
+            g.blit(CERB_FILL, c0, y0, fillW, y1 - y0, 0, 0,
+                    Math.max(1, Math.round(CB_FILL_W * progress)), CB_FILL_H, CB_FILL_W, CB_FILL_H);
+        }
+        g.blit(CERB_FRAME, x, y, w, h, 0, 0, CB_W, CB_H, CB_W, CB_H); // рамка с головами поверх
+
+        Component name = boss.getName();
+        g.drawString(font, name, cx - font.width(name) / 2, y - 8, 0xFFFF5A3C, true);
+        int hp = (int) Math.ceil(progress * Cerberus.MAX_HEALTH);
+        String text = hp + " / " + (int) Cerberus.MAX_HEALTH;
+        g.drawString(font, text, cx - font.width(text) / 2, y + h + 1, 0xFFFFD2B0, true);
+
+        event.setIncrement(h + 24);
     }
 
     private static void drawGuardian(CustomizeGuiOverlayEvent.BossEventProgress event, LerpingBossEvent boss) {
@@ -259,6 +343,14 @@ public final class BossBarHud {
     public static void onBossBar(CustomizeGuiOverlayEvent.BossEventProgress event) {
         LerpingBossEvent boss = event.getBossEvent();
         if (!(boss.getName().getContents() instanceof TranslatableContents tc)) return;
+        if (tc.getKey().equals("entity.celestial.hades")) {
+            drawHades(event, boss);
+            return;
+        }
+        if (tc.getKey().equals("entity.celestial.cerberus")) {
+            drawCerberus(event, boss);
+            return;
+        }
         if (tc.getKey().equals("entity.celestial.guardian_of_gods")) {
             drawGuardian(event, boss);
             return;
